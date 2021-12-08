@@ -1,0 +1,795 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>依赖类型论 - Lean中文手册</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title_page.html">在Lean 4中进行定理证明</a></li><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> 介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li></ol></li><li class="chapter-item expanded "><a href="dependent_type_theory.html" class="active"><strong aria-hidden="true">2.</strong> 依赖类型论</a></li><li class="chapter-item expanded "><a href="propositions_and_proofs.html"><strong aria-hidden="true">3.</strong> 命题和证明</a></li><li class="chapter-item expanded "><a href="quantifiers_and_equality.html"><strong aria-hidden="true">4.</strong> Quantifiers and Equality</a></li><li class="chapter-item expanded "><a href="tactics.html"><strong aria-hidden="true">5.</strong> Tactics</a></li><li class="chapter-item expanded "><a href="interacting_with_lean.html"><strong aria-hidden="true">6.</strong> Interacting with Lean</a></li><li class="chapter-item expanded "><a href="inductive_types.html"><strong aria-hidden="true">7.</strong> Inductive Types</a></li><li class="chapter-item expanded "><a href="induction_and_recursion.html"><strong aria-hidden="true">8.</strong> Induction and Recursion</a></li><li class="chapter-item expanded "><a href="structures_and_records.html"><strong aria-hidden="true">9.</strong> 结构体和记录</a></li><li class="chapter-item expanded "><a href="type_classes.html"><strong aria-hidden="true">10.</strong> Type Classes</a></li><li class="chapter-item expanded "><a href="conv.html"><strong aria-hidden="true">11.</strong> The Conversion Tactic Mode</a></li><li class="chapter-item expanded "><a href="axioms_and_computation.html"><strong aria-hidden="true">12.</strong> Axioms and Computation</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Lean中文手册</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#依赖类型论" id="依赖类型论">依赖类型论</a></h1>
+<p>依赖类型论（Dependent type theory）是一种强大而富有表达力的语言，允许你表达复杂的数学断言，编写复杂的硬件和软件规范，并以自然和统一的方式对这两者进行推理。Lean是基于一个被称为<em>构造演算</em>（Calculus of Constructions）的依赖类型论的版本，它有一个可数的非累积性宇宙和归纳类型的层次结构。在本章结束时，你将学会一大部分。</p>
+<h2><a class="header" href="#普通类型论" id="普通类型论">普通类型论</a></h2>
+<p>“类型论”得名于其中每个表达式都有一个<em>类型</em>。举例：在一个给定的语境中，<code>x + 0</code> 可能表示一个自然数， <code>f</code>可能表示一个定义在自然数上的函数。Lean中的自然数是任意精度的无符号整数。</p>
+<p>这里的一些例子展示了如何声明对象以及检查其类型。</p>
+<pre><code class="language-lean">/- 定义一些常数 -/
+
+def m : Nat := 1       -- m 是自然数
+def n : Nat := 0
+def b1 : Bool := true  -- b1 是布尔型
+def b2 : Bool := false
+
+/- 检查类型 -/
+
+#check m            -- 输出: Nat
+#check n
+#check n + 0        -- Nat
+#check m * (n + 0)  -- Nat
+#check b1           -- Bool
+#check b1 &amp;&amp; b2     -- &quot;&amp;&amp;&quot; is the Boolean and
+#check b1 || b2     -- Boolean or
+#check true         -- Boolean &quot;true&quot;
+
+/- 求值（Evaluate） -/
+
+#eval 5 * 4         -- 20
+#eval m + 2         -- 3
+#eval b1 &amp;&amp; b2      -- false
+</code></pre>
+<p>位于 <code>/-</code> 和 <code>-/</code> 之间的文本组成了一个注释块，会被Lean的编译忽略。类似地，两条横线 <code>--</code> 意味着该行剩下的内容也是被忽略的。注释块可以嵌套，这样就可以“注释掉”一整块代码，这和任何程序语言都是一样的。</p>
+<p><code>def</code> 关键字声明工作环境中的新常量符号。在上面的例子中，<code>def m : Nat := 1</code>定义了一个<code>Nat</code>类型的新常量<code>m</code>，其值为<code>1</code>。<code>#check</code>命令要求Lean给出它的类型，用于向系统询问信息的辅助命令都以井号(#)开头。<code>#eval</code> 命令让Lean计算给出的表达式。您应该尝试自己声明一些常量和检查一些表达式的类型，这是用学习系统的好方法。</p>
+<p>简单类型理论的强大之处在于，你可以从其他类型中构建新的类型。例如，如果<code>a</code>和<code>b</code>是类型，<code>a -&gt; b</code>表示从<code>a</code>到<code>b</code>的函数类型，<code>a × b</code>表示由<code>a</code>元素与<code>b</code>元素配对构成的对的类型，也称为<em>笛卡尔积</em>。注意<code>×</code>是一个Unicode符号。合理地使用Unicode提高了易读性，所有现代编辑器都大力支持它。在Lean标准库中，你经常看到希腊字母表示类型，Unicode符号<code>→</code>是<code>-&gt;</code>的更紧凑版本。</p>
+<pre><code class="language-lean">#check Nat → Nat      -- 用&quot;\to&quot; or &quot;\r&quot;来打出这个箭头
+#check Nat -&gt; Nat     -- 也可以用 ASCII 符号
+
+#check Nat × Nat      -- 用&quot;\times&quot;打出乘号
+#check Prod Nat Nat   -- 换成ASCII 符号
+
+#check Nat → Nat → Nat
+#check Nat → (Nat → Nat)  --  结果和上一个一样
+
+#check Nat × Nat → Nat
+#check (Nat → Nat) → Nat -- 一个“泛函”
+
+#check Nat.succ     -- Nat → Nat
+#check (0, 1)       -- Nat × Nat
+#check Nat.add      -- Nat → Nat → Nat
+
+#check Nat.succ 2   -- Nat
+#check Nat.add 3    -- Nat → Nat
+#check Nat.add 5 2  -- Nat
+#check (5, 9).1     -- Nat
+#check (5, 9).2     -- Nat
+
+#eval Nat.succ 2   -- 3
+#eval Nat.add 5 2  -- 7
+#eval (5, 9).1     -- 5
+#eval (5, 9).2     -- 9
+</code></pre>
+<p>同样，你应该自己尝试一些例子。</p>
+<p>让我们看一些基本语法。你可以通过输入<code>\to</code> 或者 <code>\r</code> 或者 <code>\-&gt;</code>来输入<code>→</code>。你也可以就用ASCII码<code>-&gt;</code>，所以表达式 <code>Nat -&gt; Nat</code> 和 <code>Nat → Nat</code> 意思是一样的，都表示以一个自然数作为输入并返回一个自然数作为输出的函数类型。Unicode符号 <code>×</code> 是笛卡尔积，用 <code>\times</code> 输入。小写的希腊字母 <code>α </code>，<code>β</code>，和 <code>γ</code> 等等常用来表示类型变量，可以用<code>\a</code>，<code>\b</code>，和 <code>\g</code>来输入。</p>
+<p>这里还有一些需要注意的事情。第一，函数 <code>f</code> 应用到值 <code>x</code> 上写为<code>f x</code> (例：<code>Nat.succ 2</code>)。第二，当写类型表达式时，箭头是<em>右结合</em>的；例如，<code>Nat.add</code> 的类型是 <code>Nat → Nat → Nat</code>，等价于<code>Nat → (Nat → Nat)</code>。</p>
+<p>因此你可以把 <code>Nat.add</code> 看作一个函数，它接受一个自然数并返回另一个函数，该函数接受一个自然数并返回一个自然数。在类型论中，把 <code>Nat.add</code> 函数看作接受一对自然数作为输入并返回一个自然数作为输出的函数通常会更方便。系统允许你“部分应用”函数<code>Nat.add</code>，比如<code>Nat.add 3</code> 具有类型 <code>Nat → Nat</code>，即<code>Nat.add 3</code>返回一个“等待”第二个参数<code>n</code>的函数，然后可以继续写<code>Nat.add 3 n</code>。</p>
+<blockquote>
+<p>注：取一个函数 <code>h</code> （类型为 <code>Nat × Nat → Nat</code>） 然后 &quot;重定义&quot; 它，让它变成像 <code>g</code> 一样的形式，这个过程被称作 <em>柯里化</em>（currying）。</p>
+</blockquote>
+<p>如果你有 <code>m : Nat</code> 和 <code>n : Nat</code>，那么 <code>(m, n)</code> 表示 <code>m</code> 和 <code>n</code> 组成的有序对，其类型为 <code>Nat × Nat</code>。这个方法可以制造自然数对。反过来，如果你有 <code>p : Nat × Nat</code>，之后你可以写 <code>p.1 : Nat</code> 和 <code>p.2 : Nat</code>。这个方法用于提取它的两个组件。</p>
+<h2><a class="header" href="#类型作为对象" id="类型作为对象">类型作为对象</a></h2>
+<p>Lean所依据的依赖类型论对普通类型论的其中一项升级是，类型本身（如 <code>Nat</code> 和 <code>Bool</code> 这些东西）也是对象，因此也具有类型。</p>
+<pre><code class="language-lean">#check Nat               -- Type
+#check Bool              -- Type
+#check Nat → Bool        -- Type
+#check Nat × Bool        -- Type
+#check Nat → Nat         -- ...
+#check Nat × Nat → Nat
+#check Nat → Nat → Nat
+#check Nat → (Nat → Nat)
+#check Nat → Nat → Bool
+#check (Nat → Nat) → Nat
+</code></pre>
+<p>上面的每个表达式都是类型为<code>Type</code>的对象。你也可以为类型声明新的常量:</p>
+<pre><code class="language-lean">def α : Type := Nat
+def β : Type := Bool
+def F : Type → Type := List
+def G : Type → Type → Type := Prod
+
+#check α        -- Type
+#check F α      -- Type
+#check F Nat    -- Type
+#check G α      -- Type → Type
+#check G α β    -- Type
+#check G α Nat  -- Type
+</code></pre>
+<p>正如上面所示，你已经看到了一个类型为 <code>Type → Type → Type</code> 的函数例子，即笛卡尔积 <code>Prod</code>：</p>
+<pre><code class="language-lean">def α : Type := Nat
+def β : Type := Bool
+
+#check Prod α β       -- Type
+#check α × β          -- Type
+
+#check Prod Nat Nat   -- Type
+#check Nat × Nat      -- Type
+</code></pre>
+<p>这里有另一个例子：给出任意类型 <code>α</code>，那么类型 <code>List α</code> 是类型为 <code>α</code> 的元素的列表的类型。</p>
+<pre><code class="language-lean">def α : Type := Nat
+
+#check List α    -- Type
+#check List Nat  -- Type
+</code></pre>
+<p>看起来Lean中任何表达式都有一个类型，因此你可能会想到：<code>Type</code>自己的类型是什么？</p>
+<pre><code class="language-lean">#check Type      -- Type 1
+</code></pre>
+<p>实际上，你已经遇到了Lean系统的一个最微妙的方面：Lean的底层基础有无限的类型层次：</p>
+<pre><code class="language-lean">#check Type     -- Type 1
+#check Type 1   -- Type 2
+#check Type 2   -- Type 3
+#check Type 3   -- Type 4
+#check Type 4   -- Type 5
+</code></pre>
+<p>可以将 <code>Type 0</code> 看作是一个由“小”或“普通”类型组成的宇宙。然后，<code>Type 1</code> 是一个更大的类型范围，其中包含 <code>Type 0</code> 作为一个元素，而 <code>Type 2</code> 是一个更大的类型范围，其中包含<code>Type 1</code>作为一个元素。这个列表是不确定的，所以对于每个自然数 <code>n</code> 都有一个 <code>Type n</code>。<code>Type</code> 是 <code>Type 0</code> 的缩写：</p>
+<pre><code class="language-lean">#check Type
+#check Type 0
+</code></pre>
+<p>然而，有些操作需要在类型宇宙上具有<em>多态</em>（polymorphic）。例如，<code>List α</code> 应该对任何类型的<code>α</code>都有意义，无论<code>α</code>存在于哪种类型的宇宙中。所以函数<code>List</code>有如下的类型：</p>
+<pre><code class="language-lean">#check List    -- Type u_1 → Type u_1
+</code></pre>
+<p>这里 <code>u_1</code> 是一个覆盖类型级别的变量。<code>#check</code> 命令的输出意味着当 <code>α</code> 有类型<code>Type n</code>时，<code>List α</code> 也有类型 <code>Type n</code>。函数 <code>Prod</code> 具有类似的多态性：</p>
+<pre><code class="language-lean">#check Prod    -- Type u_1 → Type u_2 → Type (max u_1 u_2)
+</code></pre>
+<p>你可以使用 <code>universe</code> 命令来声明宇宙变量，这样就可以定义定义多态常量：</p>
+<pre><code class="language-lean">universe u
+
+def F (α : Type u) : Type u := Prod α α
+
+#check F    -- Type u → Type u
+</code></pre>
+<p>可以通过在定义F时提供universe参数来避免使用universe命令：</p>
+<pre><code class="language-lean">def F.{u} (α : Type u) : Type u := Prod α α
+
+#check F    -- Type u → Type u
+</code></pre>
+<h2><a class="header" href="#函数抽象和求值" id="函数抽象和求值">函数抽象和求值</a></h2>
+<p>Lean提供 <code>fun</code> (或 <code>λ</code>)关键字用于从给定表达式创建函数，如下所示：</p>
+<pre><code class="language-lean">#check fun (x : Nat) =&gt; x + 5   -- Nat → Nat
+#check λ (x : Nat) =&gt; x + 5     -- λ 和 fun 是同义词
+#check fun x : Nat =&gt; x + 5     -- 同上
+#check λ x : Nat =&gt; x + 5       -- 同上
+</code></pre>
+<p>你可以通过传递所需的参数来计算lambda函数：</p>
+<pre><code class="language-lean">#eval (λ x : Nat =&gt; x + 5) 10    -- 15
+</code></pre>
+<p>从另一个表达式创建函数的过程称为<em>lambda 抽象</em>。假设你有一个变量<code>x : α</code>和一个表达式<code>t : β</code>，那么表达式 <code>fun (x : α) =&gt; t</code> 或者 <code>λ (x : α) =&gt; t</code> 是一个类型为<code>α → β</code>的对象。这个从<code>α</code>到<code>β</code>的函数把任意<code>x</code>映射到<code>t</code>。</p>
+<p>这有些例子：</p>
+<pre><code class="language-lean">#check fun x : Nat =&gt; fun y : Bool =&gt; if not y then x + 1 else x + 2
+#check fun (x : Nat) (y : Bool) =&gt; if not y then x + 1 else x + 2
+#check fun x y =&gt; if not y then x + 1 else x + 2   -- Nat → Bool → Nat
+</code></pre>
+<p>Lean将这三个例子解释为相同的表达式；在最后一个表达式中，Lean可以从表达式<code>if not y then x + 1 else x + 2</code>推断<code>x</code>和<code>y</code>的类型。</p>
+<p>一些数学上常见的函数运算的例子可以用lambda抽象的项来描述:</p>
+<pre><code class="language-lean">def f (n : Nat) : String := toString n
+def g (s : String) : Bool := s.length &gt; 0
+
+#check fun x : Nat =&gt; x        -- Nat → Nat
+#check fun x : Nat =&gt; true     -- Nat → Bool
+#check fun x : Nat =&gt; g (f x)  -- Nat → Bool
+#check fun x =&gt; g (f x)        -- Nat → Bool
+</code></pre>
+<p>看看这些表达式的意思。表达式<code>fun x : Nat =&gt; x</code>代表<code>Nat</code>上的恒等函数，表达式<code>fun x : Nat =&gt; true</code>表示一个永远输出<code>true</code>的常值函数，表达式<code>fun x : Nat =&gt; g (f x)</code>表示<code>f</code>和<code>g</code>的复合。一般来说，你可以省略类型注释，让Lean自己推断它。因此你可以写<code>fun x =&gt; g (f x)</code>来代替<code>fun x : Nat =&gt; g (f x)</code>。</p>
+<p>你可以以函数作为参数，通过给它们命名<code>f</code>和<code>g</code>，你可以在实现中使用这些函数：</p>
+<pre><code class="language-lean">#check fun (g : String → Bool) (f : Nat → String) (x : Nat) =&gt; g (f x)
+-- (String → Bool) → (Nat → String) → Nat → Bool
+</code></pre>
+<p>你还可以以类型作为参数：</p>
+<pre><code class="language-lean">#check fun (α β γ : Type) (g : β → γ) (f : α → β) (x : α) =&gt; g (f x)
+</code></pre>
+<p>这个表达式表示一个接受三个类型<code>α</code>，<code>β</code>和<code>γ</code>和两个函数<code>g : β → γ</code>和<code>f : α → β</code>，并返回的<code>g</code>和<code>f</code>的复合的函数。(理解这个函数的类型需要理解依赖乘积类型，下面将对此进行解释。)</p>
+<p>lambda表达式的一般形式是<code>fun x : α =&gt; t</code>，其中变量<code>x</code>是一个“约束变量”：它实际上是一个占位符，其“作用域”没有扩展到表达式<code>t</code>之外。例如，表达式<code>fun (b : β) (x : α) =&gt; b</code>中的变量<code>b</code>与前面声明的常量<code>b</code>没有任何关系。事实上，这个表达式表示的函数与<code>fun (u : β) (z : α) =&gt; u</code>是一样的。形式上，可以通过给约束变量重命名来使形式相同的表达式被看作是<em>alpha等价</em>的，也就是被认为是“一样的”。Lean认识这种等价性。</p>
+<p>注意到应用项<code>t : α → β</code>到项<code>s : α</code>上导出了表达式<code>t s : β</code>。回到前面的例子，为清晰起见给约束变量重命名，注意以下表达式的类型:</p>
+<pre><code class="language-lean">#check (fun x : Nat =&gt; x) 1     -- Nat
+#check (fun x : Nat =&gt; true) 1  -- Bool
+
+def f (n : Nat) : String := toString n
+def g (s : String) : Bool := s.length &gt; 0
+
+#check
+  (fun (α β γ : Type) (u : β → γ) (v : α → β) (x : α) =&gt; u (v x)) Nat String Bool g f 0
+  -- Bool
+</code></pre>
+<p>正如我们所期望的，表达式<code>(fun x : Nat =&gt;  x) 1</code>的类型是<code>Nat</code>。实际上，应用<code>(fun x : Nat =&gt; x)</code>到<code>1</code>上返回的值是<code>1</code>。</p>
+<pre><code class="language-lean">#eval (fun x : Nat =&gt; x) 1     -- 1
+#eval (fun x : Nat =&gt; true) 1  -- true
+</code></pre>
+<p>稍后你将看到这些项是如何计算的。现在，请注意这是依赖类型论的一个重要特征：每个项都有一个计算行为，并支持“标准化”的概念。从原则上讲，两个可以化简为相同值的项被称为“定义等价”。它们被Lean的类型检查器认为是“相同的”，并且Lean尽其所能地识别和支持这些识别结果。</p>
+<p>Lean是个完备的编程语言。它有一个生成二进制可执行文件的编译器，和一个交互式解释器。你可以用<code>#eval</code>命令执行表达式，这也是测试你的函数的好办法。</p>
+<blockquote>
+<p>注意到<code>#eval</code>和<code>#reduce</code><em>不是</em>等价的。<code>#eval</code>命令首先把Lean表达式编译成中间表示（intermediate representation, IR）然后用一个解释器来执行这个IR。某些内建类型（例如，<code>Nat</code>、<code>String</code>、<code>Array</code>）在IR中有更有效率的表示。IR支持使用对Lean不透明的外部函数。
+<code>#reduce</code>命令建立在一个化简引擎上，类似于在精益的可信内核中使用的那个，它是负责检查和验证表达式和证明正确性的那一部分。它的效率不如<code>#eval</code>，且将所有外部函数视为不透明的常量。稍后您将了解到这两个命令之间还有其他一些差异。</p>
+</blockquote>
+<h2><a class="header" href="#定义" id="定义">定义</a></h2>
+<p><code>def</code>关键字提供了一个声明新对象的重要方式。</p>
+<pre><code class="language-lean">def double (x : Nat) : Nat :=
+  x + x
+</code></pre>
+<p>这很类似其他编程语言中的函数。名字<code>double</code>被定义为一个函数，它接受一个类型为<code>Nat</code>的输入参数<code>x</code>，其结果是<code>x + x</code>，因此它返回类型<code>Nat</code>。然后你可以调用这个函数:</p>
+<pre><code class="language-lean"># def double (x : Nat) : Nat :=
+#  x + x
+#eval double 3    -- 6
+</code></pre>
+<p>在这种情况下你可以把<code>def</code>想成一种<code>lambda</code>。下面给出了相同的结果：</p>
+<pre><code class="language-lean">def double :=
+  fun (x : Nat) =&gt; x + x
+</code></pre>
+<p>当Lean有足够的信息来推断时，您可以省略类型声明。类型推断是Lean的重要组成部分:</p>
+<pre><code class="language-lean">def double : Nat → Nat :=
+  fun x =&gt; x + x
+
+#eval double 3    -- 6
+</code></pre>
+<p>定义的一般形式是<code>def foo : α := bar</code>，其中<code>α</code>是表达式<code>bar</code>返回的类型。Lean通常可以推断类型<code>α</code>，但是精确写出它可以澄清你的意图，并且如果定义的右侧没有匹配你的类型，Lean将标记一个错误。</p>
+<p><code>bar</code>可以是任何一个表达式，不只是一个lambda表达式。因此<code>def</code>也可以用于给一些值命名，例如：</p>
+<pre><code class="language-lean">def pi := 3.141592654
+</code></pre>
+<p><code>def</code>可以接受多个输入参数。比如定义两自然数之和：</p>
+<pre><code class="language-lean">def add (x y : Nat) :=
+  x + y
+
+#eval add 3 2               -- 5
+</code></pre>
+<p>参数列表可以像这样分开写：</p>
+<pre><code class="language-lean">def add (x : Nat) (y : Nat) :=
+  x + y
+
+#eval add (double 3) (7 + 9)  -- 22
+</code></pre>
+<p>注意到这里我们使用了<code>double</code>函数来创建<code>add</code>函数的第一个参数。</p>
+<p>你还可以在<code>def</code>中写一些更有趣的表达式：</p>
+<pre><code class="language-lean">def greater (x y : Nat) :=
+  if x &gt; y then x
+  else y
+</code></pre>
+<p>你可能能猜到这个可以做什么。</p>
+<p>还可以定义一个函数，该函数接受另一个函数作为输入。下面调用一个给定函数两次，将第一次调用的输出传递给第二次:</p>
+<pre><code class="language-lean">def doTwice (f : Nat → Nat) (x : Nat) : Nat :=
+  f (f x)
+
+#eval doTwice double 2   -- 8
+</code></pre>
+<p>现在为了更抽象一点，你也可以指定类似类型参数的参数:</p>
+<pre><code class="language-lean">def compose (α β γ : Type) (g : β → γ) (f : α → β) (x : α) : γ :=
+  g (f x)
+</code></pre>
+<p>这句代码的意思是：函数<code>compose</code>首先接受任何两个函数作为参数，这其中两个函数各自接受一个输入。类型<code>β → γ</code>和<code>α → β</code>意思是要求第二个函数的输出类型必须与第一个函数的输入类型匹配——这是有意义的，否则这两个函数将无法复合。</p>
+<p><code>compose</code>再接受一个类型为<code>α</code>的参数作为第二个函数（这里叫做<code>f</code>）的输入，通过这个函数之后的返回结果类型为<code>β</code>，再作为第一个函数（这里叫做<code>g</code>）的输入。第一个函数返回类型为<code>γ</code>，这就是<code>compose</code>函数最终返回的类型。</p>
+<p><code>compose</code>可以在任意的类型<code>α β γ</code>上使用，它可以复合任意两个函数，只要前一个的输出类型是后一个的输入类型。举例：</p>
+<pre><code class="language-lean">-- def compose (α β γ : Type) (g : β → γ) (f : α → β) (x : α) : γ :=
+--  g (f x)
+-- def double (x : Nat) : Nat :=
+--  x + x
+def square (x : Nat) : Nat :=
+  x * x
+
+#eval compose Nat Nat Nat double square 3  -- 18
+</code></pre>
+<h2><a class="header" href="#局部定义" id="局部定义">局部定义</a></h2>
+<p>Lean还允许你使用<code>let</code>关键字来引入“局部定义”。表达式<code>let a := t1; t2</code>定义等价于把<code>t2</code>中所有的<code>a</code>替换成<code>t1</code>的结果。</p>
+<pre><code class="language-lean">#check let y := 2 + 2; y * y   -- Nat
+#eval  let y := 2 + 2; y * y   -- 16
+
+def twice_double (x : Nat) : Nat :=
+  let y := x + x; y * y
+
+#eval twice_double 2   -- 16
+</code></pre>
+<p>这里<code>twice_double x</code>定义等价于<code>(x + x) * (x + x)</code>。</p>
+<p>你可以连续使用多个<code>let</code>命令来进行多次替换：</p>
+<pre><code class="language-lean">#check let y := 2 + 2; let z := y + y; z * z   -- Nat
+#eval  let y := 2 + 2; let z := y + y; z * z   -- 64
+</code></pre>
+<p>换行可以省略分号<code>;</code>。</p>
+<pre><code class="language-lean">def t (x : Nat) : Nat :=
+  let y := x + x
+  y * y
+</code></pre>
+<p>表达式<code>let a := t1; t2</code>的意思很类似<code>(fun a =&gt; t2) t1</code>，但是这两者并不一样。前者中你要把<code>t2</code>中每一个<code>a</code>的实例考虑成<code>t1</code>的一个缩写。后者中<code>a</code>是一个变量，表达式<code>fun a =&gt; t2</code>不依赖于<code>a</code>的取值而可以单独具有意义。作为一个对照，考虑为什么下面的<code>foo</code>定义是合法的，但<code>bar</code>不行（因为在确定了<code>x</code>所属的<code>a</code>是什么之前，是无法让它<code>+ 2</code>的）。</p>
+<pre><code class="language-lean">def foo := let a := Nat; fun x : a =&gt; x + 2
+/-
+  def bar := (fun a =&gt; fun x : a =&gt; x + 2) Nat
+-/
+</code></pre>
+<h1><a class="header" href="#变量和节" id="变量和节">变量和节</a></h1>
+<p>考虑下面这三个函数定义：</p>
+<pre><code class="language-lean">def compose (α β γ : Type) (g : β → γ) (f : α → β) (x : α) : γ :=
+  g (f x)
+
+def doTwice (α : Type) (h : α → α) (x : α) : α :=
+  h (h x)
+
+def doThrice (α : Type) (h : α → α) (x : α) : α :=
+  h (h (h x))
+</code></pre>
+<p>Lean提供<code>variable</code>指令来让这些声明变得紧凑：</p>
+<pre><code class="language-lean">variable (α β γ : Type)
+
+def compose (g : β → γ) (f : α → β) (x : α) : γ :=
+  g (f x)
+
+def doTwice (h : α → α) (x : α) : α :=
+  h (h x)
+
+def doThrice (h : α → α) (x : α) : α :=
+  h (h (h x))
+</code></pre>
+<p>你可以声明任意类型的变量，不只是<code>Type</code>类型：</p>
+<pre><code class="language-lean">variable (α β γ : Type)
+variable (g : β → γ) (f : α → β) (h : α → α)
+variable (x : α)
+
+def compose := g (f x)
+def doTwice := h (h x)
+def doThrice := h (h (h x))
+
+#print compose
+#print doTwice
+#print doThrice
+</code></pre>
+<p>打印结果表明所有三组定义具有完全相同的效果。</p>
+<p><code>variable</code>命令指示Lean将声明的变量作为约束变量插入定义中，这些定义通过名称引用它们。Lean足够聪明，它能找出定义中显式或隐式使用哪些变量。因此在写定义时，你可以将<code>α</code>、<code>β</code>、<code>γ</code>、<code>g</code>、<code>f</code>、<code>h</code>和<code>x</code>视为固定的对象，并让Lean自动抽象这些定义。</p>
+<p>当以这种方式声明时，变量将一直保持存在，直到所处理的文件结束。然而，有时限制变量的作用范围是有用的。Lean提供了节标记<code>section</code>来实现这个目的：</p>
+<pre><code class="language-lean">section useful
+  variable (α β γ : Type)
+  variable (g : β → γ) (f : α → β) (h : α → α)
+  variable (x : α)
+
+  def compose := g (f x)
+  def doTwice := h (h x)
+  def doThrice := h (h (h x))
+end useful
+</code></pre>
+<p>当一个节结束后，变量不再发挥作用。</p>
+<p>你不需要缩进一个节中的行。你也不需要命名一个节，也就是说，你可以使用一个匿名的<code>section</code> / <code>end</code>对。但是，如果你确实命名了一个节，你必须使用相同的名字关闭它。节也可以嵌套，这允许你逐步增加声明新变量。</p>
+<h2><a class="header" href="#命名空间" id="命名空间">命名空间</a></h2>
+<p>Lean可以让你把定义放进一个“命名空间”（<code>namespace</code>）里，并且命名空间也是层次化的：</p>
+<pre><code class="language-lean">namespace Foo
+  def a : Nat := 5
+  def f (x : Nat) : Nat := x + 7
+
+  def fa : Nat := f a
+  def ffa : Nat := f (f a)
+
+  #check a
+  #check f
+  #check fa
+  #check ffa
+  #check Foo.fa
+end Foo
+
+-- #check a  -- error
+-- #check f  -- error
+#check Foo.a
+#check Foo.f
+#check Foo.fa
+#check Foo.ffa
+
+open Foo
+
+#check a
+#check f
+#check fa
+#check Foo.fa
+</code></pre>
+<p>当你声明你在命名空间<code>Foo</code>中工作时，你声明的每个标识符都有一个前缀<code>Foo.</code>。在打开的命名空间中，可以通过较短的名称引用标识符，但是关闭命名空间后，必须使用较长的名称。与<code>section</code>不同，命名空间需要一个名称。只有一个匿名命名空间在根级别上。</p>
+<p><code>open</code>命令使你可以在当前使用较短的名称。通常，当你导入一个模块时，你会想打开它包含的一个或多个命名空间，以访问短标识符。但是，有时您希望将这些信息保留在一个完全限定的名称中，例如，当它们与您想要使用的另一个命名空间中的标识符冲突时。因此，命名空间为您提供了一种在工作环境中管理名称的方法。</p>
+<p>例如，Lean把和列表相关的定义和定理都放在了命名空间<code>List</code>之中。</p>
+<pre><code class="language-lean">#check List.nil
+#check List.cons
+#check List.map
+</code></pre>
+<p><code>open List</code>命令允许你使用短一点的名字：</p>
+<pre><code class="language-lean">open List
+
+#check nil
+#check cons
+#check map
+</code></pre>
+<p>像节一样，命名空间也是可以嵌套的：</p>
+<pre><code class="language-lean">namespace Foo
+  def a : Nat := 5
+  def f (x : Nat) : Nat := x + 7
+
+  def fa : Nat := f a
+
+  namespace Bar
+    def ffa : Nat := f (f a)
+
+    #check fa
+    #check ffa
+  end Bar
+
+  #check fa
+  #check Bar.ffa
+end Foo
+
+#check Foo.fa
+#check Foo.Bar.ffa
+
+open Foo
+
+#check fa
+#check Bar.ffa
+</code></pre>
+<p>关闭的命名空间可以之后重新打开，甚至是在另一个文件里：</p>
+<pre><code class="language-lean">namespace Foo
+  def a : Nat := 5
+  def f (x : Nat) : Nat := x + 7
+
+  def fa : Nat := f a
+end Foo
+
+#check Foo.a
+#check Foo.f
+
+namespace Foo
+  def ffa : Nat := f (f a)
+end Foo
+</code></pre>
+<p>与节一样，嵌套的名称空间必须按照打开的顺序关闭。命名空间和节有不同的用途：命名空间组织数据，节声明变量，以便在定义中插入。节对于分隔<code>set_option</code>和<code>open</code>等命令的范围也很有用。</p>
+<p>然而，在许多方面，<code>namespace ... end</code>结构块和<code>section ... end</code>表现出来的特征是一样的。尤其是你在命名空间中使用<code>variable</code>命令时，它的作用范围被限制在命名空间里。类似地，如果你在命名空间中使用<code>open</code>命令，它的效果在命名空间关闭后消失。</p>
+<h2><a class="header" href="#依赖类型论依赖着什么" id="依赖类型论依赖着什么">依赖类型论“依赖”着什么?</a></h2>
+<p>简单地说，类型可以依赖于参数。你已经看到了一个很好的例子：类型<code>List α</code>依赖于参数<code>α</code>，而这种依赖性是区分<code>List Nat</code>和<code>List Bool</code>的关键。另一个例子，考虑类型<code>Vector α n</code>，即长度为<code>n</code>的<code>α</code>元素的向量类型。这个类型取决于<em>两个</em>参数：向量中元素的类型<code>α : Type</code>和向量的长度<code>n : Nat</code>。</p>
+<p>假设你希望编写一个函数<code>cons</code>，它在列表的开头插入一个新元素。<code>cons</code>应该有什么类型？这样的函数是<em>多态的</em>（polymorphic）：你期望<code>Nat</code>，<code>Bool</code>或任意类型<code>α</code>的<code>cons</code>函数表现相同的方式。因此，将类型作为<code>cons</code>的第一个参数是有意义的，因此对于任何类型<code>α</code>，<code>cons α</code>是类型<code>α</code>列表的插入函数。换句话说，对于每个<code>α</code>，<code>cons α</code>是将元素<code>a : α</code>插入列表<code>as : List α</code>的函数，并返回一个新的列表，因此有<code>cons α a as : List α</code>。</p>
+<p>很明显，<code>cons α</code>具有类型<code>α → List α → List α</code>，但是<code>cons</code>具有什么类型？如果我们假设是<code>Type → α → list α → list α</code>，那么问题在于，这个类型表达式没有意义：<code>α</code>没有任何的所指，但它实际上指的是某个类型<code>Type</code>。换句话说，<em>假设</em><code>α : Type</code>是函数的首个参数，之后的两个参数的类型是<code>α</code>和<code>List α</code>，它们依赖于首个参数<code>α</code>。</p>
+<pre><code class="language-lean">def cons (α : Type) (a : α) (as : List α) : List α :=
+  List.cons a as
+
+#check cons Nat        -- Nat → List Nat → List Nat
+#check cons Bool       -- Bool → List Bool → List Bool
+#check cons            -- (α : Type) → α → List α → List α
+</code></pre>
+<p>这就是<em>依赖函数类型</em>，或者<em>依赖箭头类型</em>的一个例子。给定<code>α : Type</code>和<code>β : α → Type</code>，把<code>β</code>考虑成<code>α</code>之上的类型族，也就是说，对于每个<code>a : α</code>都有类型<code>β a</code>。在这种情况下，类型<code>(a : α) → β a</code>表示的是具有如下性质的函数<code>f</code>的类型：对于每个<code>a : α</code>，<code>f a</code>是<code>β a</code>的一个元素。换句话说，<code>f</code>返回值的类型取决于其输入。</p>
+<p>注意到<code>(a : α) → β</code>对于任意表达式<code>β : Type</code>都有意义。当<code>β</code>的值依赖于<code>a</code>（例如，在前一段的表达式<code>β a</code>），<code>(a : α) → β</code>表示一个依赖函数类型。当<code>β</code>的值不依赖于<code>a</code>，<code>(a : α) → β</code>与类型<code>α → β</code>无异。实际上，在依赖类型论（以及Lean）中，<code>α → β</code>表达的意思就是当<code>β</code>的值不依赖于<code>a</code>时的<code>(a : α) → β</code>。【注】</p>
+<blockquote>
+<p>译者注：在依赖类型论的数学符号体系中，依赖类型是用<code>Π</code>符号来表达的，在Lean 3中还使用这种表达，例如<code>Π x : α, β x</code>。Lean 4抛弃了这种对新手不友好的写法，但是沿袭了三代中另外两种意义更明朗的写法：<code>forall x : α, β x</code>和<code>∀ x : α, β x</code>。这几个表达式都和<code>(a : α) → β a</code>同义。但是个人感觉本教程这一段的讲法也对新手不友好，反倒是<code>forall x : α, β x</code>这种写法更加清楚明白，在<a href="./quantifiers_and_equality.html">量词与等价</a>一章中有更详细的说明。同时，依赖类型有着更丰富的引入动机，两段话不很能讲明白，推荐读者寻找一些拓展读物。</p>
+</blockquote>
+<p>回到列表的例子，你可以使用<code>#check</code>命令来检查下列的<code>List</code>函数。<code>@</code>符号以及圆括号和花括号之间的区别将在后面解释。</p>
+<pre><code class="language-lean">#check @List.cons    -- {α : Type u_1} → α → List α → List α
+#check @List.nil     -- {α : Type u_1} → List α
+#check @List.length  -- {α : Type u_1} → List α → Nat
+#check @List.append  -- {α : Type u_1} → List α → List α → List α
+</code></pre>
+<p>就像依赖函数类型<code>(a : α) → β a</code>通过允许<code>β</code>依赖<code>α</code>从而推广了函数类型<code>α → β</code>，依赖笛卡尔积类型<code>(a : α) × β a</code>同样推广了笛卡尔积<code>α × β</code>。依赖积类型又称为<em>sigma</em>类型，可写成<code>Σ a : α, β a</code>。你可以用<code>⟨a, b⟩</code>或者<code>Sigma.mk a b</code>来创建依赖对。</p>
+<pre><code class="language-lean">universe u v
+
+def f (α : Type u) (β : α → Type v) (a : α) (b : β a) : (a : α) × β a :=
+  ⟨a, b⟩
+
+def g (α : Type u) (β : α → Type v) (a : α) (b : β a) : Σ a : α, β a :=
+  Sigma.mk a b
+
+def h1 (x : Nat) : Nat :=
+  (f Type (fun α =&gt; α) Nat x).2
+
+#eval h1 5 -- 5
+
+def h2 (x : Nat) : Nat :=
+  (g Type (fun α =&gt; α) Nat x).2
+
+#eval h2 5 -- 5
+</code></pre>
+<p>函数<code>f</code>和<code>g</code>表达的是同样的函数。</p>
+<h2><a class="header" href="#隐参数" id="隐参数">隐参数</a></h2>
+<p>假设我们有一个列表的实现如下：</p>
+<pre><code class="language-lean">universe u
+def Lst (α : Type u) : Type u := List α
+def Lst.cons (α : Type u) (a : α) (as : Lst α) : Lst α := List.cons a as
+def Lst.nil (α : Type u) : Lst α := List.nil
+def Lst.append (α : Type u) (as bs : Lst α) : Lst α := List.append as bs
+#check Lst          -- Type u_1 → Type u_1
+#check Lst.cons     -- (α : Type u_1) → α → Lst α → Lst α
+#check Lst.nil      -- (α : Type u_1) → Lst α
+#check Lst.append   -- (α : Type u_1) → Lst α → Lst α → Lst α
+</code></pre>
+<p>然后，你可以建立一个自然数列表如下：</p>
+<pre><code class="language-lean">#check Lst.cons Nat 0 (Lst.nil Nat)
+
+def as : Lst Nat := Lst.nil Nat
+def bs : Lst Nat := Lst.cons Nat 5 (Lst.nil Nat)
+
+#check Lst.append Nat as bs
+</code></pre>
+<p>由于构造子对类型是多态的【注】，我们需要重复插入类型<code>Nat</code>作为一个参数。但是这个信息是多余的：我们可以推断表达式<code>Lst.cons Nat 5 (Lst.nil Nat)</code>中参数<code>α</code>的类型，这是通过第二个参数<code>5</code>的类型是<code>Nat</code>来实现的。类似地，我们可以推断<code>Lst.nil Nat</code>中参数的类型，这是通过它作为函数<code>Lst.cons</code>的一个参数，且这个函数在这个位置需要接收的是一个具有<code>Lst α</code>类型的参数来实现的。</p>
+<blockquote>
+<p>译者注：“构造子”（constructor）的概念前文未加解释，对类型论不熟悉的读者可能会困惑。它指的是一种“依赖类型的类型”，也可以看作“类型的构造器”，例如<code>λ α : α -&gt; α</code>甚至可看成<code>⋆ -&gt; ⋆</code>。当给<code>α</code>或者<code>⋆</code>赋予一个具体的类型时，这个表达式就成为了一个类型。原句“构造子对类型是多态的”意为给构造子中放入不同类型时它会变成不同类型。</p>
+</blockquote>
+<p>这是依赖类型论的一个主要特征：项包含大量信息，而且通常可以从上下文推断出一些信息。在Lean中，我们使用下划线<code>_</code>来指定系统应该自动填写信息。这就是所谓的“隐参数”。</p>
+<pre><code class="language-lean">#check Lst.cons _ 0 (Lst.nil _)
+
+def as : Lst Nat := Lst.nil _
+def bs : Lst Nat := Lst.cons _ 5 (Lst.nil _)
+
+#check Lst.append _ as bs
+</code></pre>
+<p>然而，敲这么多下划线仍然很无聊。当一个函数接受一个通常可以从上下文推断出来的参数时，Lean允许您指定该参数在默认情况下应该保持隐式。这是通过将参数放入花括号来实现的，如下所示:</p>
+<pre><code class="language-lean">universe u
+def Lst (α : Type u) : Type u := List α
+
+def Lst.cons {α : Type u} (a : α) (as : Lst α) : Lst α := List.cons a as
+def Lst.nil {α : Type u} : Lst α := List.nil
+def Lst.append {α : Type u} (as bs : Lst α) : Lst α := List.append as bs
+
+#check Lst.cons 0 Lst.nil
+
+def as : Lst Nat := Lst.nil
+def bs : Lst Nat := Lst.cons 5 Lst.nil
+
+#check Lst.append as bs
+</code></pre>
+<p>唯一改变的是变量声明中<code>α : Type u</code>周围的花括号。我们也可以在函数定义中使用这个技巧：</p>
+<pre><code class="language-lean">universe u
+def ident {α : Type u} (x : α) := x
+
+#check ident         -- ?m → ?m
+#check ident 1       -- Nat
+#check ident &quot;hello&quot; -- String
+#check @ident        -- {α : Type u_1} → α → α
+</code></pre>
+<p>这使得<code>ident</code>的第一个参数是隐式的。从符号上讲，这隐藏了类型的说明，使它看起来好像<code>ident</code>只是接受任何类型的参数。事实上，函数<code>id</code>在标准库中就是以这种方式定义的。我们在这里选择一个非传统的名字只是为了避免名字的冲突。</p>
+<p><code>variable</code>命令也可以用这种技巧来来把变量变成隐式的：</p>
+<pre><code class="language-lean">universe u
+
+section
+  variable {α : Type u}
+  variable (x : α)
+  def ident := x
+end
+
+#check ident
+#check ident 4
+#check ident &quot;hello&quot;
+</code></pre>
+<p>Lean有非常复杂的机制来实例化隐参数，我们将看到它们可以用来推断函数类型、谓词，甚至证明。实例化这些“洞”或“占位符”的过程通常被称为<em>阐释</em>（elaboration）。隐参数的存在意味着有时可能没有足够的信息来精确地确定表达式的含义。像<code>id</code>或<code>List.nil</code>这样的表达式被认为是“多态的”，因为它可以在不同的上下文中具有不同的含义。</p>
+<p>可以通过写<code>(e : T)</code>来指定表达式<code>e</code>的类型<code>T</code>。这就指导Lean的阐释器在试图解决隐式参数时使用值<code>T</code>作为<code>e</code>的类型。在下面的第二个例子中，这种机制用于指定表达式<code>id</code>和<code>List.nil</code>所需的类型:</p>
+<pre><code class="language-lean">#check List.nil               -- List ?m
+#check id                     -- ?m → ?m
+
+#check (List.nil : List Nat)  -- List Nat
+#check (id : Nat → Nat)       -- Nat → Nat
+</code></pre>
+<p>Lean中数字是重载的，但是当数字的类型不能被推断时，Lean默认假设它是一个自然数。因此，下面的前两个<code>#check</code>命令中的表达式以同样的方式进行了阐释，而第三个<code>#check</code>命令将<code>2</code>解释为整数。</p>
+<pre><code class="language-lean">#check 2            -- Nat
+#check (2 : Nat)    -- Nat
+#check (2 : Int)    -- Int
+</code></pre>
+<p>然而，有时我们可能会发现自己处于这样一种情况：我们已经声明了函数的参数是隐式的，但现在想显式地提供参数。如果<code>foo</code>是有隐参数的函数，符号<code>@foo</code>表示所有参数都是显式的该函数。</p>
+<pre><code class="language-lean">#check @id        -- {α : Type u_1} → α → α
+#check @id Nat    -- Nat → Nat
+#check @id Bool   -- Bool → Bool
+
+#check @id Nat 1     -- Nat
+#check @id Bool true -- Bool
+</code></pre>
+<p>第一个<code>#check</code>命令给出了标识符的类型<code>id</code>，没有插入任何占位符。而且，输出表明第一个参数是隐式的。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="setup.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="propositions_and_proofs.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="setup.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="propositions_and_proofs.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
