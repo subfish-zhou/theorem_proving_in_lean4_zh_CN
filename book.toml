@@ -1,0 +1,6 @@
+[book]
+authors = ["subfish-zhou"]
+language = "zh"
+multilingual = false
+src = "src"
+title = "Lean中文手册"
