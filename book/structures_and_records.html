@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>结构体和记录 - Lean中文手册</title>
+        <title>结构体和记录 - Lean中文教程</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title_page.html">在Lean 4中进行定理证明</a></li><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> 介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li></ol></li><li class="chapter-item expanded "><a href="dependent_type_theory.html"><strong aria-hidden="true">2.</strong> 依赖类型论</a></li><li class="chapter-item expanded "><a href="propositions_and_proofs.html"><strong aria-hidden="true">3.</strong> 命题和证明</a></li><li class="chapter-item expanded "><a href="quantifiers_and_equality.html"><strong aria-hidden="true">4.</strong> Quantifiers and Equality</a></li><li class="chapter-item expanded "><a href="tactics.html"><strong aria-hidden="true">5.</strong> Tactics</a></li><li class="chapter-item expanded "><a href="interacting_with_lean.html"><strong aria-hidden="true">6.</strong> Interacting with Lean</a></li><li class="chapter-item expanded "><a href="inductive_types.html"><strong aria-hidden="true">7.</strong> Inductive Types</a></li><li class="chapter-item expanded "><a href="induction_and_recursion.html"><strong aria-hidden="true">8.</strong> Induction and Recursion</a></li><li class="chapter-item expanded "><a href="structures_and_records.html" class="active"><strong aria-hidden="true">9.</strong> 结构体和记录</a></li><li class="chapter-item expanded "><a href="type_classes.html"><strong aria-hidden="true">10.</strong> Type Classes</a></li><li class="chapter-item expanded "><a href="conv.html"><strong aria-hidden="true">11.</strong> The Conversion Tactic Mode</a></li><li class="chapter-item expanded "><a href="axioms_and_computation.html"><strong aria-hidden="true">12.</strong> Axioms and Computation</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title_page.html">Lean 4定理证明</a></li><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> 介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li></ol></li><li class="chapter-item expanded "><a href="dependent_type_theory.html"><strong aria-hidden="true">2.</strong> 依赖类型论</a></li><li class="chapter-item expanded "><a href="propositions_and_proofs.html"><strong aria-hidden="true">3.</strong> 命题和证明</a></li><li class="chapter-item expanded "><a href="quantifiers_and_equality.html"><strong aria-hidden="true">4.</strong> Quantifiers and Equality</a></li><li class="chapter-item expanded "><a href="tactics.html"><strong aria-hidden="true">5.</strong> Tactics</a></li><li class="chapter-item expanded "><a href="interacting_with_lean.html"><strong aria-hidden="true">6.</strong> Interacting with Lean</a></li><li class="chapter-item expanded "><a href="inductive_types.html"><strong aria-hidden="true">7.</strong> Inductive Types</a></li><li class="chapter-item expanded "><a href="induction_and_recursion.html"><strong aria-hidden="true">8.</strong> Induction and Recursion</a></li><li class="chapter-item expanded "><a href="structures_and_records.html" class="active"><strong aria-hidden="true">9.</strong> 结构体和记录</a></li><li class="chapter-item expanded "><a href="type_classes.html"><strong aria-hidden="true">10.</strong> Type Classes</a></li><li class="chapter-item expanded "><a href="conv.html"><strong aria-hidden="true">11.</strong> The Conversion Tactic Mode</a></li><li class="chapter-item expanded "><a href="axioms_and_computation.html"><strong aria-hidden="true">12.</strong> Axioms and Computation</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Lean中文手册</h1>
+                    <h1 class="menu-title">Lean中文教程</h1>
 
                     <div class="right-buttons">
                         
@@ -135,6 +135,10 @@
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         
+                        
+                        <a href="https://github.com/subfish-zhou/theorem_proving_in_lean4_zh_CN" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
                         
                     </div>
                 </div>
@@ -164,8 +168,8 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#结构体和记录" id="结构体和记录">结构体和记录</a></h1>
-<p>我们已经看到Lean的基本系统包括归纳类型。此外，显然仅基于类型宇宙、依赖的箭头类型和归纳类型，就有可能构建一个坚实的数学大厦；其他的一切都是由此而来。Lean标准库包含许多归纳类型的实例(例如，<code>Nat</code>，<code>Prod</code>，<code>List</code>)，甚至逻辑连接词也是使用归纳类型定义的。</p>
-<p>回忆一下，只包含一个构造子的非递归归纳类型被称为<em>结构体</em>（structure）或<em>记录</em>（record）。乘积类型是一种结构体，依赖乘积(Sigma)类型也是如此。一般来说，每当我们定义一个结构体<code>S</code>时，我们通常定义<em>投影</em>（projection）函数来“析构”（destruct）<code>S</code>的每个实例并检索存储在其字段中的值。<code>prod.pr1</code>和<code>prod.pr2</code>，分别返回乘积对中的第一个和第二个元素的函数，就是这种投影的例子。</p>
+<p>我们已经看到Lean的基本系统包括递归类型。此外，显然仅基于类型宇宙、依赖箭头类型和递归类型，就有可能构建一个坚实的数学大厦；其他的一切都是由此而来。Lean标准库包含许多递归类型的实例(例如，<code>Nat</code>，<code>Prod</code>，<code>List</code>)，甚至逻辑连接词也是使用递归类型定义的。</p>
+<p>回忆一下，只包含一个构造子的非递归递归类型被称为<em>结构体</em>（structure）或<em>记录</em>（record）。乘积类型是一种结构体，依赖乘积(Sigma)类型也是如此。一般来说，每当我们定义一个结构体<code>S</code>时，我们通常定义<em>投影</em>（projection）函数来“析构”（destruct）<code>S</code>的每个实例并检索存储在其字段中的值。<code>prod.pr1</code>和<code>prod.pr2</code>，分别返回乘积对中的第一个和第二个元素的函数，就是这种投影的例子。</p>
 <p>在编写程序或形式化数学时，定义包含许多字段的结构体是很常见的。Lean中可用<code>structure</code>命令实现此过程。当我们使用这个命令定义一个结构体时，Lean会自动生成所有的投影函数。<code>structure</code>命令还允许我们根据以前定义的结构体定义新的结构体。此外，Lean为定义给定结构体的实例提供了方便的符号。</p>
 <h2><a class="header" href="#声明结构体" id="声明结构体">声明结构体</a></h2>
 <p>结构体命令本质上是定义归纳数据类型的“前端”。每个<code>structure</code>声明都会引入一个同名的命名空间。一般形式如下:</p>
@@ -177,9 +181,9 @@
   mk :: (x : α) (y : α)
 </code></pre>
 <p>类型<code>Point</code>的值是使用<code>Point.mk a b</code>创建的，并且点<code>p</code>的字段可以使用<code>Point.x p</code>和<code>Point.y p</code>。结构体命令还生成有用的递归子和定理。下面是为上述声明生成的一些结构体方法。</p>
-<pre><code class="language-lean"># structure Point (α : Type u) where
-#  mk :: (x : α) (y : α)
-#check Point       -- a Type
+<pre><code class="language-lean"><span class="boring">structure Point (α : Type u) where
+</span><span class="boring"> mk :: (x : α) (y : α)
+</span>#check Point       -- a Type
 #check @Point.rec  -- the eliminator
 #check @Point.mk   -- the constructor
 #check @Point.x    -- a projection

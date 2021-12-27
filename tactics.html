@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Tactics - Lean中文手册</title>
+        <title>Tactics - Lean中文教程</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title_page.html">在Lean 4中进行定理证明</a></li><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> 介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li></ol></li><li class="chapter-item expanded "><a href="dependent_type_theory.html"><strong aria-hidden="true">2.</strong> 依赖类型论</a></li><li class="chapter-item expanded "><a href="propositions_and_proofs.html"><strong aria-hidden="true">3.</strong> 命题和证明</a></li><li class="chapter-item expanded "><a href="quantifiers_and_equality.html"><strong aria-hidden="true">4.</strong> Quantifiers and Equality</a></li><li class="chapter-item expanded "><a href="tactics.html" class="active"><strong aria-hidden="true">5.</strong> Tactics</a></li><li class="chapter-item expanded "><a href="interacting_with_lean.html"><strong aria-hidden="true">6.</strong> Interacting with Lean</a></li><li class="chapter-item expanded "><a href="inductive_types.html"><strong aria-hidden="true">7.</strong> Inductive Types</a></li><li class="chapter-item expanded "><a href="induction_and_recursion.html"><strong aria-hidden="true">8.</strong> Induction and Recursion</a></li><li class="chapter-item expanded "><a href="structures_and_records.html"><strong aria-hidden="true">9.</strong> 结构体和记录</a></li><li class="chapter-item expanded "><a href="type_classes.html"><strong aria-hidden="true">10.</strong> Type Classes</a></li><li class="chapter-item expanded "><a href="conv.html"><strong aria-hidden="true">11.</strong> The Conversion Tactic Mode</a></li><li class="chapter-item expanded "><a href="axioms_and_computation.html"><strong aria-hidden="true">12.</strong> Axioms and Computation</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title_page.html">Lean 4定理证明</a></li><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> 介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li></ol></li><li class="chapter-item expanded "><a href="dependent_type_theory.html"><strong aria-hidden="true">2.</strong> 依赖类型论</a></li><li class="chapter-item expanded "><a href="propositions_and_proofs.html"><strong aria-hidden="true">3.</strong> 命题和证明</a></li><li class="chapter-item expanded "><a href="quantifiers_and_equality.html"><strong aria-hidden="true">4.</strong> Quantifiers and Equality</a></li><li class="chapter-item expanded "><a href="tactics.html" class="active"><strong aria-hidden="true">5.</strong> Tactics</a></li><li class="chapter-item expanded "><a href="interacting_with_lean.html"><strong aria-hidden="true">6.</strong> Interacting with Lean</a></li><li class="chapter-item expanded "><a href="inductive_types.html"><strong aria-hidden="true">7.</strong> Inductive Types</a></li><li class="chapter-item expanded "><a href="induction_and_recursion.html"><strong aria-hidden="true">8.</strong> Induction and Recursion</a></li><li class="chapter-item expanded "><a href="structures_and_records.html"><strong aria-hidden="true">9.</strong> 结构体和记录</a></li><li class="chapter-item expanded "><a href="type_classes.html"><strong aria-hidden="true">10.</strong> Type Classes</a></li><li class="chapter-item expanded "><a href="conv.html"><strong aria-hidden="true">11.</strong> The Conversion Tactic Mode</a></li><li class="chapter-item expanded "><a href="axioms_and_computation.html"><strong aria-hidden="true">12.</strong> Axioms and Computation</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Lean中文手册</h1>
+                    <h1 class="menu-title">Lean中文教程</h1>
 
                     <div class="right-buttons">
                         
@@ -135,6 +135,10 @@
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         
+                        
+                        <a href="https://github.com/subfish-zhou/theorem_proving_in_lean4_zh_CN" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
                         
                     </div>
                 </div>
@@ -247,13 +251,13 @@ elaborator takes the expected type, given by the target of the goal,
 into account when processing the expression that is being applied. In
 this case, however, <code>apply</code> would work just as well.</p>
 <p>You can see the resulting proof term with the <code>#print</code> command:</p>
-<pre><code class="language-lean"># theorem test (p q : Prop) (hp : p) (hq : q) : p ∧ q ∧ p := by
-#  apply And.intro
-#  exact hp
-#  apply And.intro
-#  exact hq
-#  exact hp
-#print test
+<pre><code class="language-lean"><span class="boring">theorem test (p q : Prop) (hp : p) (hq : q) : p ∧ q ∧ p := by
+</span><span class="boring"> apply And.intro
+</span><span class="boring"> exact hp
+</span><span class="boring"> apply And.intro
+</span><span class="boring"> exact hq
+</span><span class="boring"> exact hp
+</span>#print test
 </code></pre>
 <p>You can write a tactic script incrementally. In VS Code, you can open
 a window to display messages by pressing <code>Ctrl-Shift-Enter</code>, and
@@ -272,10 +276,10 @@ proof:</p>
   exact And.intro hq hp
 </code></pre>
 <p>Unsurprisingly, it produces exactly the same proof term.</p>
-<pre><code class="language-lean"># theorem test (p q : Prop) (hp : p) (hq : q) : p ∧ q ∧ p := by
-#  apply And.intro hp
-#  exact And.intro hq hp
-#print test
+<pre><code class="language-lean"><span class="boring">theorem test (p q : Prop) (hp : p) (hq : q) : p ∧ q ∧ p := by
+</span><span class="boring"> apply And.intro hp
+</span><span class="boring"> exact And.intro hq hp
+</span>#print test
 </code></pre>
 <p>Multiple tactic applications can be written in a single line by concatenating with a semicolon.</p>
 <pre><code class="language-lean">theorem test (p q : Prop) (hp : p) (hq : q) : p ∧ q ∧ p := by
@@ -1101,9 +1105,9 @@ and the expressions are ordered in a canonical (though somewhat
 arbitrary) way. Two expressions that are equivalent up to
 associativity and commutativity are then rewritten to the same
 canonical form.</p>
-<pre><code class="language-lean"># attribute [local simp] Nat.mul_comm Nat.mul_assoc Nat.mul_left_comm
-# attribute [local simp] Nat.add_assoc Nat.add_comm Nat.add_left_comm
-example (w x y z : Nat) (p : Nat → Prop)
+<pre><code class="language-lean"><span class="boring">attribute [local simp] Nat.mul_comm Nat.mul_assoc Nat.mul_left_comm
+</span><span class="boring">attribute [local simp] Nat.add_assoc Nat.add_comm Nat.add_left_comm
+</span>example (w x y z : Nat) (p : Nat → Prop)
         : x * y + z * w  * x = x * w * z + y * x := by
   simp
 
@@ -1165,19 +1169,19 @@ reversal:</p>
 </code></pre>
 <p>Then for any list <code>xs</code>, <code>reverse (mk_symm xs)</code> is equal to <code>mk_symm xs</code>,
 which can easily be proved by unfolding the definition:</p>
-<pre><code class="language-lean"># def mk_symm (xs : List α) :=
-#  xs ++ xs.reverse
-theorem reverse_mk_symm (xs : List α)
+<pre><code class="language-lean"><span class="boring">def mk_symm (xs : List α) :=
+</span><span class="boring"> xs ++ xs.reverse
+</span>theorem reverse_mk_symm (xs : List α)
         : (mk_symm xs).reverse = mk_symm xs := by
   simp [mk_symm]
 </code></pre>
 <p>We can now use this theorem to prove new results:</p>
-<pre><code class="language-lean"># def mk_symm (xs : List α) :=
-#  xs ++ xs.reverse
-# theorem reverse_mk_symm (xs : List α)
-#        : (mk_symm xs).reverse = mk_symm xs := by
-#  simp [mk_symm]
-example (xs ys : List Nat)
+<pre><code class="language-lean"><span class="boring">def mk_symm (xs : List α) :=
+</span><span class="boring"> xs ++ xs.reverse
+</span><span class="boring">theorem reverse_mk_symm (xs : List α)
+</span><span class="boring">       : (mk_symm xs).reverse = mk_symm xs := by
+</span><span class="boring"> simp [mk_symm]
+</span>example (xs ys : List Nat)
         : (xs ++ mk_symm ys).reverse = mk_symm ys ++ xs.reverse := by
   simp [reverse_mk_symm]
 
@@ -1190,9 +1194,9 @@ example (xs ys : List Nat) (p : List Nat → Prop)
 it would be nice if users did not have to invoke it explicitly. You can
 achieve that by marking it as a simplification rule when the theorem
 is defined:</p>
-<pre><code class="language-lean"># def mk_symm (xs : List α) :=
-#  xs ++ xs.reverse
-@[simp] theorem reverse_mk_symm (xs : List α)
+<pre><code class="language-lean"><span class="boring">def mk_symm (xs : List α) :=
+</span><span class="boring"> xs ++ xs.reverse
+</span>@[simp] theorem reverse_mk_symm (xs : List α)
         : (mk_symm xs).reverse = mk_symm xs := by
   simp [mk_symm]
 
@@ -1207,9 +1211,9 @@ example (xs ys : List Nat) (p : List Nat → Prop)
 </code></pre>
 <p>The notation <code>@[simp]</code> declares <code>reverse_mk_symm</code> to have the
 <code>[simp]</code> attribute, and can be spelled out more explicitly:</p>
-<pre><code class="language-lean"># def mk_symm (xs : List α) :=
-#  xs ++ xs.reverse
-theorem reverse_mk_symm (xs : List α)
+<pre><code class="language-lean"><span class="boring">def mk_symm (xs : List α) :=
+</span><span class="boring"> xs ++ xs.reverse
+</span>theorem reverse_mk_symm (xs : List α)
         : (mk_symm xs).reverse = mk_symm xs := by
   simp [mk_symm]
 
@@ -1225,9 +1229,9 @@ example (xs ys : List Nat) (p : List Nat → Prop)
   simp at h; assumption
 </code></pre>
 <p>The attribute can also be applied any time after the theorem is declared:</p>
-<pre><code class="language-lean"># def mk_symm (xs : List α) :=
-#  xs ++ xs.reverse
-theorem reverse_mk_symm (xs : List α)
+<pre><code class="language-lean"><span class="boring">def mk_symm (xs : List α) :=
+</span><span class="boring"> xs ++ xs.reverse
+</span>theorem reverse_mk_symm (xs : List α)
         : (mk_symm xs).reverse = mk_symm xs := by
   simp [mk_symm]
 
@@ -1247,9 +1251,9 @@ remove it; it persists in any file that imports the one where the
 attribute is assigned. As we will discuss further in
 <a href="TBD">Attributes</a>, one can limit the scope of an attribute to the
 current file or section using the <code>local</code> modifier:</p>
-<pre><code class="language-lean"># def mk_symm (xs : List α) :=
-#  xs ++ xs.reverse
-theorem reverse_mk_symm (xs : List α)
+<pre><code class="language-lean"><span class="boring">def mk_symm (xs : List α) :=
+</span><span class="boring"> xs ++ xs.reverse
+</span>theorem reverse_mk_symm (xs : List α)
         : (mk_symm xs).reverse = mk_symm xs := by
   simp [mk_symm]
 

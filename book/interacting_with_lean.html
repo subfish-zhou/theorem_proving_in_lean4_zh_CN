@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Interacting with Lean - Lean中文手册</title>
+        <title>Interacting with Lean - Lean中文教程</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title_page.html">在Lean 4中进行定理证明</a></li><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> 介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li></ol></li><li class="chapter-item expanded "><a href="dependent_type_theory.html"><strong aria-hidden="true">2.</strong> 依赖类型论</a></li><li class="chapter-item expanded "><a href="propositions_and_proofs.html"><strong aria-hidden="true">3.</strong> 命题和证明</a></li><li class="chapter-item expanded "><a href="quantifiers_and_equality.html"><strong aria-hidden="true">4.</strong> Quantifiers and Equality</a></li><li class="chapter-item expanded "><a href="tactics.html"><strong aria-hidden="true">5.</strong> Tactics</a></li><li class="chapter-item expanded "><a href="interacting_with_lean.html" class="active"><strong aria-hidden="true">6.</strong> Interacting with Lean</a></li><li class="chapter-item expanded "><a href="inductive_types.html"><strong aria-hidden="true">7.</strong> Inductive Types</a></li><li class="chapter-item expanded "><a href="induction_and_recursion.html"><strong aria-hidden="true">8.</strong> Induction and Recursion</a></li><li class="chapter-item expanded "><a href="structures_and_records.html"><strong aria-hidden="true">9.</strong> 结构体和记录</a></li><li class="chapter-item expanded "><a href="type_classes.html"><strong aria-hidden="true">10.</strong> Type Classes</a></li><li class="chapter-item expanded "><a href="conv.html"><strong aria-hidden="true">11.</strong> The Conversion Tactic Mode</a></li><li class="chapter-item expanded "><a href="axioms_and_computation.html"><strong aria-hidden="true">12.</strong> Axioms and Computation</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title_page.html">Lean 4定理证明</a></li><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> 介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li></ol></li><li class="chapter-item expanded "><a href="dependent_type_theory.html"><strong aria-hidden="true">2.</strong> 依赖类型论</a></li><li class="chapter-item expanded "><a href="propositions_and_proofs.html"><strong aria-hidden="true">3.</strong> 命题和证明</a></li><li class="chapter-item expanded "><a href="quantifiers_and_equality.html"><strong aria-hidden="true">4.</strong> Quantifiers and Equality</a></li><li class="chapter-item expanded "><a href="tactics.html"><strong aria-hidden="true">5.</strong> Tactics</a></li><li class="chapter-item expanded "><a href="interacting_with_lean.html" class="active"><strong aria-hidden="true">6.</strong> Interacting with Lean</a></li><li class="chapter-item expanded "><a href="inductive_types.html"><strong aria-hidden="true">7.</strong> Inductive Types</a></li><li class="chapter-item expanded "><a href="induction_and_recursion.html"><strong aria-hidden="true">8.</strong> Induction and Recursion</a></li><li class="chapter-item expanded "><a href="structures_and_records.html"><strong aria-hidden="true">9.</strong> 结构体和记录</a></li><li class="chapter-item expanded "><a href="type_classes.html"><strong aria-hidden="true">10.</strong> Type Classes</a></li><li class="chapter-item expanded "><a href="conv.html"><strong aria-hidden="true">11.</strong> The Conversion Tactic Mode</a></li><li class="chapter-item expanded "><a href="axioms_and_computation.html"><strong aria-hidden="true">12.</strong> Axioms and Computation</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Lean中文手册</h1>
+                    <h1 class="menu-title">Lean中文教程</h1>
 
                     <div class="right-buttons">
                         
@@ -135,6 +135,10 @@
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         
+                        
+                        <a href="https://github.com/subfish-zhou/theorem_proving_in_lean4_zh_CN" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
                         
                     </div>
                 </div>
@@ -347,9 +351,9 @@ example : isPrefix [1, 2, 3] [1, 2, 3] := by
 </code></pre>
 <p>The simplifier then proves <code>isPrefix [1, 2, 3] [1, 2, 3]</code> by rewriting it to <code>True</code>.</p>
 <p>One can also assign the attribute any time after the definition takes place:</p>
-<pre><code class="language-lean"># def isPrefix (l₁ : List α) (l₂ : List α) : Prop :=
-#  ∃ t, l₁ ++ t = l₂
-theorem List.isPrefix_self (as : List α) : isPrefix as as :=
+<pre><code class="language-lean"><span class="boring">def isPrefix (l₁ : List α) (l₂ : List α) : Prop :=
+</span><span class="boring"> ∃ t, l₁ ++ t = l₂
+</span>theorem List.isPrefix_self (as : List α) : isPrefix as as :=
   ⟨[], by simp⟩
 
 attribute [simp] List.isPrefix_self
@@ -357,9 +361,9 @@ attribute [simp] List.isPrefix_self
 <p>In all these cases, the attribute remains in effect in any file that
 imports the one in which the declaration occurs. Adding the <code>local</code>
 modifier restricts the scope:</p>
-<pre><code class="language-lean"># def isPrefix (l₁ : List α) (l₂ : List α) : Prop :=
-#  ∃ t, l₁ ++ t = l₂
-section
+<pre><code class="language-lean"><span class="boring">def isPrefix (l₁ : List α) (l₂ : List α) : Prop :=
+</span><span class="boring"> ∃ t, l₁ ++ t = l₂
+</span>section
 
 theorem List.isPrefix_self (as : List α) : isPrefix as as :=
   ⟨[], by simp⟩
@@ -389,9 +393,9 @@ theorem List.isPrefix_self (as : List α) : as ≤ as :=
   ⟨[], by simp⟩
 </code></pre>
 <p>That assignment can also be made local:</p>
-<pre><code class="language-lean"># def isPrefix (l₁ : List α) (l₂ : List α) : Prop :=
-#   ∃ t, l₁ ++ t = l₂
-def instLe : LE (List α) :=
+<pre><code class="language-lean"><span class="boring">def isPrefix (l₁ : List α) (l₂ : List α) : Prop :=
+</span><span class="boring">  ∃ t, l₁ ++ t = l₂
+</span>def instLe : LE (List α) :=
   { le := isPrefix }
 
 section
@@ -544,8 +548,8 @@ overloading existing) prefix, infix, and postfix operators.</p>
 infix:50    &quot; = &quot; =&gt; Eq         -- non-associative
 infixr:80   &quot; ^ &quot; =&gt; HPow.hPow  -- right-associative
 prefix:100  &quot;-&quot;   =&gt; Neg.neg
-# set_option quotPrecheck false
-postfix:max &quot;⁻¹&quot;  =&gt; Inv.inv
+<span class="boring">set_option quotPrecheck false
+</span>postfix:max &quot;⁻¹&quot;  =&gt; Inv.inv
 </code></pre>
 <p>After the initial command name describing the operator kind (its
 &quot;fixity&quot;), we give the <em>parsing precedence</em> of the operator preceded
@@ -559,8 +563,8 @@ can make this more precise by looking at the commands the above unfold to:</p>
 notation:50 lhs:51 &quot; = &quot; rhs:51 =&gt; Eq lhs rhs
 notation:80 lhs:81 &quot; ^ &quot; rhs:80 =&gt; HPow.hPow lhs rhs
 notation:100 &quot;-&quot; arg:100 =&gt; Neg.neg arg
-# set_option quotPrecheck false
-notation:1024 arg:1024 &quot;⁻¹&quot; =&gt; Inv.inv arg  -- `max` is a shorthand for precedence 1024
+<span class="boring">set_option quotPrecheck false
+</span>notation:1024 arg:1024 &quot;⁻¹&quot; =&gt; Inv.inv arg  -- `max` is a shorthand for precedence 1024
 </code></pre>
 <p>It turns out that all commands from the first code block are in fact
 command <em>macros</em> translating to the more general <code>notation</code> command.
@@ -576,8 +580,8 @@ has precedence one greater than the notation itself.  In contrast,
 <code>infixr</code> reuses the notation's precedence for the right-hand side
 operand, so <code>a ^ b ^ c</code> <em>can</em> be parsed as <code>a ^ (b ^ c)</code>.  Note that
 if we used <code>notation</code> directly to introduce an infix notation like</p>
-<pre><code class="language-lean"># set_option quotPrecheck false
-notation:65 lhs:65 &quot; ~ &quot; rhs:65 =&gt; wobble lhs rhs
+<pre><code class="language-lean"><span class="boring">set_option quotPrecheck false
+</span>notation:65 lhs:65 &quot; ~ &quot; rhs:65 =&gt; wobble lhs rhs
 </code></pre>
 <p>where the precedences do not sufficiently determine associativity,
 Lean's parser will default to right associativity.  More precisely,
@@ -588,8 +592,8 @@ precedence allows), not stopping after <code>b</code> but parsing <code>~ c</cod
 Thus the term is equivalent to <code>a ~ (b ~ c)</code>.</p>
 <p>As mentioned above, the <code>notation</code> command allows us to define
 arbitrary <em>mixfix</em> syntax freely mixing tokens and placeholders.</p>
-<pre><code class="language-lean"># set_option quotPrecheck false
-notation:max &quot;(&quot; e &quot;)&quot; =&gt; e
+<pre><code class="language-lean"><span class="boring">set_option quotPrecheck false
+</span>notation:max &quot;(&quot; e &quot;)&quot; =&gt; e
 notation:10 Γ &quot; ⊢ &quot; e &quot; : &quot; τ =&gt; Typing Γ e τ
 </code></pre>
 <p>Placeholders without precedence default to <code>0</code>, i.e. they accept notations of any precedence in their place.
@@ -820,16 +824,16 @@ the command <code>set_option autoBoundImplicitLocal false</code>.</p>
 It is often used when we the expected type is a function type with implicit arguments,
 and we have a constant (<code>reader_t.pure</code> in the example) which also takes implicit arguments. In Lean 4, the elaborator automatically introduces lambdas
 for consuming implicit arguments. We are still exploring this feature and analyzing its impact, but the experience so far has been very positive. Here is the example from the link above using Lean 4 implicit lambdas.</p>
-<pre><code class="language-lean"># variable (ρ : Type) (m : Type → Type) [Monad m]
-instance : Monad (ReaderT ρ m) where
+<pre><code class="language-lean"><span class="boring">variable (ρ : Type) (m : Type → Type) [Monad m]
+</span>instance : Monad (ReaderT ρ m) where
   pure := ReaderT.pure
   bind := ReaderT.bind
 </code></pre>
 <p>Users can disable the implicit lambda feature by using <code>@</code> or writing
 a lambda expression with <code>{}</code> or <code>[]</code> binder annotations.  Here are
 few examples</p>
-<pre><code class="language-lean"># namespace ex2
-def id1 : {α : Type} → α → α :=
+<pre><code class="language-lean"><span class="boring">namespace ex2
+</span>def id1 : {α : Type} → α → α :=
   fun x =&gt; x
 
 def listId : List ({α : Type} → α → α) :=
@@ -850,15 +854,15 @@ def id4 : {α : Type} → α → α :=
 -- because we used the binder annotation `{...}`
 def id5 : {α : Type} → α → α :=
   fun {α} x =&gt; id1 x
-# end ex2
-</code></pre>
+<span class="boring">end ex2
+</span></code></pre>
 <h2><a class="header" href="#sugar-for-simple-functions" id="sugar-for-simple-functions">Sugar for Simple Functions</a></h2>
 <p>In Lean 3, we can create simple functions from infix operators by
 using parentheses. For example, <code>(+1)</code> is sugar for <code>fun x, x + 1</code>. In
 Lean 4, we generalize this notation using <code>·</code> As a placeholder. Here
 are a few examples:</p>
-<pre><code class="language-lean"># namespace ex3
-#check (· + 1)
+<pre><code class="language-lean"><span class="boring">namespace ex3
+</span>#check (· + 1)
 -- fun a =&gt; a + 1
 #check (2 - ·)
 -- fun a =&gt; 2 - a
@@ -873,8 +877,8 @@ def f (x y z : Nat) :=
 
 #eval [(1, 2), (3, 4), (5, 6)].map (·.1)
 -- [1, 3, 5]
-# end ex3
-</code></pre>
+<span class="boring">end ex3
+</span></code></pre>
 <p>As in Lean 3, the notation is activated using parentheses, and the lambda abstraction is created by collecting the nested <code>·</code>s.
 The collection is interrupted by nested parentheses. In the following example, two different lambda expressions are created.</p>
 <pre><code class="language-lean">#check (Prod.mk · (· + 1))

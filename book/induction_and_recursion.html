@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Induction and Recursion - Lean中文手册</title>
+        <title>Induction and Recursion - Lean中文教程</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title_page.html">在Lean 4中进行定理证明</a></li><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> 介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li></ol></li><li class="chapter-item expanded "><a href="dependent_type_theory.html"><strong aria-hidden="true">2.</strong> 依赖类型论</a></li><li class="chapter-item expanded "><a href="propositions_and_proofs.html"><strong aria-hidden="true">3.</strong> 命题和证明</a></li><li class="chapter-item expanded "><a href="quantifiers_and_equality.html"><strong aria-hidden="true">4.</strong> Quantifiers and Equality</a></li><li class="chapter-item expanded "><a href="tactics.html"><strong aria-hidden="true">5.</strong> Tactics</a></li><li class="chapter-item expanded "><a href="interacting_with_lean.html"><strong aria-hidden="true">6.</strong> Interacting with Lean</a></li><li class="chapter-item expanded "><a href="inductive_types.html"><strong aria-hidden="true">7.</strong> Inductive Types</a></li><li class="chapter-item expanded "><a href="induction_and_recursion.html" class="active"><strong aria-hidden="true">8.</strong> Induction and Recursion</a></li><li class="chapter-item expanded "><a href="structures_and_records.html"><strong aria-hidden="true">9.</strong> 结构体和记录</a></li><li class="chapter-item expanded "><a href="type_classes.html"><strong aria-hidden="true">10.</strong> Type Classes</a></li><li class="chapter-item expanded "><a href="conv.html"><strong aria-hidden="true">11.</strong> The Conversion Tactic Mode</a></li><li class="chapter-item expanded "><a href="axioms_and_computation.html"><strong aria-hidden="true">12.</strong> Axioms and Computation</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title_page.html">Lean 4定理证明</a></li><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> 介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li></ol></li><li class="chapter-item expanded "><a href="dependent_type_theory.html"><strong aria-hidden="true">2.</strong> 依赖类型论</a></li><li class="chapter-item expanded "><a href="propositions_and_proofs.html"><strong aria-hidden="true">3.</strong> 命题和证明</a></li><li class="chapter-item expanded "><a href="quantifiers_and_equality.html"><strong aria-hidden="true">4.</strong> Quantifiers and Equality</a></li><li class="chapter-item expanded "><a href="tactics.html"><strong aria-hidden="true">5.</strong> Tactics</a></li><li class="chapter-item expanded "><a href="interacting_with_lean.html"><strong aria-hidden="true">6.</strong> Interacting with Lean</a></li><li class="chapter-item expanded "><a href="inductive_types.html"><strong aria-hidden="true">7.</strong> Inductive Types</a></li><li class="chapter-item expanded "><a href="induction_and_recursion.html" class="active"><strong aria-hidden="true">8.</strong> Induction and Recursion</a></li><li class="chapter-item expanded "><a href="structures_and_records.html"><strong aria-hidden="true">9.</strong> 结构体和记录</a></li><li class="chapter-item expanded "><a href="type_classes.html"><strong aria-hidden="true">10.</strong> Type Classes</a></li><li class="chapter-item expanded "><a href="conv.html"><strong aria-hidden="true">11.</strong> The Conversion Tactic Mode</a></li><li class="chapter-item expanded "><a href="axioms_and_computation.html"><strong aria-hidden="true">12.</strong> Axioms and Computation</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Lean中文手册</h1>
+                    <h1 class="menu-title">Lean中文教程</h1>
 
                     <div class="right-buttons">
                         
@@ -135,6 +135,10 @@
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         
+                        
+                        <a href="https://github.com/subfish-zhou/theorem_proving_in_lean4_zh_CN" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
                         
                     </div>
                 </div>
@@ -202,14 +206,14 @@ def isZero : Nat → Bool
   | succ x =&gt; false
 </code></pre>
 <p>The equations used to define these function hold definitionally:</p>
-<pre><code class="language-lean"># open Nat
-# def sub1 : Nat → Nat
-#   | zero   =&gt; zero
-#   | succ x =&gt; x
-# def isZero : Nat → Bool
-#   | zero   =&gt; true
-#   | succ x =&gt; false
-example : sub1 0 = 0 := rfl
+<pre><code class="language-lean"><span class="boring">open Nat
+</span><span class="boring">def sub1 : Nat → Nat
+</span><span class="boring">  | zero   =&gt; zero
+</span><span class="boring">  | succ x =&gt; x
+</span><span class="boring">def isZero : Nat → Bool
+</span><span class="boring">  | zero   =&gt; true
+</span><span class="boring">  | succ x =&gt; false
+</span>example : sub1 0 = 0 := rfl
 example (x : Nat) : sub1 (succ x) = x := rfl
 
 example : isZero 0 = true := rfl
@@ -244,16 +248,16 @@ def bar : Option Nat → Nat
 </code></pre>
 <p>Here we use it not only to define a function, but also to carry out a
 proof by cases:</p>
-<pre><code class="language-lean"># namespace Hidden
-def not : Bool → Bool
+<pre><code class="language-lean"><span class="boring">namespace Hidden
+</span>def not : Bool → Bool
   | true  =&gt; false
   | false =&gt; true
 
 theorem not_not : ∀ (b : Bool), not (not b) = b
   | true  =&gt; rfl  -- proof that not (not true) = true
   | false =&gt; rfl  -- proof that not (not false) = false
-# end Hidden
-</code></pre>
+<span class="boring">end Hidden
+</span></code></pre>
 <p>Pattern matching can also be used to destruct inductively defined propositions:</p>
 <pre><code class="language-lean">example (p q : Prop) : p ∧ q → q ∧ p
   | And.intro h₁ h₂ =&gt; And.intro h₂ h₁
@@ -278,11 +282,11 @@ the necessary case splits from the patterns that are presented to it,
 and raises an error if the patterns fail to exhaust the cases. Once
 again, we can use arithmetic notation, as in the version below. In
 either case, the defining equations hold definitionally.</p>
-<pre><code class="language-lean"># def sub2 : Nat → Nat
-#   | 0   =&gt; 0
-#   | 1   =&gt; 0
-#   | x+2 =&gt; x
-example : sub2 0 = 0 := rfl
+<pre><code class="language-lean"><span class="boring">def sub2 : Nat → Nat
+</span><span class="boring">  | 0   =&gt; 0
+</span><span class="boring">  | 1   =&gt; 0
+</span><span class="boring">  | x+2 =&gt; x
+</span>example : sub2 0 = 0 := rfl
 example : sub2 1 = 0 := rfl
 example : sub2 (x+2) = x := rfl
 
@@ -330,8 +334,8 @@ function of two arguments:</p>
 <p>In each of the following examples, splitting occurs on only the first
 argument, even though the others are included among the list of
 patterns.</p>
-<pre><code class="language-lean"># namespace Hidden
-def and : Bool → Bool → Bool
+<pre><code class="language-lean"><span class="boring">namespace Hidden
+</span>def and : Bool → Bool → Bool
   | true,  a =&gt; a
   | false, _ =&gt; false
 
@@ -342,8 +346,8 @@ def or : Bool → Bool → Bool
 def cond : Bool → α → α → α
   | true,  x, y =&gt; x
   | false, x, y =&gt; y
-# end Hidden
-</code></pre>
+<span class="boring">end Hidden
+</span></code></pre>
 <p>Notice also that, when the value of an argument is not needed in the
 definition, you can use an underscore instead. This underscore is
 known as a <em>wildcard pattern</em>, or an <em>anonymous variable</em>. In contrast
@@ -390,11 +394,11 @@ pair of arguments <code>0 0</code> matches all three cases. But Lean handles
 the ambiguity by using the first applicable equation, so in this example
 the net result is the same. In particular, the following equations hold
 definitionally:</p>
-<pre><code class="language-lean"># def foo : Nat → Nat → Nat
-#   | 0, n =&gt; 0
-#   | m, 0 =&gt; 1
-#   | m, n =&gt; 2
-example : foo 0     0     = 0 := rfl
+<pre><code class="language-lean"><span class="boring">def foo : Nat → Nat → Nat
+</span><span class="boring">  | 0, n =&gt; 0
+</span><span class="boring">  | m, 0 =&gt; 1
+</span><span class="boring">  | m, n =&gt; 2
+</span>example : foo 0     0     = 0 := rfl
 example : foo 0     (n+1) = 0 := rfl
 example : foo (m+1) 0     = 1 := rfl
 example : foo (m+1) (n+1) = 2 := rfl
@@ -531,10 +535,10 @@ used directly by the user; rather, the <code>simp</code> tactic
 is configured to use them when necessary. Thus both of the following
 proofs of <code>zero_add</code> work:</p>
 <pre><code class="language-lean">open Nat
-# def add : Nat → Nat → Nat
-#   | m, zero   =&gt; m
-#   | m, succ n =&gt; succ (add m n)
-theorem zero_add : ∀ n, add zero n = n
+<span class="boring">def add : Nat → Nat → Nat
+</span><span class="boring">  | m, zero   =&gt; m
+</span><span class="boring">  | m, succ n =&gt; succ (add m n)
+</span>theorem zero_add : ∀ n, add zero n = n
   | zero   =&gt; by simp [add]
   | succ n =&gt; by simp [add, zero_add]
 </code></pre>
@@ -957,11 +961,11 @@ end Vector
 is going on: if <code>v</code> has type <code>Vector α (succ n)</code>, it <em>can't</em> be
 nil, but it is not clear how to tell that to <code>casesOn</code>.</p>
 <p>One solution is to define an auxiliary function:</p>
-<pre><code class="language-lean"># inductive Vector (α : Type u) : Nat → Type u
-#   | nil  : Vector α 0
-#   | cons : α → {n : Nat} → Vector α n → Vector α (n+1)
-# namespace Vector
-def tailAux (v : Vector α m) : m = n + 1 → Vector α n :=
+<pre><code class="language-lean"><span class="boring">inductive Vector (α : Type u) : Nat → Type u
+</span><span class="boring">  | nil  : Vector α 0
+</span><span class="boring">  | cons : α → {n : Nat} → Vector α n → Vector α (n+1)
+</span><span class="boring">namespace Vector
+</span>def tailAux (v : Vector α m) : m = n + 1 → Vector α n :=
   Vector.casesOn (motive := fun x _ =&gt; x = n + 1 → Vector α n) v
     (fun h : 0 = n + 1 =&gt; Nat.noConfusion h)
     (fun (a : α) (m : Nat) (as : Vector α m) =&gt;
@@ -970,8 +974,8 @@ def tailAux (v : Vector α m) : m = n + 1 → Vector α n :=
 
 def tail (v : Vector α (n+1)) : Vector α n :=
   tailAux v rfl
-# end Vector
-</code></pre>
+<span class="boring">end Vector
+</span></code></pre>
 <p>In the <code>nil</code> case, <code>m</code> is instantiated to <code>0</code>, and
 <code>noConfusion</code> makes use of the fact that <code>0 = succ n</code> cannot
 occur.  Otherwise, <code>v</code> is of the form <code>a :: w</code>, and we can simply
@@ -985,11 +989,11 @@ a case is to use <code>noConfusion</code>.</p>
 <p>The <code>tail</code> function is, however, easy to define using recursive
 equations, and the equation compiler generates all the boilerplate
 code automatically for us. Here are a number of similar examples:</p>
-<pre><code class="language-lean"># inductive Vector (α : Type u) : Nat → Type u
-#   | nil  : Vector α 0
-#   | cons : α → {n : Nat} → Vector α n → Vector α (n+1)
-# namespace Vector
-def head : {n : Nat} → Vector α (n+1) → α
+<pre><code class="language-lean"><span class="boring">inductive Vector (α : Type u) : Nat → Type u
+</span><span class="boring">  | nil  : Vector α 0
+</span><span class="boring">  | cons : α → {n : Nat} → Vector α n → Vector α (n+1)
+</span><span class="boring">namespace Vector
+</span>def head : {n : Nat} → Vector α (n+1) → α
   | n, cons a as =&gt; a
 
 def tail : {n : Nat} → Vector α (n+1) → Vector α n
@@ -1005,23 +1009,23 @@ def map (f : α → β → γ) : {n : Nat} → Vector α n → Vector β n → V
 def zip : {n : Nat} → Vector α n → Vector β n → Vector (α × β) n
   | 0,   nil,       nil       =&gt; nil
   | n+1, cons a as, cons b bs =&gt; cons (a, b) (zip as bs)
-# end Vector
-</code></pre>
+<span class="boring">end Vector
+</span></code></pre>
 <p>Note that we can omit recursive equations for &quot;unreachable&quot; cases such
 as <code>head nil</code>. The automatically generated definitions for indexed
 families are far from straightforward. For example:</p>
-<pre><code class="language-lean"># inductive Vector (α : Type u) : Nat → Type u
-#   | nil  : Vector α 0
-#   | cons : α → {n : Nat} → Vector α n → Vector α (n+1)
-# namespace Vector
-def map (f : α → β → γ) : {n : Nat} → Vector α n → Vector β n → Vector γ n
+<pre><code class="language-lean"><span class="boring">inductive Vector (α : Type u) : Nat → Type u
+</span><span class="boring">  | nil  : Vector α 0
+</span><span class="boring">  | cons : α → {n : Nat} → Vector α n → Vector α (n+1)
+</span><span class="boring">namespace Vector
+</span>def map (f : α → β → γ) : {n : Nat} → Vector α n → Vector β n → Vector γ n
   | 0,   nil,       nil       =&gt; nil
   | n+1, cons a as, cons b bs =&gt; cons (f a b) (map f as bs)
 
 #print map
 #print map.match_1
-# end Vector
-</code></pre>
+<span class="boring">end Vector
+</span></code></pre>
 <p>The <code>map</code> function is even more tedious to define by hand than the
 <code>tail</code> function. We encourage you to try it, using <code>recOn</code>,
 <code>casesOn</code> and <code>noConfusion</code>.</p>
@@ -1090,71 +1094,71 @@ the first pattern.</p>
 argument and replaces it by <code>0</code> and <code>n + 1</code> when we do a case
 split on the second argument. Using inaccessible patterns, we can prompt
 the equation compiler to avoid the case split on <code>n</code></p>
-<pre><code class="language-lean"># inductive Vector (α : Type u) : Nat → Type u
-#   | nil  : Vector α 0
-#   | cons : α → {n : Nat} → Vector α n → Vector α (n+1)
-# namespace Vector
-
+<pre><code class="language-lean"><span class="boring">inductive Vector (α : Type u) : Nat → Type u
+</span><span class="boring">  | nil  : Vector α 0
+</span><span class="boring">  | cons : α → {n : Nat} → Vector α n → Vector α (n+1)
+</span><span class="boring">namespace Vector
+</span>
 def add [Add α] : {n : Nat} → Vector α n → Vector α n → Vector α n
   | .(_),   nil,       nil       =&gt; nil
   | .(_), cons a as, cons b bs =&gt; cons (a + b) (add as bs)
 
-# end Vector
-</code></pre>
+<span class="boring">end Vector
+</span></code></pre>
 <p>Marking the position as an inaccessible pattern tells the
 equation compiler first, that the form of the argument should be
 inferred from the constraints posed by the other arguments, and,
 second, that the first argument should <em>not</em> participate in pattern
 matching.</p>
 <p>The inaccessible pattern <code>.(_)</code> can be written as <code>_</code> for convenience.</p>
-<pre><code class="language-lean"># inductive Vector (α : Type u) : Nat → Type u
-#   | nil  : Vector α 0
-#   | cons : α → {n : Nat} → Vector α n → Vector α (n+1)
-# namespace Vector
-
+<pre><code class="language-lean"><span class="boring">inductive Vector (α : Type u) : Nat → Type u
+</span><span class="boring">  | nil  : Vector α 0
+</span><span class="boring">  | cons : α → {n : Nat} → Vector α n → Vector α (n+1)
+</span><span class="boring">namespace Vector
+</span>
 def add [Add α] : {n : Nat} → Vector α n → Vector α n → Vector α n
   | _,   nil,       nil       =&gt; nil
   | _, cons a as, cons b bs =&gt; cons (a + b) (add as bs)
 
-# end Vector
-</code></pre>
+<span class="boring">end Vector
+</span></code></pre>
 <p>As we mentioned above, the argument <code>{n : Nat}</code> is part of the
 pattern matching, because it cannot be held fixed throughout the
 definition. In previous Lean versions, users often found it cumbersome
 to have to include these extra discriminants. Thus, Lean 4
 implements a new feature, <em>discriminant refinement</em>, which includes
 these extra discriminants automatically for us.</p>
-<pre><code class="language-lean"># inductive Vector (α : Type u) : Nat → Type u
-#   | nil  : Vector α 0
-#   | cons : α → {n : Nat} → Vector α n → Vector α (n+1)
-# namespace Vector
-
+<pre><code class="language-lean"><span class="boring">inductive Vector (α : Type u) : Nat → Type u
+</span><span class="boring">  | nil  : Vector α 0
+</span><span class="boring">  | cons : α → {n : Nat} → Vector α n → Vector α (n+1)
+</span><span class="boring">namespace Vector
+</span>
 def add [Add α] {n : Nat} : Vector α n → Vector α n → Vector α n
   | nil,       nil       =&gt; nil
   | cons a as, cons b bs =&gt; cons (a + b) (add as bs)
 
-# end Vector
-</code></pre>
+<span class="boring">end Vector
+</span></code></pre>
 <p>When combined with the <em>auto bound implicits</em> feature, you can simplify
 the declare further and write:</p>
-<pre><code class="language-lean"># inductive Vector (α : Type u) : Nat → Type u
-#   | nil  : Vector α 0
-#   | cons : α → {n : Nat} → Vector α n → Vector α (n+1)
-# namespace Vector
-
+<pre><code class="language-lean"><span class="boring">inductive Vector (α : Type u) : Nat → Type u
+</span><span class="boring">  | nil  : Vector α 0
+</span><span class="boring">  | cons : α → {n : Nat} → Vector α n → Vector α (n+1)
+</span><span class="boring">namespace Vector
+</span>
 def add [Add α] : Vector α n → Vector α n → Vector α n
   | nil,       nil       =&gt; nil
   | cons a as, cons b bs =&gt; cons (a + b) (add as bs)
 
-# end Vector
-</code></pre>
+<span class="boring">end Vector
+</span></code></pre>
 <p>Using these new features, you can write the other vector functions defined
 in the previous sections more compactly as follows:</p>
-<pre><code class="language-lean"># inductive Vector (α : Type u) : Nat → Type u
-#   | nil  : Vector α 0
-#   | cons : α → {n : Nat} → Vector α n → Vector α (n+1)
-# namespace Vector
-def head : Vector α (n+1) → α
+<pre><code class="language-lean"><span class="boring">inductive Vector (α : Type u) : Nat → Type u
+</span><span class="boring">  | nil  : Vector α 0
+</span><span class="boring">  | cons : α → {n : Nat} → Vector α n → Vector α (n+1)
+</span><span class="boring">namespace Vector
+</span>def head : Vector α (n+1) → α
   | cons a as =&gt; a
 
 def tail : Vector α (n+1) → Vector α n
@@ -1170,8 +1174,8 @@ def map (f : α → β → γ) : Vector α n → Vector β n → Vector γ n
 def zip : Vector α n → Vector β n → Vector (α × β) n
   | nil,       nil       =&gt; nil
   | cons a as, cons b bs =&gt; cons (a, b) (zip as bs)
-# end Vector
-</code></pre>
+<span class="boring">end Vector
+</span></code></pre>
 <h2><a class="header" href="#a-name_match_expressionsamatch-expressions" id="a-name_match_expressionsamatch-expressions"><a name="_match_expressions"></a>Match Expressions</a></h2>
 <p>Lean also provides a compiler for <em>match-with</em> expressions found in
 many functional languages.</p>
@@ -1262,12 +1266,12 @@ Note that, Lean &quot;closes&quot; the declaration by adding any local variable 
 <code>let rec</code> declaration as additional parameters. For example, the local variable <code>a</code> occurs
 at <code>let rec loop</code>.</p>
 <p>You can also use <code>let rec</code> in tactic mode and for creating proofs by induction.</p>
-<pre><code class="language-lean"># def replicate (n : Nat) (a : α) : List α :=
-#  let rec loop : Nat → List α → List α
-#    | 0,   as =&gt; as
-#    | n+1, as =&gt; loop n (a::as)
-#  loop n []
-theorem length_replicate (n : Nat) (a : α) : (replicate n a).length = n := by
+<pre><code class="language-lean"><span class="boring">def replicate (n : Nat) (a : α) : List α :=
+</span><span class="boring"> let rec loop : Nat → List α → List α
+</span><span class="boring">   | 0,   as =&gt; as
+</span><span class="boring">   | n+1, as =&gt; loop n (a::as)
+</span><span class="boring"> loop n []
+</span>theorem length_replicate (n : Nat) (a : α) : (replicate n a).length = n := by
   let rec aux (n : Nat) (as : List α)
               : (replicate.loop a n as).length = n + as.length := by
     match n with
@@ -1337,16 +1341,16 @@ def sampleExpr : Expr :=
 </code></pre>
 <p>Here <code>sampleExpr</code> represents <code>(v₀ * 7) + (2 * v₁)</code>.</p>
 <p>Write a function that evaluates such an expression, evaluating each <code>var n</code> to <code>v n</code>.</p>
-<pre><code class="language-lean"># inductive Expr where
-#   | const : Nat → Expr
-#   | var : Nat → Expr
-#   | plus : Expr → Expr → Expr
-#   | times : Expr → Expr → Expr
-#   deriving Repr
-# open Expr
-# def sampleExpr : Expr :=
-#   plus (times (var 0) (const 7)) (times (const 2) (var 1))
-def eval (v : Nat → Nat) : Expr → Nat
+<pre><code class="language-lean"><span class="boring">inductive Expr where
+</span><span class="boring">  | const : Nat → Expr
+</span><span class="boring">  | var : Nat → Expr
+</span><span class="boring">  | plus : Expr → Expr → Expr
+</span><span class="boring">  | times : Expr → Expr → Expr
+</span><span class="boring">  deriving Repr
+</span><span class="boring">open Expr
+</span><span class="boring">def sampleExpr : Expr :=
+</span><span class="boring">  plus (times (var 0) (const 7)) (times (const 2) (var 1))
+</span>def eval (v : Nat → Nat) : Expr → Nat
   | const n     =&gt; sorry
   | var n       =&gt; v n
   | plus e₁ e₂  =&gt; sorry
@@ -1365,19 +1369,19 @@ def sampleVal : Nat → Nat
 define a function &quot;fuse&quot;: to simplify a plus or a times, first
 simplify the arguments recursively, and then apply <code>simpConst</code> to
 try to simplify the result.</p>
-<pre><code class="language-lean"># inductive Expr where
-#   | const : Nat → Expr
-#   | var : Nat → Expr
-#   | plus : Expr → Expr → Expr
-#   | times : Expr → Expr → Expr
-#   deriving Repr
-# open Expr
-# def eval (v : Nat → Nat) : Expr → Nat
-#   | const n     =&gt; sorry
-#   | var n       =&gt; v n
-#   | plus e₁ e₂  =&gt; sorry
-#   | times e₁ e₂ =&gt; sorry
-def simpConst : Expr → Expr
+<pre><code class="language-lean"><span class="boring">inductive Expr where
+</span><span class="boring">  | const : Nat → Expr
+</span><span class="boring">  | var : Nat → Expr
+</span><span class="boring">  | plus : Expr → Expr → Expr
+</span><span class="boring">  | times : Expr → Expr → Expr
+</span><span class="boring">  deriving Repr
+</span><span class="boring">open Expr
+</span><span class="boring">def eval (v : Nat → Nat) : Expr → Nat
+</span><span class="boring">  | const n     =&gt; sorry
+</span><span class="boring">  | var n       =&gt; v n
+</span><span class="boring">  | plus e₁ e₂  =&gt; sorry
+</span><span class="boring">  | times e₁ e₂ =&gt; sorry
+</span>def simpConst : Expr → Expr
   | plus (const n₁) (const n₂)  =&gt; const (n₁ + n₂)
   | times (const n₁) (const n₂) =&gt; const (n₁ * n₂)
   | e                           =&gt; e

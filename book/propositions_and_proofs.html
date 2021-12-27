@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>命题和证明 - Lean中文手册</title>
+        <title>命题和证明 - Lean中文教程</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title_page.html">在Lean 4中进行定理证明</a></li><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> 介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li></ol></li><li class="chapter-item expanded "><a href="dependent_type_theory.html"><strong aria-hidden="true">2.</strong> 依赖类型论</a></li><li class="chapter-item expanded "><a href="propositions_and_proofs.html" class="active"><strong aria-hidden="true">3.</strong> 命题和证明</a></li><li class="chapter-item expanded "><a href="quantifiers_and_equality.html"><strong aria-hidden="true">4.</strong> Quantifiers and Equality</a></li><li class="chapter-item expanded "><a href="tactics.html"><strong aria-hidden="true">5.</strong> Tactics</a></li><li class="chapter-item expanded "><a href="interacting_with_lean.html"><strong aria-hidden="true">6.</strong> Interacting with Lean</a></li><li class="chapter-item expanded "><a href="inductive_types.html"><strong aria-hidden="true">7.</strong> Inductive Types</a></li><li class="chapter-item expanded "><a href="induction_and_recursion.html"><strong aria-hidden="true">8.</strong> Induction and Recursion</a></li><li class="chapter-item expanded "><a href="structures_and_records.html"><strong aria-hidden="true">9.</strong> 结构体和记录</a></li><li class="chapter-item expanded "><a href="type_classes.html"><strong aria-hidden="true">10.</strong> Type Classes</a></li><li class="chapter-item expanded "><a href="conv.html"><strong aria-hidden="true">11.</strong> The Conversion Tactic Mode</a></li><li class="chapter-item expanded "><a href="axioms_and_computation.html"><strong aria-hidden="true">12.</strong> Axioms and Computation</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title_page.html">Lean 4定理证明</a></li><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> 介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li></ol></li><li class="chapter-item expanded "><a href="dependent_type_theory.html"><strong aria-hidden="true">2.</strong> 依赖类型论</a></li><li class="chapter-item expanded "><a href="propositions_and_proofs.html" class="active"><strong aria-hidden="true">3.</strong> 命题和证明</a></li><li class="chapter-item expanded "><a href="quantifiers_and_equality.html"><strong aria-hidden="true">4.</strong> Quantifiers and Equality</a></li><li class="chapter-item expanded "><a href="tactics.html"><strong aria-hidden="true">5.</strong> Tactics</a></li><li class="chapter-item expanded "><a href="interacting_with_lean.html"><strong aria-hidden="true">6.</strong> Interacting with Lean</a></li><li class="chapter-item expanded "><a href="inductive_types.html"><strong aria-hidden="true">7.</strong> Inductive Types</a></li><li class="chapter-item expanded "><a href="induction_and_recursion.html"><strong aria-hidden="true">8.</strong> Induction and Recursion</a></li><li class="chapter-item expanded "><a href="structures_and_records.html"><strong aria-hidden="true">9.</strong> 结构体和记录</a></li><li class="chapter-item expanded "><a href="type_classes.html"><strong aria-hidden="true">10.</strong> Type Classes</a></li><li class="chapter-item expanded "><a href="conv.html"><strong aria-hidden="true">11.</strong> The Conversion Tactic Mode</a></li><li class="chapter-item expanded "><a href="axioms_and_computation.html"><strong aria-hidden="true">12.</strong> Axioms and Computation</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Lean中文手册</h1>
+                    <h1 class="menu-title">Lean中文教程</h1>
 
                     <div class="right-buttons">
                         
@@ -135,6 +135,10 @@
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         
+                        
+                        <a href="https://github.com/subfish-zhou/theorem_proving_in_lean4_zh_CN" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
                         
                     </div>
                 </div>
@@ -180,9 +184,8 @@ variable (p q r : Prop)
 #check Implies (And p q) (And q p)  -- Prop
 </code></pre>
 <p>对每个元素<code>p : Prop</code>，可以引入另一个类型<code>Proof p</code>，作为<code>p</code>的证明的类型。“公理”是这个类型中的常值。</p>
-<pre><code class="language-lean"># def Implies (p q : Prop) : Prop := p → q
-# structure Proof (p : Prop) : Type where
-#   proof : p
+<pre><code class="language-lean">structure Proof (p : Prop) : Type where
+  proof : p
 #check Proof   -- Proof : Prop → Type
 
 axiom and_comm (p q : Prop) : Proof (Implies (And p q) (And q p))
@@ -195,7 +198,7 @@ variable (p q : Prop)
 <p>如果能证明<code>Implies p q</code>和<code>p</code>，则能证明<code>q</code>。</p>
 </blockquote>
 <p>我们可以如下地表示它：</p>
-<pre><code class="language-lean">axiom modus_ponens : (p q : Prop) → Proof (Implies p q) →  Proof p → Proof q
+<pre><code class="language-lean">axiom modus_ponens : (p q : Prop) → Proof (Implies p q) → Proof p → Proof q
 </code></pre>
 <p>命题逻辑的自然演绎系统通常也依赖于以下规则：</p>
 <blockquote>
@@ -204,13 +207,13 @@ variable (p q : Prop)
 <p>我们可以如下地表示它：</p>
 <pre><code class="language-lean">axiom implies_intro : (p q : Prop) → (Proof p → Proof q) → Proof (Implies p q)
 </code></pre>
-<p>这个功能让我们可以合理地搭建断言和证明。确定表达式<code>t</code>是<code>p</code>的正确证明，只需检查<code>t</code>具有类型<code>Proof p</code>。</p>
+<p>这个功能让我们可以合理地搭建断言和证明。确定表达式<code>t</code>是<code>p</code>的证明，只需检查<code>t</code>具有类型<code>Proof p</code>。</p>
 <p>可以做一些简化。首先，我们可以通过将<code>Proof p</code>和<code>p</code>本身合并来避免重复地写<code>Proof</code>这个词。换句话说，只要我们有<code>p : Prop</code>，我们就可以把<code>p</code>解释为一种类型，也就是它的证明类型。然后我们可以把<code>t : p</code>读作<code>t</code>是<code>p</code>的证明。</p>
-<p>此外，我们可以在<code>Implies p q</code>和<code>p → q</code>之间来回切换。换句话说，命题<code>p</code>和<code>q</code>之间的含义对应于一个函数，它将<code>p</code>的任何元素接受为<code>q</code>的一个元素。因此，引入连接词<code>Implies</code>是完全多余的：我们可以使用依赖类型论中常见的函数空间构造器<code>p → q</code>作为我们的蕴含概念。</p>
+<p>此外，我们可以在<code>Implies p q</code>和<code>p → q</code>之间来回切换。换句话说，命题<code>p</code>和<code>q</code>之间的含义对应于一个函数，它将<code>p</code>的任何元素接受为<code>q</code>的一个元素。因此，引入连接词<code>Implies</code>是完全多余的：我们可以使用依赖类型论中常见的函数空间构造子<code>p → q</code>作为我们的蕴含概念。</p>
 <p>这是在构造演算（Calculus of Constructions）中遵循的方法，因此在Lean中也是如此。自然演绎证明系统中的蕴含规则与控制函数抽象（abstraction）和应用（application）的规则完全一致，这是<em>Curry-Howard同构</em>的一个实例，有时也被称为<em>命题即类型</em>。事实上，类型<code>Prop</code>是上一章描述的类型层次结构的最底部<code>Sort 0</code>的语法糖。此外，<code>Type u</code>也只是<code>Sort (u+1)</code>的语法糖。<code>Prop</code>有一些特殊的特性，但像其他类型宇宙一样，它在箭头构造子下是封闭的:如果我们有<code>p q : Prop</code>，那么<code>p → q : Prop</code>。</p>
 <p>至少有两种将命题作为类型来思考的方法。对于那些对逻辑和数学中的构造主义者来说，这是对命题含义的忠实诠释：命题<code>p</code>代表了一种数据类型，即构成证明的数据类型的说明。<code>p</code>的证明就是正确类型的对象<code>t : p</code>。</p>
 <p>非构造主义者可以把它看作是一种简单的编码技巧。对于每个命题<code>p</code>，我们关联一个类型，如果<code>p</code>为假，则该类型为空，如果<code>p</code>为真，则有且只有一个元素，比如<code>*</code>。在后一种情况中，让我们说(与之相关的类型)<code>p</code>被<em>占据</em>（inhabited）。恰好，函数应用和抽象的规则可以方便地帮助我们跟踪<code>Prop</code>的哪些元素是被占据的。所以构造一个元素<code>t : p</code>告诉我们<code>p</code>确实是正确的。你可以把<code>p</code>的占据者想象成“<code>p</code>为真”的事实。对<code>p → q</code>的证明使用“<code>p</code>是真的”这个事实来得到“<code>q</code>是真的”这个事实。</p>
-<p>事实上，如果<code>p : Prop</code>是任何命题，那么Lean的内核将任意两个元素<code>t1 t2 : p</code>看作定义相等，就像它把<code>(fun x =&gt; t) s</code>和<code>t[s/x]</code>看作定义相等。这就是所谓的“证明无关性”（proof irrelevance）。这意味着，即使我们可以把证明<code>t : p</code>当作依赖类型论语言中的普通对象，它们除了<code>p</code>是真的这一事实之外，没有其他信息。</p>
+<p>事实上，如果<code>p : Prop</code>是任何命题，那么Lean的内核将任意两个元素<code>t1 t2 : p</code>看作定义相等，就像它把<code>(fun x =&gt; t) s</code>和<code>t[s/x]</code>看作定义等价。这就是所谓的“证明无关性”（proof irrelevance）。这意味着，即使我们可以把证明<code>t : p</code>当作依赖类型论语言中的普通对象，它们除了<code>p</code>是真的这一事实之外，没有其他信息。</p>
 <p>我们所建议的思考“命题即类型”范式的两种方式在一个根本性的方面有所不同。从构造的角度看，证明是抽象的数学对象，它被依赖类型论中的合适表达式所<em>表示</em>。相反，如果我们从上述编码技巧的角度考虑，那么表达式本身并不表示任何有趣的东西。相反，是我们可以写下它们并检查它们是否有良好的类型这一事实确保了有关命题是真的。换句话说，表达式<em>本身</em>就是证明。</p>
 <p>在下面的论述中，我们将在这两种说话方式之间来回切换，有时说一个表达式“构造”或“产生”或“返回”一个命题的证明，有时则简单地说它“是”这样一个证明。这类似于计算机科学家偶尔会模糊语法和语义之间的区别，有时说一个程序“计算”某个函数，有时又说该程序“是”该函数。</p>
 <p>为了用依赖类型论的语言正式表达一个数学断言，我们需要展示一个项<code>p : Prop</code>。为了<em>证明</em>该断言，我们需要展示一个项<code>t : p</code>。Lean的任务，作为一个证明助手，是帮助我们构造这样一个项<code>t</code>，并验证它的格式是否良好，类型是否正确。</p>
@@ -233,7 +236,7 @@ theorem t1 : p → q → p := fun hp : p =&gt; fun hq : q =&gt; hp
 <pre><code class="language-lean">theorem t1 : p → q → p :=
   fun hp : p =&gt;
   fun hq : q =&gt;
-  show p from hp
+  show p from hp --试试改成 show q from hp 会怎样？
 </code></pre>
 <p>添加这些额外的信息可以提高证明的清晰度，并有助于在编写证明时发现错误。<code>show</code>命令只是注释类型，而且在内部，我们看到的所有关于<code>t1</code>的表示都产生了相同的项。</p>
 <p>与普通定义一样，我们可以将lambda抽象的变量移到冒号的左边：</p>
@@ -340,14 +343,14 @@ example (h : p ∧ q) : q ∧ p :=
 And.intro (And.right h) (And.left h)
 </code></pre>
 <p>请注意，引入和消去与笛卡尔积的配对和投影操作类似。区别在于，给定<code>hp : p</code>和<code>hq : q</code>，<code>And.intro hp hq</code>具有类型<code>p ∧ q : Prop</code>，而<code>Prod hp hq</code>具有类型<code>p × q : Type</code>。<code>∧</code>和<code>×</code>之间的相似性是Curry-Howard同构的另一个例子，但与蕴涵和函数空间构造子不同，在Lean中<code>∧</code>和<code>×</code>是分开处理的。然而，通过类比，我们刚刚构造的证明类似于交换一对中的元素的函数。</p>
-<p>我们将在<a href="./structures_and_records.html">Structures and Records</a>一章中看到Lean中的某些类型是<em>Structures</em>，也就是说，该类型是用单个规范的<em>构造子</em>定义的，该构造子从一系列合适的参数构建该类型的一个元素。对于每一组<code>p q : Prop</code>， <code>p ∧ q</code>就是一个例子:构造一个元素的规范方法是将<code>And.intro</code>应用于合适的参数<code>hp : p</code>和<code>hq : q</code>。Lean允许我们使用<em>匿名构造子</em>表示法<code>⟨arg1, arg2, ...⟩</code>在此类情况下，当相关类型是归纳类型并可以从上下文推断时。特别地，我们经常可以写入<code>⟨hp, hq⟩</code>，而不是<code>And.intro hp hq</code>:</p>
+<p>我们将在<a href="./structures_and_records.html">结构体和记录</a>一章中看到Lean中的某些类型是<em>Structures</em>，也就是说，该类型是用单个规范的<em>构造子</em>定义的，该构造子从一系列合适的参数构建该类型的一个元素。对于每一组<code>p q : Prop</code>， <code>p ∧ q</code>就是一个例子:构造一个元素的规范方法是将<code>And.intro</code>应用于合适的参数<code>hp : p</code>和<code>hq : q</code>。Lean允许我们使用<em>匿名构造子</em>表示法<code>⟨arg1, arg2, ...⟩</code>在此类情况下，当相关类型是递归类型并可以从上下文推断时。特别地，我们经常可以写入<code>⟨hp, hq⟩</code>，而不是<code>And.intro hp hq</code>:</p>
 <pre><code class="language-lean">variable (p q : Prop)
 variable (hp : p) (hq : q)
 
 #check (⟨hp, hq⟩ : p ∧ q)
 </code></pre>
 <p>尖括号可以用<code>\&lt;</code>和<code>\&gt;</code>打出来。</p>
-<p>Lean提供了另一个有用的语法小工具。给定一个归纳类型<code>Foo</code>的表达式<code>e</code>(可能应用于一些参数)，符号<code>e.bar</code>是<code>Foo.bar e</code>的缩写。这为访问函数提供了一种方便的方式，而无需打开名称空间。例如，下面两个表达的意思是相同的：</p>
+<p>Lean提供了另一个有用的语法小工具。给定一个递归类型<code>Foo</code>的表达式<code>e</code>(可能应用于一些参数)，符号<code>e.bar</code>是<code>Foo.bar e</code>的缩写。这为访问函数提供了一种方便的方式，而无需打开名称空间。例如，下面两个表达的意思是相同的：</p>
 <pre><code class="language-lean">variable (xs : List Nat)
 
 #check List.length xs
@@ -600,19 +603,19 @@ example (p q : Prop) : ¬(p ∧ ¬q) → (p → q) :=
 <p>证明以下等式，用真实证明取代“sorry”占位符。</p>
 <pre><code class="language-lean">variable (p q r : Prop)
 
--- commutativity of ∧ and ∨
+--  ∧ 和 ∨ 的交换律
 example : p ∧ q ↔ q ∧ p := sorry
 example : p ∨ q ↔ q ∨ p := sorry
 
--- associativity of ∧ and ∨
+-- ∧ 和 ∨ 的结合律
 example : (p ∧ q) ∧ r ↔ p ∧ (q ∧ r) := sorry
 example : (p ∨ q) ∨ r ↔ p ∨ (q ∨ r) := sorry
 
--- distributivity
+-- 分配律
 example : p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r) := sorry
 example : p ∨ (q ∧ r) ↔ (p ∨ q) ∧ (p ∨ r) := sorry
 
--- other properties
+-- 其他性质
 example : (p → (q → r)) ↔ (p ∧ q → r) := sorry
 example : ((p ∨ q) → r) ↔ (p → r) ∧ (q → r) := sorry
 example : ¬(p ∨ q) ↔ ¬p ∧ ¬q := sorry

@@ -1,6 +1,6 @@
-# 在Lean 4中进行定理证明
+# Lean 4定理证明
 
-[在Lean 4中进行定理证明](title_page.md)
+[Lean 4定理证明](title_page.md)
 
 - [介绍](./introduction.md)
   - [安装](./setup.md)

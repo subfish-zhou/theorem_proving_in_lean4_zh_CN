@@ -25,9 +25,8 @@ variable (p q r : Prop)
 对每个元素``p : Prop``，可以引入另一个类型``Proof p``，作为``p``的证明的类型。“公理”是这个类型中的常值。
 
 ```lean
-# def Implies (p q : Prop) : Prop := p → q
-# structure Proof (p : Prop) : Type where
-#   proof : p
+structure Proof (p : Prop) : Type where
+  proof : p
 #check Proof   -- Proof : Prop → Type
 
 axiom and_comm (p q : Prop) : Proof (Implies (And p q) (And q p))
@@ -43,7 +42,7 @@ variable (p q : Prop)
 我们可以如下地表示它：
 
 ```lean
-axiom modus_ponens : (p q : Prop) → Proof (Implies p q) →  Proof p → Proof q
+axiom modus_ponens : (p q : Prop) → Proof (Implies p q) → Proof p → Proof q
 ```
 
 命题逻辑的自然演绎系统通常也依赖于以下规则：
@@ -56,11 +55,11 @@ axiom modus_ponens : (p q : Prop) → Proof (Implies p q) →  Proof p → Proof
 axiom implies_intro : (p q : Prop) → (Proof p → Proof q) → Proof (Implies p q)
 ```
 
-这个功能让我们可以合理地搭建断言和证明。确定表达式``t``是``p``的正确证明，只需检查``t``具有类型``Proof p``。
+这个功能让我们可以合理地搭建断言和证明。确定表达式``t``是``p``的证明，只需检查``t``具有类型``Proof p``。
 
 可以做一些简化。首先，我们可以通过将``Proof p``和``p``本身合并来避免重复地写``Proof``这个词。换句话说，只要我们有``p : Prop``，我们就可以把``p``解释为一种类型，也就是它的证明类型。然后我们可以把``t : p``读作``t``是``p``的证明。
 
-此外，我们可以在``Implies p q``和``p → q``之间来回切换。换句话说，命题``p``和``q``之间的含义对应于一个函数，它将``p``的任何元素接受为``q``的一个元素。因此，引入连接词``Implies``是完全多余的：我们可以使用依赖类型论中常见的函数空间构造器``p → q``作为我们的蕴含概念。
+此外，我们可以在``Implies p q``和``p → q``之间来回切换。换句话说，命题``p``和``q``之间的含义对应于一个函数，它将``p``的任何元素接受为``q``的一个元素。因此，引入连接词``Implies``是完全多余的：我们可以使用依赖类型论中常见的函数空间构造子``p → q``作为我们的蕴含概念。
 
 这是在构造演算（Calculus of Constructions）中遵循的方法，因此在Lean中也是如此。自然演绎证明系统中的蕴含规则与控制函数抽象（abstraction）和应用（application）的规则完全一致，这是*Curry-Howard同构*的一个实例，有时也被称为*命题即类型*。事实上，类型``Prop``是上一章描述的类型层次结构的最底部``Sort 0``的语法糖。此外，``Type u``也只是``Sort (u+1)``的语法糖。``Prop``有一些特殊的特性，但像其他类型宇宙一样，它在箭头构造子下是封闭的:如果我们有``p q : Prop``，那么``p → q : Prop``。
 
@@ -68,7 +67,7 @@ axiom implies_intro : (p q : Prop) → (Proof p → Proof q) → Proof (Implies 
 
 非构造主义者可以把它看作是一种简单的编码技巧。对于每个命题``p``，我们关联一个类型，如果``p``为假，则该类型为空，如果``p``为真，则有且只有一个元素，比如``*``。在后一种情况中，让我们说(与之相关的类型)``p``被*占据*（inhabited）。恰好，函数应用和抽象的规则可以方便地帮助我们跟踪``Prop``的哪些元素是被占据的。所以构造一个元素``t : p``告诉我们``p``确实是正确的。你可以把``p``的占据者想象成“``p``为真”的事实。对``p → q``的证明使用“``p``是真的”这个事实来得到“``q``是真的”这个事实。
 
-事实上，如果``p : Prop``是任何命题，那么Lean的内核将任意两个元素``t1 t2 : p``看作定义相等，就像它把``(fun x => t) s``和``t[s/x]``看作定义相等。这就是所谓的“证明无关性”（proof irrelevance）。这意味着，即使我们可以把证明``t : p``当作依赖类型论语言中的普通对象，它们除了``p``是真的这一事实之外，没有其他信息。
+事实上，如果``p : Prop``是任何命题，那么Lean的内核将任意两个元素``t1 t2 : p``看作定义相等，就像它把``(fun x => t) s``和``t[s/x]``看作定义等价。这就是所谓的“证明无关性”（proof irrelevance）。这意味着，即使我们可以把证明``t : p``当作依赖类型论语言中的普通对象，它们除了``p``是真的这一事实之外，没有其他信息。
 
 我们所建议的思考“命题即类型”范式的两种方式在一个根本性的方面有所不同。从构造的角度看，证明是抽象的数学对象，它被依赖类型论中的合适表达式所*表示*。相反，如果我们从上述编码技巧的角度考虑，那么表达式本身并不表示任何有趣的东西。相反，是我们可以写下它们并检查它们是否有良好的类型这一事实确保了有关命题是真的。换句话说，表达式*本身*就是证明。
 
@@ -107,7 +106,7 @@ theorem t1 : p → q → p := fun hp : p => fun hq : q => hp
 theorem t1 : p → q → p :=
   fun hp : p =>
   fun hq : q =>
-  show p from hp
+  show p from hp --试试改成 show q from hp 会怎样？
 ```
 
 添加这些额外的信息可以提高证明的清晰度，并有助于在编写证明时发现错误。``show``命令只是注释类型，而且在内部，我们看到的所有关于``t1``的表示都产生了相同的项。
@@ -268,7 +267,7 @@ And.intro (And.right h) (And.left h)
 
 请注意，引入和消去与笛卡尔积的配对和投影操作类似。区别在于，给定``hp : p``和``hq : q``，``And.intro hp hq``具有类型``p ∧ q : Prop``，而``Prod hp hq``具有类型``p × q : Type``。``∧``和``×``之间的相似性是Curry-Howard同构的另一个例子，但与蕴涵和函数空间构造子不同，在Lean中``∧``和``×``是分开处理的。然而，通过类比，我们刚刚构造的证明类似于交换一对中的元素的函数。
 
-我们将在[Structures and Records](./structures_and_records.md)一章中看到Lean中的某些类型是*Structures*，也就是说，该类型是用单个规范的*构造子*定义的，该构造子从一系列合适的参数构建该类型的一个元素。对于每一组``p q : Prop``， ``p ∧ q``就是一个例子:构造一个元素的规范方法是将``And.intro``应用于合适的参数``hp : p``和``hq : q``。Lean允许我们使用*匿名构造子*表示法``⟨arg1, arg2, ...⟩``在此类情况下，当相关类型是归纳类型并可以从上下文推断时。特别地，我们经常可以写入``⟨hp, hq⟩``，而不是``And.intro hp hq``:
+我们将在[结构体和记录](./structures_and_records.md)一章中看到Lean中的某些类型是*Structures*，也就是说，该类型是用单个规范的*构造子*定义的，该构造子从一系列合适的参数构建该类型的一个元素。对于每一组``p q : Prop``， ``p ∧ q``就是一个例子:构造一个元素的规范方法是将``And.intro``应用于合适的参数``hp : p``和``hq : q``。Lean允许我们使用*匿名构造子*表示法``⟨arg1, arg2, ...⟩``在此类情况下，当相关类型是递归类型并可以从上下文推断时。特别地，我们经常可以写入``⟨hp, hq⟩``，而不是``And.intro hp hq``:
 
 ```lean
 variable (p q : Prop)
@@ -279,7 +278,7 @@ variable (hp : p) (hq : q)
 
 尖括号可以用``\<``和``\>``打出来。
 
-Lean提供了另一个有用的语法小工具。给定一个归纳类型``Foo``的表达式``e``(可能应用于一些参数)，符号``e.bar``是``Foo.bar e``的缩写。这为访问函数提供了一种方便的方式，而无需打开名称空间。例如，下面两个表达的意思是相同的：
+Lean提供了另一个有用的语法小工具。给定一个递归类型``Foo``的表达式``e``(可能应用于一些参数)，符号``e.bar``是``Foo.bar e``的缩写。这为访问函数提供了一种方便的方式，而无需打开名称空间。例如，下面两个表达的意思是相同的：
 
 ```lean
 variable (xs : List Nat)
@@ -616,19 +615,19 @@ example (p q : Prop) : ¬(p ∧ ¬q) → (p → q) :=
 ```lean
 variable (p q r : Prop)
 
--- commutativity of ∧ and ∨
+--  ∧ 和 ∨ 的交换律
 example : p ∧ q ↔ q ∧ p := sorry
 example : p ∨ q ↔ q ∨ p := sorry
 
--- associativity of ∧ and ∨
+-- ∧ 和 ∨ 的结合律
 example : (p ∧ q) ∧ r ↔ p ∧ (q ∧ r) := sorry
 example : (p ∨ q) ∨ r ↔ p ∨ (q ∨ r) := sorry
 
--- distributivity
+-- 分配律
 example : p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r) := sorry
 example : p ∨ (q ∧ r) ↔ (p ∨ q) ∧ (p ∨ r) := sorry
 
--- other properties
+-- 其他性质
 example : (p → (q → r)) ↔ (p ∧ q → r) := sorry
 example : ((p ∨ q) → r) ↔ (p → r) ∧ (q → r) := sorry
 example : ¬(p ∨ q) ↔ ¬p ∧ ¬q := sorry
