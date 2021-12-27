@@ -6,7 +6,7 @@
   - [安装](./setup.md)
 - [依赖类型论](./dependent_type_theory.md)
 - [命题和证明](./propositions_and_proofs.md)
-- [Quantifiers and Equality](./quantifiers_and_equality.md)
+- [量词与等价](./quantifiers_and_equality.md)
 - [Tactics](./tactics.md)
 - [Interacting with Lean](./interacting_with_lean.md)
 - [Inductive Types](./inductive_types.md)
