@@ -26,9 +26,9 @@
 
 在``p x``具有``Prop``类型的情况下，如果我们用``∀ x : α, p x``替换``(x : α) → β x``，就得到构建涉及全称量词的证明的规则。
 
-因此，构造演算用forall表达式来识别依赖箭头类型。如果``p``是任何表达式，``∀ x : α, p``不过是``(x : α) → p``的替代符号，在``p``是命题的情况下，前者比后者更自然。通常，表达式``p``取决于``x : α``。回想一下，在普通函数空间中，我们可以将``α → β``解释为``(x : α) → β``的特殊情况，其中``β``不依赖于``x``。类似地，我们可以把命题之间的蕴涵``p → q``看作是``∀ x : p, q``的特殊情况，其中``q``不依赖于``x``。
+因此，构造演算用全称表达式来识别依赖箭头类型。如果``p``是任何表达式，``∀ x : α, p``不过是``(x : α) → p``的替代符号，在``p``是命题的情况下，前者比后者更自然。通常，表达式``p``取决于``x : α``。回想一下，在普通函数空间中，我们可以将``α → β``解释为``(x : α) → β``的特殊情况，其中``β``不依赖于``x``。类似地，我们可以把命题之间的蕴涵``p → q``看作是``∀ x : p, q``的特殊情况，其中``q``不依赖于``x``。
 
-下面是一个例子，说明了如何运用命题即类型对应规则。
+下面是一个例子，说明了如何运用命题即类型对应规则。``∀``可以用``\forall``输入，也可以用前两个字母简写``\fo``。
 
 ```lean
 example (α : Type) (p q : α → Prop) : (∀ x : α, p x ∧ q x) → ∀ y : α, p y  :=
@@ -103,7 +103,7 @@ example (a b c d : α) (hab : r a b) (hcb : r c b) (hcd : r c d) : r a d :=
 等价
 --------
 
-现在让我们来看看在Lean库中定义的最基本的关系之一，即等价关系。在[归纳类型](inductive_types.md)一章中，我们将解释如何从Lean的逻辑框架中定义等价。在这里我们解释如何使用它。
+现在让我们来看看在Lean库中定义的最基本的关系之一，即等价关系。在[递归类型](inductive_types.md)一章中，我们将解释如何从Lean的逻辑框架中定义等价。在这里我们解释如何使用它。
 
 等价关系的基本性质：反身性、对称性、传递性。
 
@@ -231,11 +231,7 @@ example (x y : Nat) : (x + y) * (x + y) = x * x + y * x + x * y + y * y :=
 计算式证明
 --------------------
 
-一个计算式证明只是一个中间结果的链，这意味着由基本原则，如平等的传递性组成。在Lean中，计算证明从关键字``calc``开始，语法如下:
-A calculational proof is just a chain of intermediate results that are
-meant to be composed by basic principles such as the transitivity of
-equality. In Lean, a calculation proof starts with the keyword
-``calc``, and has the following syntax:
+一个计算式证明是指一串使用诸如等式的传递性等基本规则得到的中间结果。在Lean中，计算式证明从关键字``calc``开始，语法如下：
 
 ```
 calc
@@ -246,9 +242,9 @@ calc
 
 ```
 
-Each ``<proof>_i`` is a proof for ``<expr>_{i-1} op_i <expr>_i``.
+每个``<proof>_i``是``<expr>_{i-1} op_i <expr>_i``的证明。
 
-Here is an example:
+例子：
 
 ```lean
 variable (a b c d e : Nat)
@@ -266,18 +262,9 @@ theorem T : a = e :=
     _ = e      := Eq.symm h4
 ```
 
-The style of writing proofs is most effective when it is used in
-conjunction with the ``simp`` and ``rewrite`` tactics, which are
-discussed in greater detail in the next chapter. For example, using
-the abbreviation ``rw`` for rewrite, the proof above could be written
-as follows:
+这种写证明的风格在与`simp`和`rewrite`策略（tactic）结合使用时最为有效，这些策略将在下一章详细讨论。例如，用缩写`rw'表示重写，上面的证明可以写成如下。
 
 ```lean
-# variable (a b c d e : Nat)
-# variable (h1 : a = b)
-# variable (h2 : b = c + 1)
-# variable (h3 : c = d)
-# variable (h4 : e = 1 + d)
 theorem T : a = e :=
   calc
     a = b      := by rw [h1]
@@ -287,20 +274,11 @@ theorem T : a = e :=
     _ =  e     := by rw [h4]
 ```
 
-Essentially, the ``rw`` tactic uses a given equality (which can be a
-hypothesis, a theorem name, or a complex term) to "rewrite" the
-goal. If doing so reduces the goal to an identity ``t = t``, the
-tactic applies reflexivity to prove it.
+本质上，``rw``策略使用一个给定的等式(它可以是一个假设、一个定理名称或一个复杂的项)来“重写”目标。如果这样做将目标简化为一种等式``t = t``，那么该策略将使用反身性来证明这一点。
 
-Rewrites can be applied sequentially, so that the proof above can be
-shortened to this:
+重写可以一次应用一系列，因此上面的证明可以缩写为：
 
 ```lean
-# variable (a b c d e : Nat)
-# variable (h1 : a = b)
-# variable (h2 : b = c + 1)
-# variable (h3 : c = d)
-# variable (h4 : e = 1 + d)
 theorem T : a = e :=
   calc
     a = d + 1  := by rw [h1, h2, h3]
@@ -308,38 +286,24 @@ theorem T : a = e :=
     _ =  e     := by rw [h4]
 ```
 
-Or even this:
+甚至这样：
 
 ```lean
-# variable (a b c d e : Nat)
-# variable (h1 : a = b)
-# variable (h2 : b = c + 1)
-# variable (h3 : c = d)
-# variable (h4 : e = 1 + d)
 theorem T : a = e :=
   by rw [h1, h2, h3, Nat.add_comm, h4]
 ```
 
-The ``simp`` tactic, instead, rewrites the goal by applying the given
-identities repeatedly, in any order, anywhere they are applicable in a
-term. It also uses other rules that have been previously declared to
-the system, and applies commutativity wisely to avoid looping. As a
-result, we can also prove the theorem as follows:
+相反，``simp``策略通过在项中以任意顺序在任何适用的地方重复应用给定的等式来重写目标。它还使用了之前声明给系统的其他规则，并明智地应用交换性以避免循环。因此，我们也可以如下证明定理:
 
 ```lean
-# variable (a b c d e : Nat)
-# variable (h1 : a = b)
-# variable (h2 : b = c + 1)
-# variable (h3 : c = d)
-# variable (h4 : e = 1 + d)
 theorem T : a = e :=
   by simp [h1, h2, h3, Nat.add_comm, h4]
 ```
 
+我们将在下一章讨论``rw``和``simp``的变体。
 We will discuss variations of ``rw`` and ``simp`` in the next chapter.
 
-The ``calc`` command can be configured for any relation that supports
-some form of transitivity. It can even combine different relations.
+``calc``命令可以配置为任何支持某种形式的传递性的关系。它甚至可以结合不同的关系。
 
 ```lean
 example (a b c d : Nat) (h1 : a = b) (h2 : b ≤ c) (h3 : c + 1 < d) : a < d :=
@@ -350,8 +314,7 @@ example (a b c d : Nat) (h1 : a = b) (h2 : b ≤ c) (h3 : c + 1 < d) : a < d :=
     _ < d     := h3
 ```
 
-With ``calc``, we can write the proof in the last section in a more
-natural and perspicuous way.
+使用``calc``，我们可以以一种更自然、更清晰的方式写出上一节的证明。
 
 ```lean
 example (x y : Nat) : (x + y) * (x + y) = x * x + y * x + x * y + y * y :=
@@ -362,10 +325,7 @@ example (x y : Nat) : (x + y) * (x + y) = x * x + y * x + x * y + y * y :=
         _ = x * x + y * x + x * y + y * y          := by rw [←Nat.add_assoc]
 ```
 
-Here the left arrow before ``Nat.add_assoc`` tells rewrite to use the
-identity in the opposite direction. (You can enter it with ``\l`` or
-use the ascii equivalent, ``<-``.) If brevity is what we are after,
-both ``rw`` and ``simp`` can do the job on their own:
+``Nat.add_assoc``之前的左箭头指挥重写以相反的方向使用等式。(你可以输入``\l``或ascii码``<-``。)如果追求简洁，``rw``和``simp``可以一次性完成这项工作:
 
 ```lean
 example (x y : Nat) : (x + y) * (x + y) = x * x + y * x + x * y + y * y :=
@@ -375,18 +335,12 @@ example (x y : Nat) : (x + y) * (x + y) = x * x + y * x + x * y + y * y :=
   by simp [Nat.mul_add, Nat.add_mul, Nat.add_assoc, Nat.add_left_comm]
 ```
 
-The Existential Quantifier
+存在量词
 --------------------------
 
-Finally, consider the existential quantifier, which can be written as
-either ``exists x : α, p x`` or ``∃ x : α, p x``.  Both versions are
-actually notationally convenient abbreviations for a more long-winded
-expression, ``Exists (fun x : α => p x)``, defined in Lean's library.
+存在量词可以写成``exists x : α, p x``或``∃ x : α, p x``。这两个写法实际上在Lean的库中的定义为一个更冗长的表达式，``Exists (fun x : α => p x)``。
 
-As you should by now expect, the library includes both an introduction
-rule and an elimination rule. The introduction rule is
-straightforward: to prove ``∃ x : α, p x``, it suffices to provide a
-suitable term ``t`` and a proof of ``p t``. Here are some examples:
+存在量词也有一个引入规则和一个消去规则。引入规则很简单：要证明``∃ x : α, p x``，只需提供一个合适的项``t``和对``p t``的证明即可。``∃``用``\exists``或简写``\ex``输入，下面是一些例子:
 
 ```lean
 example : ∃ x : Nat, x > 0 :=
@@ -402,8 +356,7 @@ example (x y z : Nat) (hxy : x < y) (hyz : y < z) : ∃ w, x < w ∧ w < z :=
 #check @Exists.intro
 ```
 
-We can use the anonymous constructor notation ``⟨t, h⟩`` for
-``Exists.intro t h``, when the type is clear from the context.
+当类型可从上下文中推断时，我们可以使用匿名构造子表示法``⟨t, h⟩``替换``Exists.intro t h``。
 
 ```lean
 example : ∃ x : Nat, x > 0 :=
@@ -417,15 +370,7 @@ example (x y z : Nat) (hxy : x < y) (hyz : y < z) : ∃ w, x < w ∧ w < z :=
   ⟨y, hxy, hyz⟩
 ```
 
-Note that ``Exists.intro`` has implicit arguments: Lean has to infer
-the predicate ``p : α → Prop`` in the conclusion ``∃ x, p x``.  This
-is not a trivial affair. For example, if we have have
-``hg : g 0 0 = 0`` and write ``Exists.intro 0 hg``, there are many possible values
-for the predicate ``p``, corresponding to the theorems ``∃ x, g x x = x``,
-``∃ x, g x x = 0``, ``∃ x, g x 0 = x``, etc. Lean uses the
-context to infer which one is appropriate. This is illustrated in the
-following example, in which we set the option ``pp.explicit`` to true
-to ask Lean's pretty-printer to show the implicit arguments.
+注意``Exists.intro``有隐参数：Lean必须在结论``∃ x, p x``中推断谓词``p : α → Prop``。这不是一件小事。例如，如果我们有``hg : g 0 0 = 0``和``Exists.intro 0 hg``，有许多可能的值的谓词``p``，对应定理``∃ x, g x x = x``，``∃ x, g x x = 0``，``∃ x, g x 0 = x``，等等。Lean使用上下文来推断哪个是合适的。下面的例子说明了这一点，在这个例子中，我们设置了选项``pp.explicit``为true，要求Lean打印隐参数。
 
 ```lean
 variable (g : Nat → Nat → Nat)
@@ -436,12 +381,14 @@ theorem gex2 : ∃ x, g x 0 = x := ⟨0, hg⟩
 theorem gex3 : ∃ x, g 0 0 = x := ⟨0, hg⟩
 theorem gex4 : ∃ x, g x x = 0 := ⟨0, hg⟩
 
-set_option pp.explicit true  -- display implicit arguments
+set_option pp.explicit true  -- 打印隐参数
 #print gex1
 #print gex2
 #print gex3
 #print gex4
 ```
+
+我们可以将``Exists.intro``视为信息隐藏操作，因为它将断言体的见证隐藏起来。存在消除规则``Exists.elim``执行相反的操作。它允许我们从``∃ x : α, p x``证明一个命题``q``，通过证明对于任意值``w``时``p w``都能推出``q``。粗略地说，既然我们知道有一个``x``满足``p x``，我们可以给它起个名字，比如``w``。如果``q``没有提到``w``，那么表明``p w``能推出``q``就等同于表明``q``从任何这样的``x``的存在而来。下面是一个例子:
 
 We can view ``Exists.intro`` as an information-hiding operation, since
 it hides the witness to the body of the assertion. The existential
@@ -489,6 +436,7 @@ example (h : ∃ x, p x ∧ q x) : ∃ x, q x ∧ p x :=
   | ⟨w, hw⟩ => ⟨w, hw.right, hw.left⟩
 ```
 
+``match``表达式是精益功能定义系统的一部分，它提供了定义复杂功能的方便和表达方式。再一次，正是Curry-Howard同构让我们能够采用这种机制来编写证明。``match``语句将存在断言“析构”到组件``w``和``hw``中，然后可以在语句体中使用它们来证明命题。我们可以对match中使用的类型进行注释，以提高清晰度:
 The ``match`` expression is part of Lean's function definition system,
 which provides convenient and expressive ways of defining complex
 functions.  Once again, it is the Curry-Howard isomorphism that allows
@@ -505,7 +453,7 @@ example (h : ∃ x, p x ∧ q x) : ∃ x, q x ∧ p x :=
   | ⟨(w : α), (hw : p w ∧ q w)⟩ => ⟨w, hw.right, hw.left⟩
 ```
 
-We can even use the match statement to decompose the conjunction at the same time:
+我们甚至可以同时使用match语句来分解合取：
 
 ```lean
 # variable (α : Type) (p q : α → Prop)
@@ -514,7 +462,7 @@ example (h : ∃ x, p x ∧ q x) : ∃ x, q x ∧ p x :=
   | ⟨w, hpw, hqw⟩ => ⟨w, hqw, hpw⟩
 ```
 
-Lean also provides a pattern-matching ``let`` expression:
+Lean还提供了一个模式匹配的``let``表达式：
 
 ```lean
 # variable (α : Type) (p q : α → Prop)
@@ -523,9 +471,7 @@ example (h : ∃ x, p x ∧ q x) : ∃ x, q x ∧ p x :=
   ⟨w, hqw, hpw⟩
 ```
 
-This is essentially just alternative notation for the ``match``
-construct above. Lean will even allow us to use an implicit ``match``
-in the ``fun`` expression:
+这实际上是上面的``match``结构的替代表示法。Lean甚至允许我们在``fun``表达式中使用隐含的``match``：
 
 ```lean
 # variable (α : Type) (p q : α → Prop)
@@ -533,11 +479,9 @@ example : (∃ x, p x ∧ q x) → ∃ x, q x ∧ p x :=
   fun ⟨w, hpw, hqw⟩ => ⟨w, hqw, hpw⟩
 ```
 
-We will see in [Chapter Induction and Recursion](./induction_and_recursion.md) that all these variations are
-instances of a more general pattern-matching construct.
+我们将在[归纳和递归](./induction_and_recursion.md)一章看到所有这些变体都是更一般的模式匹配构造的实例。
 
-In the following example, we define ``even a`` as ``∃ b, a = 2*b``,
-and then we show that the sum of two even numbers is an even number.
+在下面的例子中，我们将``even a``定义为``∃ b, a = 2*b``，然后我们证明两个偶数的和是偶数。
 
 ```lean
 def is_even (a : Nat) := ∃ b, a = 2 * b
@@ -551,9 +495,7 @@ theorem even_plus_even (h1 : is_even a) (h2 : is_even b) : is_even (a + b) :=
           _   = 2*(w1 + w2)      := by rw [Nat.mul_add])))
 ```
 
-Using the various gadgets described in this chapter --- the match
-statement, anonymous constructors, and the ``rewrite`` tactic, we can
-write this proof concisely as follows:
+使用本章描述的各种小工具——match语句、匿名构造子和``rewrite``策略，我们可以简洁地写出如下证明：
 
 ```lean
 # def is_even (a : Nat) := ∃ b, a = 2 * b
@@ -562,12 +504,7 @@ theorem even_plus_even (h1 : is_even a) (h2 : is_even b) : is_even (a + b) :=
   | ⟨w1, hw1⟩, ⟨w2, hw2⟩ => ⟨w1 + w2, by rw [hw1, hw2, Nat.mul_add]⟩
 ```
 
-Just as the constructive "or" is stronger than the classical "or," so,
-too, is the constructive "exists" stronger than the classical
-"exists". For example, the following implication requires classical
-reasoning because, from a constructive standpoint, knowing that it is
-not the case that every ``x`` satisfies ``¬ p`` is not the same as
-having a particular ``x`` that satisfies ``p``.
+就像构造主义的“或”比古典的“或”强，同样，构造的“存在”也比古典的“存在”强。例如，下面的推论需要经典推理，因为从构造的角度来看，知道并不是每一个``x``都满足``¬ p``，并不等于有一个特定的``x``满足``p``。
 
 ```lean
 open Classical
@@ -584,10 +521,7 @@ example (h : ¬ ∀ x, ¬ p x) : ∃ x, p x :=
       show False from h h2)
 ```
 
-What follows are some common identities involving the existential
-quantifier. In the exercises below, we encourage you to prove as many
-as you can. We also leave it to you to determine which are
-nonconstructive, and hence require some form of classical reasoning.
+下面是一些涉及存在量词的常见等式。在下面的练习中，我们鼓励你尽可能多写出证明。你需要判断哪些是非构造主义的，因此需要一些经典推理。
 
 ```lean
 open Classical
@@ -610,10 +544,9 @@ example (a : α) : (∃ x, p x → r) ↔ (∀ x, p x) → r := sorry
 example (a : α) : (∃ x, r → p x) ↔ (r → ∃ x, p x) := sorry
 ```
 
-Notice that the second example and the last two examples require the
-assumption that there is at least one element ``a`` of type ``α``.
+注意，第二个例子和最后两个例子要求假设至少有一个类型为``α``的元素``a``。
 
-Here are solutions to two of the more difficult ones:
+以下是两个比较困难的问题的解：
 
 ```lean
 open Classical
@@ -654,17 +587,12 @@ example : (∃ x, p x → r) ↔ (∀ x, p x) → r :=
               show False from hnap hap)))
 ```
 
-More on the Proof Language
+更多证明语言
 --------------------------
 
-We have seen that keywords like ``fun``, ``have``, and ``show`` make
-it possible to write formal proof terms that mirror the structure of
-informal mathematical proofs. In this section, we discuss some
-additional features of the proof language that are often convenient.
+我们已经看到像``fun``、``have``和``show``这样的关键字使得写出反映非正式数学证明结构的正式证明项成为可能。在本节中，我们将讨论证明语言的一些通常很方便的附加特性。
 
-To start with, we can use anonymous "have" expressions to introduce an
-auxiliary goal without having to label it. We can refer to the last
-expression introduced in this way using the keyword ``this``:
+首先，我们可以使用匿名的``have``表达式来引入一个辅助目标，而不需要标注它。我们可以使用关键字``this``'来引用最后一个以这种方式引入的表达式:
 
 ```lean
 variable (f : Nat → Nat)
@@ -676,11 +604,9 @@ example : f 0 ≤ f 3 :=
   show f 0 ≤ f 3 from Nat.le_trans this (h 2)
 ```
 
-Often proofs move from one fact to the next, so this can be effective
-in eliminating the clutter of lots of labels.
+通常证明从一个事实转移到另一个事实，所以这可以有效地消除杂乱的大量标签。
 
-When the goal can be inferred, we can also ask Lean instead to fill in
-the proof by writing ``by assumption``:
+当目标可以推断出来时，我们也可以让Lean写``by assumption``来填写证明：
 
 ```lean
 # variable (f : Nat → Nat)
@@ -691,26 +617,15 @@ example : f 0 ≤ f 3 :=
   show f 0 ≤ f 3 from Nat.le_trans (by assumption) (h 2)
 ```
 
-This tells Lean to use the ``assumption`` tactic, which, in turn,
-proves the goal by finding a suitable hypothesis in the local
-context. We will learn more about the ``assumption`` tactic in the
-next chapter.
+这告诉Lean使用``assumption``策略，反过来，通过在局部上下文中找到合适的假设来证明目标。我们将在下一章学习更多关于``assumption``策略的内容。
 
-We can also ask Lean to fill in the proof by writing ``‹p›``, where
-``p`` is the proposition whose proof we want Lean to find in the
-context.  You can type these corner quotes using ``\f<`` and ``\f>``,
-respectively. The letter "f" is for "French," since the unicode
-symbols can also be used as French quotation marks. In fact, the
-notation is defined in Lean as follows:
+我们也可以通过写``‹p›``的形式要求Lean填写证明，其中``p``是我们希望Lean在上下文中找到的证明命题。你可以分别使用``\f<``和``\f>``输入这些角引号。字母“f”表示“French”，因为unicode符号也可以用作法语引号。事实上，这个符号在Lean中定义如下:
 
 ```lean
 notation "‹" p "›" => show p by assumption
 ```
 
-This approach is more robust than using ``by assumption``, because the
-type of the assumption that needs to be inferred is given
-explicitly. It also makes proofs more readable. Here is a more
-elaborate example:
+这种方法比使用``by assumption``更稳健，因为需要推断的假设类型是显式给出的。它还使证明更具可读性。这里有一个更详细的例子:
 
 ```lean
 variable (f : Nat → Nat)
@@ -724,16 +639,13 @@ example : f 0 ≥ f 1 → f 1 ≥ f 2 → f 0 = f 2 :=
   show f 0 = f 2 from Nat.le_antisymm this ‹f 0 ≥ f 2›
 ```
 
-Keep in mind that you can use the French quotation marks in this way
-to refer to *anything* in the context, not just things that were
-introduced anonymously. Its use is also not limited to propositions,
-though using it for data is somewhat odd:
+你可以这样使用法语引号来指代上下文中的“任何东西”，而不仅仅是匿名引入的东西。它的使用也不局限于命题，尽管将它用于数据有点奇怪：
 
 ```lean
 example (n : Nat) : Nat := ‹Nat›
 ```
 
-Later, we show how you can extend the proof language using the Lean macro system.
+稍后，我们将展示如何使用Lean中的宏系统扩展证明语言。
 
 练习
 ---------
