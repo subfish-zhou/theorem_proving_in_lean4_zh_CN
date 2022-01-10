@@ -8,6 +8,12 @@ example : p ∧ q ↔ q ∧ p :=
     (fun h : q ∧ p => 
         And.intro (h.right) (h.left))
 
+-- The following proof is from Mathlib4, It's not for beginners.
+-- Mathlib4 can be found at 
+-- https://github.com/leanprover-community/mathlib4/blob/master/Mathlib/Init/Logic.lean
+example : p ∧ q ↔ q ∧ p := ⟨λ ⟨hp, hq⟩ => ⟨hq, hp⟩, λ ⟨hp, hq⟩ => ⟨hq, hp⟩⟩
+-- Here we don't provide more proof from Mathlib4, you can find it by yourself.
+
 example : p ∨ q ↔ q ∨ p := 
   Iff.intro
     (fun h : p ∨ q => 
