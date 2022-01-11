@@ -37,7 +37,7 @@ example (α : Type) (p q : α → Prop) : (∀ x : α, p x ∧ q x) → ∀ y : 
   show p y from (h y).left
 ```
 
-作为一种符号约定，我们给予全称量词尽可能最宽的范围，因此上面例子中的假设中，需要用括号将``x``上的量词限制起来。证明``∀ y : α, p y``的标准方法是取任意的``y``，然后证明``p y``。这是引入规则。现在，给定``h``有类型``∀ x : α, p x ∧ q x``，表达式``h y``有类型``p y ∧ q y``。这是消去规则。取合取的左侧得到想要的结论``p y``。
+作为一种符号约定，我们给予全称量词尽可能最宽的优先级范围，因此上面例子中的假设中，需要用括号将``x``上的量词限制起来。证明``∀ y : α, p y``的标准方法是取任意的``y``，然后证明``p y``。这是引入规则。现在，给定``h``有类型``∀ x : α, p x ∧ q x``，表达式``h y``有类型``p y ∧ q y``。这是消去规则。取合取的左侧得到想要的结论``p y``。
 
 只有约束变量名称不同的表达式被认为是等价的。因此，例如，我们可以在假设和结论中使用相同的变量``x``，并在证明中用不同的变量``z``实例化它:
 
@@ -94,16 +94,16 @@ example (a b c d : α) (hab : r a b) (hcb : r c b) (hcd : r c d) : r a d :=
 
 为了习惯使用全称量词，你应该尝试本节末尾的一些练习。
 
-依赖箭头类型的类型规则，特别是全称量词，将``Prop``与其他类型区分开来。假设我们有``α : Sort i``和``β : Sort j``，其中表达式``β``可能依赖于变量``x : α``。那么``(x : α) → β``是``Sort (imax i j)``的一个元素，其中``imax i j``是``i``和``j``在``j``不为0时的最大值，否则为0。
+依赖箭头类型的类型规则，特别是全称量词，体现了``Prop``命题类型与其他对象的类型的不同。假设我们有``α : Sort i``和``β : Sort j``，其中表达式``β``可能依赖于变量``x : α``。那么``(x : α) → β``是``Sort (imax i j)``的一个元素，其中``imax i j``是``i``和``j``在``j``不为0时的最大值，否则为0。
 
-其想法如下。如果``j``不是``0``，然后``(x : α) → β``是``Sort (max i j)``类型的一个元素。换句话说，从``α``到``β``的一类依赖函数存在于指数为``i``和``j``最大值的宇宙中。然而，假设``β``属于``Sort 0``，即``Prop``的一个元素。在这种情况下，``(x : α) → β``也是``Sort 0``的一个元素，无论``α``生活在哪种类型的宇宙中。换句话说，如果``β``是一个依赖于``α``的命题，那么``∀ x : α, β``又是一个命题。这反映了``Prop``作为一种命题类型而不是数据类型的解释，这也使得``Prop``具有“非直谓性”。
+其想法如下。如果``j``不是``0``，然后``(x : α) → β``是``Sort (max i j)``类型的一个元素。换句话说，从``α``到``β``的一类依赖函数存在于指数为``i``和``j``最大值的宇宙中。然而，假设``β``属于``Sort 0``，即``Prop``的一个元素。在这种情况下，``(x : α) → β``也是``Sort 0``的一个元素，无论``α``生活在哪种类型的宇宙中。换句话说，如果``β``是一个依赖于``α``的命题，那么``∀ x : α, β``又是一个命题。这反映出``Prop``作为一种命题类型而不是数据类型，这也使得``Prop``具有“非直谓性”（impredicative）。
 
-“直谓性”一词起源于20世纪初的基础发展，当时逻辑学家如庞加莱和罗素将集合论的悖论归咎于“恶性循环”：当我们通过量化一个集合来定义一个属性时，这个集合包含了被定义的属性。注意，如果``α``是任何类型，我们可以在``α``上形成所有谓词的类型``α → Prop``(``α``的“幂”类型)。Prop的非直谓性意味着我们可以通过``α → Prop``形成量化命题。特别是，我们可以通过量化所有关于``α``的谓词来定义``α``上的谓词，这正是曾经被认为有问题的循环类型。
+“直谓性”一词起源于20世纪初的数学基础发展，当时逻辑学家如庞加莱和罗素将集合论的悖论归咎于“恶性循环”：当我们通过量化一个集合来定义一个属性时，这个集合包含了被定义的属性。注意，如果``α``是任何类型，我们可以在``α``上形成所有谓词的类型``α → Prop``(``α``的“幂”类型)。Prop的非直谓性意味着我们可以通过``α → Prop``形成量化命题。特别是，我们可以通过量化所有关于``α``的谓词来定义``α``上的谓词，这正是曾经被认为有问题的循环类型。
 
 等价
 --------
 
-现在让我们来看看在Lean库中定义的最基本的关系之一，即等价关系。在[递归类型](inductive_types.md)一章中，我们将解释如何从Lean的逻辑框架中定义等价。在这里我们解释如何使用它。
+现在让我们来看看在Lean库中定义的最基本的关系之一，即等价关系。在[归纳类型](inductive_types.md)一章中，我们将解释如何从Lean的逻辑框架中定义等价。在这里我们解释如何使用它。
 
 等价关系的基本性质：反身性、对称性、传递性。
 
@@ -113,7 +113,7 @@ example (a b c d : α) (hab : r a b) (hcb : r c b) (hcd : r c d) : r a d :=
 #check Eq.trans   -- ?m.2 = ?m.3 → ?m.3 = ?m.4 → ?m.2 = ?m.4
 ```
 
-通过告诉Lean不要插入隐式参数(在这里显示为元变量)，我们可以使输出更容易阅读。
+通过告诉Lean不要插入隐参数(在这里显示为元变量)可以使输出更容易阅读。
 
 ```lean
 universe u
@@ -135,13 +135,13 @@ example : a = d :=
   Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
 ```
 
-我们也可以使用投影符号：
+我们也可以使用简写：
 
 ```lean
 example : a = d := (hab.trans hcb.symm).trans hcd
 ```
 
-反身性比它看起来更强大。回想一下，在构造演算中，项有一个计算解释，逻辑框架将可以简化为相同形式的项视为相同的。因此，一些非平凡的恒等式可以通过自反性来证明：
+反身性比它看上去更强大。回想一下，在构造演算中，项有一个计算解释，可化简为相同形式的项会被逻辑框架视为相同的。因此，一些非平凡的恒等式可以通过自反性来证明：
 
 ```lean
 variable (α β : Type)
@@ -172,7 +172,7 @@ example (α : Type) (a b : α) (p : α → Prop)
   h1 ▸ h2
 ```
 
-第二个演示中的三角形是建立在``Eq.subst``和``Eq.symm``之上的宏，它可以通过``\t``来输入。
+第二个例子中的三角形是建立在``Eq.subst``和``Eq.symm``之上的宏，它可以通过``\t``来输入。
 
 规则``Eq.subst``定义了一些辅助规则，用来执行更显式的替换。它们是为处理应用型项，即形式为``s t``的项而设计的。这些辅助规则是，使用``congrArg``来替换参数，使用``congrFun``来替换正在应用的项，并且可以同时使用``congr``来替换两者。
 
@@ -388,18 +388,7 @@ set_option pp.explicit true  -- 打印隐参数
 #print gex4
 ```
 
-我们可以将``Exists.intro``视为信息隐藏操作，因为它将断言体的见证隐藏起来。存在消除规则``Exists.elim``执行相反的操作。它允许我们从``∃ x : α, p x``证明一个命题``q``，通过证明对于任意值``w``时``p w``都能推出``q``。粗略地说，既然我们知道有一个``x``满足``p x``，我们可以给它起个名字，比如``w``。如果``q``没有提到``w``，那么表明``p w``能推出``q``就等同于表明``q``从任何这样的``x``的存在而来。下面是一个例子:
-
-We can view ``Exists.intro`` as an information-hiding operation, since
-it hides the witness to the body of the assertion. The existential
-elimination rule, ``Exists.elim``, performs the opposite operation. It
-allows us to prove a proposition ``q`` from ``∃ x : α, p x``, by
-showing that ``q`` follows from ``p w`` for an arbitrary value
-``w``. Roughly speaking, since we know there is an ``x`` satisfying
-``p x``, we can give it a name, say, ``w``. If ``q`` does not mention
-``w``, then showing that ``q`` follows from ``p w`` is tantamount to
-showing the ``q`` follows from the existence of any such ``x``. Here
-is an example:
+我们可以将``Exists.intro``视为信息隐藏操作，因为它将断言的具体实例隐藏起来变成了存在量词。存在消去规则``Exists.elim``执行相反的操作。它允许我们从``∃ x : α, p x``证明一个命题``q``，通过证明对于任意值``w``时``p w``都能推出``q``。粗略地说，既然我们知道有一个``x``满足``p x``，我们可以给它起个名字，比如``w``。如果``q``没有提到``w``，那么表明``p w``能推出``q``就等同于表明``q``从任何这样的``x``的存在而推得。下面是一个例子:
 
 ```lean
 variable (α : Type) (p q : α → Prop)
@@ -411,22 +400,11 @@ example (h : ∃ x, p x ∧ q x) : ∃ x, q x ∧ p x :=
      show ∃ x, q x ∧ p x from ⟨w, hw.right, hw.left⟩)
 ```
 
-It may be helpful to compare the exists-elimination rule to the
-or-elimination rule: the assertion ``∃ x : α, p x`` can be thought of
-as a big disjunction of the propositions ``p a``, as ``a`` ranges over
-all the elements of ``α``. Note that the anonymous constructor
-notation ``⟨w, hw.right, hw.left⟩`` abbreviates a nested constructor
-application; we could equally well have written ``⟨w, ⟨hw.right, hw.left⟩⟩``.
+把存在消去规则和析取消去规则作个比较可能会带来一些启发。命题``∃ x : α, p x``可以看成一个对所有``α``中的元素``a``所组成的命题``p a``的大型析取。注意到匿名构造子``⟨w, hw.right, hw.left⟩``是嵌套的构造子``⟨w, ⟨hw.right, hw.left⟩⟩``的缩写。
 
-Notice that an existential proposition is very similar to a sigma
-type, as described in dependent types section.  The difference is that
-given ``a : α`` and ``h : p a``, the term ``Exists.intro a h`` has
-type ``(∃ x : α, p x) : Prop`` and ``Sigma.mk a h`` has type
-``(Σ x : α, p x) : Type``. The similarity between ``∃`` and ``Σ`` is another
-instance of the Curry-Howard isomorphism.
+存在式命题类型很像依赖类型一节所述的sigma类型。给定``a : α``和``h : p a``时，项``Exists.intro a h``具有类型``(∃ x : α, p x) : Prop``，而``Sigma.mk a h``具有类型``(Σ x : α, p x) : Type``。``∃``和``Σ``之间的相似性是Curry-Howard同构的另一例子。
 
-Lean provides a more convenient way to eliminate from an existential
-quantifier with the ``match`` expression:
+Lean提供一个更加方便的消去存在量词的途径，那就是通过``match``表达式。
 
 ```lean
 variable (α : Type) (p q : α → Prop)
@@ -436,15 +414,7 @@ example (h : ∃ x, p x ∧ q x) : ∃ x, q x ∧ p x :=
   | ⟨w, hw⟩ => ⟨w, hw.right, hw.left⟩
 ```
 
-``match``表达式是精益功能定义系统的一部分，它提供了定义复杂功能的方便和表达方式。再一次，正是Curry-Howard同构让我们能够采用这种机制来编写证明。``match``语句将存在断言“析构”到组件``w``和``hw``中，然后可以在语句体中使用它们来证明命题。我们可以对match中使用的类型进行注释，以提高清晰度:
-The ``match`` expression is part of Lean's function definition system,
-which provides convenient and expressive ways of defining complex
-functions.  Once again, it is the Curry-Howard isomorphism that allows
-us to co-opt this mechanism for writing proofs as well.  The ``match``
-statement "destructs" the existential assertion into the components
-``w`` and ``hw``, which can then be used in the body of the statement
-to prove the proposition. We can annotate the types used in the match
-for greater clarity:
+``match``表达式是Lean功能定义系统的一部分，它提供了复杂功能的方便且丰富的表达方式。再一次，正是Curry-Howard同构让我们能够采用这种机制来编写证明。``match``语句将存在断言“析构”到组件``w``和``hw``中，然后可以在语句体中使用它们来证明命题。我们可以对match中使用的类型进行注释，以提高清晰度：
 
 ```lean
 # variable (α : Type) (p q : α → Prop)
@@ -495,10 +465,10 @@ theorem even_plus_even (h1 : is_even a) (h2 : is_even b) : is_even (a + b) :=
           _   = 2*(w1 + w2)      := by rw [Nat.mul_add])))
 ```
 
-使用本章描述的各种小工具——match语句、匿名构造子和``rewrite``策略，我们可以简洁地写出如下证明：
+使用本章描述的各种小工具——``match``语句、匿名构造子和``rewrite``策略，我们可以简洁地写出如下证明：
 
 ```lean
-# def is_even (a : Nat) := ∃ b, a = 2 * b
+def is_even (a : Nat) := ∃ b, a = 2 * b
 theorem even_plus_even (h1 : is_even a) (h2 : is_even b) : is_even (a + b) :=
   match h1, h2 with
   | ⟨w1, hw1⟩, ⟨w2, hw2⟩ => ⟨w1 + w2, by rw [hw1, hw2, Nat.mul_add]⟩
@@ -653,15 +623,15 @@ example (n : Nat) : Nat := ‹Nat›
 1. 证明以下等式：
 
 ```lean
- variable (α : Type) (p q : α → Prop)
+variable (α : Type) (p q : α → Prop)
 
- example : (∀ x, p x ∧ q x) ↔ (∀ x, p x) ∧ (∀ x, q x) := sorry
- example : (∀ x, p x → q x) → (∀ x, p x) → (∀ x, q x) := sorry
- example : (∀ x, p x) ∨ (∀ x, q x) → ∀ x, p x ∨ q x := sorry
+example : (∀ x, p x ∧ q x) ↔ (∀ x, p x) ∧ (∀ x, q x) := sorry
+example : (∀ x, p x → q x) → (∀ x, p x) → (∀ x, q x) := sorry
+example : (∀ x, p x) ∨ (∀ x, q x) → ∀ x, p x ∨ q x := sorry
 ```
 你还应该想想为什么在最后一个例子中反过来是不能证明的。
 
-2. 当一个公式的组成部分不依赖于被量化的变量时，通常可以把它提取出一个全称量词的范围。尝试证明这些(第二个命题中的一个方向需要经典逻辑)：
+2. 当一个公式的组成部分不依赖于被全称的变量时，通常可以把它提取出一个全称量词的范围。尝试证明这些(第二个命题中的一个方向需要经典逻辑)：
 
 ```lean
 variable (α : Type) (p q : α → Prop)

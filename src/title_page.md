@@ -7,3 +7,4 @@
 本书的Lean 2 和Lean 3 版本见[这里](https://leanprover.github.io/theorem_proving_in_lean/)。
 
 欢迎对本译文提出宝贵意见，可邮件至[subfishzhou@gmail.com](mailto:subfishzhou@gmail.com)
+译者自制的习题参考答案在本项目Github仓库的Exercise文件夹中。本项目尚未完工。

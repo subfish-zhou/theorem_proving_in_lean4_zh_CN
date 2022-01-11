@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Quantifiers and Equality - Lean中文教程</title>
+        <title>量词与等价 - Lean中文教程</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title_page.html">Lean 4定理证明</a></li><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> 介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li></ol></li><li class="chapter-item expanded "><a href="dependent_type_theory.html"><strong aria-hidden="true">2.</strong> 依赖类型论</a></li><li class="chapter-item expanded "><a href="propositions_and_proofs.html"><strong aria-hidden="true">3.</strong> 命题和证明</a></li><li class="chapter-item expanded "><a href="quantifiers_and_equality.html" class="active"><strong aria-hidden="true">4.</strong> Quantifiers and Equality</a></li><li class="chapter-item expanded "><a href="tactics.html"><strong aria-hidden="true">5.</strong> Tactics</a></li><li class="chapter-item expanded "><a href="interacting_with_lean.html"><strong aria-hidden="true">6.</strong> Interacting with Lean</a></li><li class="chapter-item expanded "><a href="inductive_types.html"><strong aria-hidden="true">7.</strong> Inductive Types</a></li><li class="chapter-item expanded "><a href="induction_and_recursion.html"><strong aria-hidden="true">8.</strong> Induction and Recursion</a></li><li class="chapter-item expanded "><a href="structures_and_records.html"><strong aria-hidden="true">9.</strong> 结构体和记录</a></li><li class="chapter-item expanded "><a href="type_classes.html"><strong aria-hidden="true">10.</strong> Type Classes</a></li><li class="chapter-item expanded "><a href="conv.html"><strong aria-hidden="true">11.</strong> The Conversion Tactic Mode</a></li><li class="chapter-item expanded "><a href="axioms_and_computation.html"><strong aria-hidden="true">12.</strong> Axioms and Computation</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title_page.html">Lean 4定理证明</a></li><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> 介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li></ol></li><li class="chapter-item expanded "><a href="dependent_type_theory.html"><strong aria-hidden="true">2.</strong> 依赖类型论</a></li><li class="chapter-item expanded "><a href="propositions_and_proofs.html"><strong aria-hidden="true">3.</strong> 命题和证明</a></li><li class="chapter-item expanded "><a href="quantifiers_and_equality.html" class="active"><strong aria-hidden="true">4.</strong> 量词与等价</a></li><li class="chapter-item expanded "><a href="tactics.html"><strong aria-hidden="true">5.</strong> 证明策略</a></li><li class="chapter-item expanded "><a href="interacting_with_lean.html"><strong aria-hidden="true">6.</strong> Interacting with Lean</a></li><li class="chapter-item expanded "><a href="inductive_types.html"><strong aria-hidden="true">7.</strong> Inductive Types</a></li><li class="chapter-item expanded "><a href="induction_and_recursion.html"><strong aria-hidden="true">8.</strong> Induction and Recursion</a></li><li class="chapter-item expanded "><a href="structures_and_records.html"><strong aria-hidden="true">9.</strong> 结构体和记录</a></li><li class="chapter-item expanded "><a href="type_classes.html"><strong aria-hidden="true">10.</strong> Type Classes</a></li><li class="chapter-item expanded "><a href="conv.html"><strong aria-hidden="true">11.</strong> 转换策略模式</a></li><li class="chapter-item expanded "><a href="axioms_and_computation.html"><strong aria-hidden="true">12.</strong> Axioms and Computation</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -168,7 +168,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#量词与等价" id="量词与等价">量词与等价</a></h1>
-<p>上一章介绍了构造包含命题连接词的陈述证明的方法。在本章中，我们扩展了逻辑结构的功能，包括全称量词和存在量词，以及等价关系。</p>
+<p>上一章介绍了构造包含命题连接词的证明方法。在本章中，我们扩展逻辑结构，包括全称量词和存在量词，以及等价关系。</p>
 <h2><a class="header" href="#全称量词" id="全称量词">全称量词</a></h2>
 <p>如果<code>α</code>是任何类型，我们可以将<code>α</code>上的一元谓词<code>p</code>作为<code>α → Prop</code>类型的对象。在这种情况下，给定<code>x : α</code>， <code>p x</code>表示断言<code>p</code>在<code>x</code>上成立。类似地，一个对象<code>r : α → α → Prop</code>表示<code>α</code>上的二元关系：给定<code>x y : α</code>，<code>r x y</code>表示断言<code>x</code>与<code>y</code>相关。</p>
 <p>全称量词<code>∀ x : α, p x</code>表示，对于每一个<code>x : α</code>，<code>p x</code>成立。与命题连接词一样，在自然演绎系统中，“forall”有引入和消去规则。非正式地，引入规则是：</p>
@@ -195,7 +195,7 @@
   fun y : α =&gt;
   show p y from (h y).left
 </code></pre>
-<p>作为一种符号约定，我们给予全称量词尽可能最宽的范围，因此上面例子中的假设中，需要用括号将<code>x</code>上的量词限制起来。证明<code>∀ y : α, p y</code>的标准方法是取任意的<code>y</code>，然后证明<code>p y</code>。这是引入规则。现在，给定<code>h</code>有类型<code>∀ x : α, p x ∧ q x</code>，表达式<code>h y</code>有类型<code>p y ∧ q y</code>。这是消去规则。取合取的左侧得到想要的结论<code>p y</code>。</p>
+<p>作为一种符号约定，我们给予全称量词尽可能最宽的优先级范围，因此上面例子中的假设中，需要用括号将<code>x</code>上的量词限制起来。证明<code>∀ y : α, p y</code>的标准方法是取任意的<code>y</code>，然后证明<code>p y</code>。这是引入规则。现在，给定<code>h</code>有类型<code>∀ x : α, p x ∧ q x</code>，表达式<code>h y</code>有类型<code>p y ∧ q y</code>。这是消去规则。取合取的左侧得到想要的结论<code>p y</code>。</p>
 <p>只有约束变量名称不同的表达式被认为是等价的。因此，例如，我们可以在假设和结论中使用相同的变量<code>x</code>，并在证明中用不同的变量<code>z</code>实例化它:</p>
 <pre><code class="language-lean">example (α : Type) (p q : α → Prop) : (∀ x : α, p x ∧ q x) → ∀ x : α, p x  :=
   fun h : ∀ x : α, p x ∧ q x =&gt;
@@ -237,17 +237,17 @@ example (a b c d : α) (hab : r a b) (hcb : r c b) (hcd : r c d) : r a d :=
   trans_r (trans_r hab (symm_r hcb)) hcd
 </code></pre>
 <p>为了习惯使用全称量词，你应该尝试本节末尾的一些练习。</p>
-<p>依赖箭头类型的类型规则，特别是全称量词，将<code>Prop</code>与其他类型区分开来。假设我们有<code>α : Sort i</code>和<code>β : Sort j</code>，其中表达式<code>β</code>可能依赖于变量<code>x : α</code>。那么<code>(x : α) → β</code>是<code>Sort (imax i j)</code>的一个元素，其中<code>imax i j</code>是<code>i</code>和<code>j</code>在<code>j</code>不为0时的最大值，否则为0。</p>
-<p>其想法如下。如果<code>j</code>不是<code>0</code>，然后<code>(x : α) → β</code>是<code>Sort (max i j)</code>类型的一个元素。换句话说，从<code>α</code>到<code>β</code>的一类依赖函数存在于指数为<code>i</code>和<code>j</code>最大值的宇宙中。然而，假设<code>β</code>属于<code>Sort 0</code>，即<code>Prop</code>的一个元素。在这种情况下，<code>(x : α) → β</code>也是<code>Sort 0</code>的一个元素，无论<code>α</code>生活在哪种类型的宇宙中。换句话说，如果<code>β</code>是一个依赖于<code>α</code>的命题，那么<code>∀ x : α, β</code>又是一个命题。这反映了<code>Prop</code>作为一种命题类型而不是数据类型的解释，这也使得<code>Prop</code>具有“非直谓性”。</p>
-<p>“直谓性”一词起源于20世纪初的基础发展，当时逻辑学家如庞加莱和罗素将集合论的悖论归咎于“恶性循环”：当我们通过量化一个集合来定义一个属性时，这个集合包含了被定义的属性。注意，如果<code>α</code>是任何类型，我们可以在<code>α</code>上形成所有谓词的类型<code>α → Prop</code>(<code>α</code>的“幂”类型)。Prop的非直谓性意味着我们可以通过<code>α → Prop</code>形成量化命题。特别是，我们可以通过量化所有关于<code>α</code>的谓词来定义<code>α</code>上的谓词，这正是曾经被认为有问题的循环类型。</p>
+<p>依赖箭头类型的类型规则，特别是全称量词，体现了<code>Prop</code>命题类型与其他对象的类型的不同。假设我们有<code>α : Sort i</code>和<code>β : Sort j</code>，其中表达式<code>β</code>可能依赖于变量<code>x : α</code>。那么<code>(x : α) → β</code>是<code>Sort (imax i j)</code>的一个元素，其中<code>imax i j</code>是<code>i</code>和<code>j</code>在<code>j</code>不为0时的最大值，否则为0。</p>
+<p>其想法如下。如果<code>j</code>不是<code>0</code>，然后<code>(x : α) → β</code>是<code>Sort (max i j)</code>类型的一个元素。换句话说，从<code>α</code>到<code>β</code>的一类依赖函数存在于指数为<code>i</code>和<code>j</code>最大值的宇宙中。然而，假设<code>β</code>属于<code>Sort 0</code>，即<code>Prop</code>的一个元素。在这种情况下，<code>(x : α) → β</code>也是<code>Sort 0</code>的一个元素，无论<code>α</code>生活在哪种类型的宇宙中。换句话说，如果<code>β</code>是一个依赖于<code>α</code>的命题，那么<code>∀ x : α, β</code>又是一个命题。这反映出<code>Prop</code>作为一种命题类型而不是数据类型，这也使得<code>Prop</code>具有“非直谓性”（impredicative）。</p>
+<p>“直谓性”一词起源于20世纪初的数学基础发展，当时逻辑学家如庞加莱和罗素将集合论的悖论归咎于“恶性循环”：当我们通过量化一个集合来定义一个属性时，这个集合包含了被定义的属性。注意，如果<code>α</code>是任何类型，我们可以在<code>α</code>上形成所有谓词的类型<code>α → Prop</code>(<code>α</code>的“幂”类型)。Prop的非直谓性意味着我们可以通过<code>α → Prop</code>形成量化命题。特别是，我们可以通过量化所有关于<code>α</code>的谓词来定义<code>α</code>上的谓词，这正是曾经被认为有问题的循环类型。</p>
 <h2><a class="header" href="#等价" id="等价">等价</a></h2>
-<p>现在让我们来看看在Lean库中定义的最基本的关系之一，即等价关系。在<a href="inductive_types.html">归纳类型</a>一章中，我们将解释如何从Lean的逻辑框架中定义等价。在这里我们解释如何使用它。</p>
+<p>现在让我们来看看在Lean库中定义的最基本的关系之一，即等价关系。在<a href="inductive_types.html">递归类型</a>一章中，我们将解释如何从Lean的逻辑框架中定义等价。在这里我们解释如何使用它。</p>
 <p>等价关系的基本性质：反身性、对称性、传递性。</p>
 <pre><code class="language-lean">#check Eq.refl    -- ∀ (a : ?m.1), a = a
 #check Eq.symm    -- ?m.2 = ?m.3 → ?m.3 = ?m.2
 #check Eq.trans   -- ?m.2 = ?m.3 → ?m.3 = ?m.4 → ?m.2 = ?m.4
 </code></pre>
-<p>通过告诉Lean不要插入隐式参数(在这里显示为元变量)，我们可以使输出更容易阅读。</p>
+<p>通过告诉Lean不要插入隐参数(在这里显示为元变量)可以使输出更容易阅读。</p>
 <pre><code class="language-lean">universe u
 
 #check @Eq.refl.{u}   -- ∀ {α : Sort u} (a : α), a = a
@@ -262,10 +262,10 @@ variable (hab : a = b) (hcb : c = b) (hcd : c = d)
 example : a = d :=
   Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
 </code></pre>
-<p>我们也可以使用投影符号：</p>
+<p>我们也可以使用简写：</p>
 <pre><code class="language-lean">example : a = d := (hab.trans hcb.symm).trans hcd
 </code></pre>
-<p>反身性比它看起来更强大。回想一下，在构造演算中，项有一个计算解释，逻辑框架将可以简化为相同形式的项视为相同的。因此，一些非平凡的恒等式可以通过自反性来证明：</p>
+<p>反身性比它看上去更强大。回想一下，在构造演算中，项有一个计算解释，可化简为相同形式的项会被逻辑框架视为相同的。因此，一些非平凡的恒等式可以通过自反性来证明：</p>
 <pre><code class="language-lean">variable (α β : Type)
 
 example (f : α → β) (a : α) : (fun x =&gt; f x) a = f a := Eq.refl _
@@ -287,7 +287,7 @@ example (α : Type) (a b : α) (p : α → Prop)
     (h1 : a = b) (h2 : p a) : p b :=
   h1 ▸ h2
 </code></pre>
-<p>第二个演示中的三角形是建立在<code>Eq.subst</code>和<code>Eq.symm</code>之上的宏，它可以通过<code>\t</code>来输入。</p>
+<p>第二个例子中的三角形是建立在<code>Eq.subst</code>和<code>Eq.symm</code>之上的宏，它可以通过<code>\t</code>来输入。</p>
 <p>规则<code>Eq.subst</code>定义了一些辅助规则，用来执行更显式的替换。它们是为处理应用型项，即形式为<code>s t</code>的项而设计的。这些辅助规则是，使用<code>congrArg</code>来替换参数，使用<code>congrFun</code>来替换正在应用的项，并且可以同时使用<code>congr</code>来替换两者。</p>
 <pre><code class="language-lean">variable (α : Type)
 variable (a b : α)
@@ -446,17 +446,7 @@ set_option pp.explicit true  -- 打印隐参数
 #print gex3
 #print gex4
 </code></pre>
-<p>我们可以将<code>Exists.intro</code>视为信息隐藏操作，因为它将断言体的见证隐藏起来。存在消除规则<code>Exists.elim</code>执行相反的操作。它允许我们从<code>∃ x : α, p x</code>证明一个命题<code>q</code>，通过证明对于任意值<code>w</code>时<code>p w</code>都能推出<code>q</code>。粗略地说，既然我们知道有一个<code>x</code>满足<code>p x</code>，我们可以给它起个名字，比如<code>w</code>。如果<code>q</code>没有提到<code>w</code>，那么表明<code>p w</code>能推出<code>q</code>就等同于表明<code>q</code>从任何这样的<code>x</code>的存在而来。下面是一个例子:</p>
-<p>We can view <code>Exists.intro</code> as an information-hiding operation, since
-it hides the witness to the body of the assertion. The existential
-elimination rule, <code>Exists.elim</code>, performs the opposite operation. It
-allows us to prove a proposition <code>q</code> from <code>∃ x : α, p x</code>, by
-showing that <code>q</code> follows from <code>p w</code> for an arbitrary value
-<code>w</code>. Roughly speaking, since we know there is an <code>x</code> satisfying
-<code>p x</code>, we can give it a name, say, <code>w</code>. If <code>q</code> does not mention
-<code>w</code>, then showing that <code>q</code> follows from <code>p w</code> is tantamount to
-showing the <code>q</code> follows from the existence of any such <code>x</code>. Here
-is an example:</p>
+<p>我们可以将<code>Exists.intro</code>视为信息隐藏操作，因为它将断言的具体实例隐藏起来变成了存在量词。存在消去规则<code>Exists.elim</code>执行相反的操作。它允许我们从<code>∃ x : α, p x</code>证明一个命题<code>q</code>，通过证明对于任意值<code>w</code>时<code>p w</code>都能推出<code>q</code>。粗略地说，既然我们知道有一个<code>x</code>满足<code>p x</code>，我们可以给它起个名字，比如<code>w</code>。如果<code>q</code>没有提到<code>w</code>，那么表明<code>p w</code>能推出<code>q</code>就等同于表明<code>q</code>从任何这样的<code>x</code>的存在而推得。下面是一个例子:</p>
 <pre><code class="language-lean">variable (α : Type) (p q : α → Prop)
 
 example (h : ∃ x, p x ∧ q x) : ∃ x, q x ∧ p x :=
@@ -465,35 +455,16 @@ example (h : ∃ x, p x ∧ q x) : ∃ x, q x ∧ p x :=
      fun hw : p w ∧ q w =&gt;
      show ∃ x, q x ∧ p x from ⟨w, hw.right, hw.left⟩)
 </code></pre>
-<p>It may be helpful to compare the exists-elimination rule to the
-or-elimination rule: the assertion <code>∃ x : α, p x</code> can be thought of
-as a big disjunction of the propositions <code>p a</code>, as <code>a</code> ranges over
-all the elements of <code>α</code>. Note that the anonymous constructor
-notation <code>⟨w, hw.right, hw.left⟩</code> abbreviates a nested constructor
-application; we could equally well have written <code>⟨w, ⟨hw.right, hw.left⟩⟩</code>.</p>
-<p>Notice that an existential proposition is very similar to a sigma
-type, as described in dependent types section.  The difference is that
-given <code>a : α</code> and <code>h : p a</code>, the term <code>Exists.intro a h</code> has
-type <code>(∃ x : α, p x) : Prop</code> and <code>Sigma.mk a h</code> has type
-<code>(Σ x : α, p x) : Type</code>. The similarity between <code>∃</code> and <code>Σ</code> is another
-instance of the Curry-Howard isomorphism.</p>
-<p>Lean provides a more convenient way to eliminate from an existential
-quantifier with the <code>match</code> expression:</p>
+<p>把存在消去规则和析取消去规则作个比较可能会带来一些启发。命题<code>∃ x : α, p x</code>可以看成一个对所有<code>α</code>中的元素<code>a</code>所组成的命题<code>p a</code>的大型析取。注意到匿名构造子<code>⟨w, hw.right, hw.left⟩</code>是嵌套的构造子<code>⟨w, ⟨hw.right, hw.left⟩⟩</code>的缩写。</p>
+<p>存在式命题类型很像依赖类型一节所述的sigma类型。给定<code>a : α</code>和<code>h : p a</code>时，项<code>Exists.intro a h</code>具有类型<code>(∃ x : α, p x) : Prop</code>，而<code>Sigma.mk a h</code>具有类型<code>(Σ x : α, p x) : Type</code>。<code>∃</code>和<code>Σ</code>之间的相似性是Curry-Howard同构的另一例子。</p>
+<p>Lean提供一个更加方便的消去存在量词的途径，那就是通过<code>match</code>表达式。</p>
 <pre><code class="language-lean">variable (α : Type) (p q : α → Prop)
 
 example (h : ∃ x, p x ∧ q x) : ∃ x, q x ∧ p x :=
   match h with
   | ⟨w, hw⟩ =&gt; ⟨w, hw.right, hw.left⟩
 </code></pre>
-<p><code>match</code>表达式是精益功能定义系统的一部分，它提供了定义复杂功能的方便和表达方式。再一次，正是Curry-Howard同构让我们能够采用这种机制来编写证明。<code>match</code>语句将存在断言“析构”到组件<code>w</code>和<code>hw</code>中，然后可以在语句体中使用它们来证明命题。我们可以对match中使用的类型进行注释，以提高清晰度:
-The <code>match</code> expression is part of Lean's function definition system,
-which provides convenient and expressive ways of defining complex
-functions.  Once again, it is the Curry-Howard isomorphism that allows
-us to co-opt this mechanism for writing proofs as well.  The <code>match</code>
-statement &quot;destructs&quot; the existential assertion into the components
-<code>w</code> and <code>hw</code>, which can then be used in the body of the statement
-to prove the proposition. We can annotate the types used in the match
-for greater clarity:</p>
+<p><code>match</code>表达式是Lean功能定义系统的一部分，它提供了复杂功能的方便且丰富的表达方式。再一次，正是Curry-Howard同构让我们能够采用这种机制来编写证明。<code>match</code>语句将存在断言“析构”到组件<code>w</code>和<code>hw</code>中，然后可以在语句体中使用它们来证明命题。我们可以对match中使用的类型进行注释，以提高清晰度：</p>
 <pre><code class="language-lean"><span class="boring">variable (α : Type) (p q : α → Prop)
 </span>example (h : ∃ x, p x ∧ q x) : ∃ x, q x ∧ p x :=
   match h with
@@ -528,9 +499,9 @@ theorem even_plus_even (h1 : is_even a) (h2 : is_even b) : is_even (a + b) :=
         a + b = 2 * w1 + 2 * w2  := by rw [hw1, hw2]
           _   = 2*(w1 + w2)      := by rw [Nat.mul_add])))
 </code></pre>
-<p>使用本章描述的各种小工具——match语句、匿名构造子和<code>rewrite</code>策略，我们可以简洁地写出如下证明：</p>
-<pre><code class="language-lean"><span class="boring">def is_even (a : Nat) := ∃ b, a = 2 * b
-</span>theorem even_plus_even (h1 : is_even a) (h2 : is_even b) : is_even (a + b) :=
+<p>使用本章描述的各种小工具——<code>match</code>语句、匿名构造子和<code>rewrite</code>策略，我们可以简洁地写出如下证明：</p>
+<pre><code class="language-lean">def is_even (a : Nat) := ∃ b, a = 2 * b
+theorem even_plus_even (h1 : is_even a) (h2 : is_even b) : is_even (a + b) :=
   match h1, h2 with
   | ⟨w1, hw1⟩, ⟨w2, hw2⟩ =&gt; ⟨w1 + w2, by rw [hw1, hw2, Nat.mul_add]⟩
 </code></pre>
@@ -650,15 +621,15 @@ example : f 0 ≥ f 1 → f 1 ≥ f 2 → f 0 = f 2 :=
 <ol>
 <li>证明以下等式：</li>
 </ol>
-<pre><code class="language-lean"> variable (α : Type) (p q : α → Prop)
+<pre><code class="language-lean">variable (α : Type) (p q : α → Prop)
 
- example : (∀ x, p x ∧ q x) ↔ (∀ x, p x) ∧ (∀ x, q x) := sorry
- example : (∀ x, p x → q x) → (∀ x, p x) → (∀ x, q x) := sorry
- example : (∀ x, p x) ∨ (∀ x, q x) → ∀ x, p x ∨ q x := sorry
+example : (∀ x, p x ∧ q x) ↔ (∀ x, p x) ∧ (∀ x, q x) := sorry
+example : (∀ x, p x → q x) → (∀ x, p x) → (∀ x, q x) := sorry
+example : (∀ x, p x) ∨ (∀ x, q x) → ∀ x, p x ∨ q x := sorry
 </code></pre>
 <p>你还应该想想为什么在最后一个例子中反过来是不能证明的。</p>
 <ol start="2">
-<li>当一个公式的组成部分不依赖于被量化的变量时，通常可以把它提取出一个全称量词的范围。尝试证明这些(第二个命题中的一个方向需要经典逻辑)：</li>
+<li>当一个公式的组成部分不依赖于被全称的变量时，通常可以把它提取出一个全称量词的范围。尝试证明这些(第二个命题中的一个方向需要经典逻辑)：</li>
 </ol>
 <pre><code class="language-lean">variable (α : Type) (p q : α → Prop)
 variable (r : Prop)

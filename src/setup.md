@@ -32,6 +32,9 @@ $ elan override set leanprover/lean4:stable
     ```sh
     curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- --default-toolchain leanprover/lean4:nightly
     ```
+    > 如果下载不成功，可以到本项目的git仓库的resources文件夹中获取elan-init.sh文件。
+    > (不推荐)如果后面的步骤执行也不成功，可以直接下载.elan压缩文件，解压到用户文件目录下(例如C:\Users\xxx目录)，然后手动配置环境变量(C:\Users\xxx\\.elan\bin)
+    
     或者在Windows系统中, 在`cmd`中运行
     ```sh
     curl -O --location https://raw.githubusercontent.com/leanprover/elan/master/elan-init.ps1

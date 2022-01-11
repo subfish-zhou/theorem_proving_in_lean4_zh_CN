@@ -1,0 +1,1 @@
+def multiply (a b : Nat) : Nat := Nat.mul a b
