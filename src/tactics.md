@@ -469,7 +469,11 @@ example (p q r : Prop) : p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r) := by
       | intro hp hr => constructor; exact hp; apply Or.inr; exact hr
 ```
 
+<<<<<<< HEAD
 你将在[归纳类型](./inductive_types.md)一章中看到，这些策略是相当通用的。``cases``策略可以用来分解递归定义类型的任何元素；``constructor``总是应用递归定义类型的第一个适用构造子。例如，你可以使用``cases``和``constructor``与一个存在量词：
+=======
+你将在[递归类型](./inductive_types.md)一章中看到，这些策略是相当通用的。``cases``策略可以用来分解递归定义类型的任何元素；``constructor``总是应用递归定义类型的第一个适用构造子。例如，你可以使用``cases``和``constructor``与一个存在量词：
+>>>>>>> 9647471447f08eb78a8c7dde28bf1857dae49c9f
 
 ```lean
 example (p q : Nat → Prop) : (∃ x, p x) → ∃ x, p x ∨ q x := by
@@ -529,7 +533,11 @@ example (P : Nat → Prop) (h₀ : P 0) (h₁ : ∀ n, P (succ n)) (m : Nat) : P
  | succ m' => exact h₁ m'
 ```
 
+<<<<<<< HEAD
 ``cases``策略伙同``induction``策略将在[归纳类型的策略](./inductive_types.md#_tactics_for_inductive_types)一节中详述。
+=======
+``cases``策略伙同``induction``策略将在[递归类型的策略](./inductive_types.md#_tactics_for_inductive_types)一节中详述。
+>>>>>>> 9647471447f08eb78a8c7dde28bf1857dae49c9f
 
 ``contradiction``策略搜索当前目标的假设中的矛盾：
 
