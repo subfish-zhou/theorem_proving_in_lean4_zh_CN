@@ -3,48 +3,28 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Interacting with Lean - Lean中文教程</title>
-        
-        
-
-
+        <title>使用Lean进行工作 - Lean中文教程</title>
         <!-- Custom HTML head -->
-        
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="favicon.svg">
-        
-        
         <link rel="shortcut icon" href="favicon.png">
-        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
-        
         <link rel="stylesheet" href="css/print.css" media="print">
-        
-
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="fonts/fonts.css">
-        
-
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
         <link rel="stylesheet" href="tomorrow-night.css">
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
-
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -95,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title_page.html">Lean 4定理证明</a></li><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> 介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li></ol></li><li class="chapter-item expanded "><a href="dependent_type_theory.html"><strong aria-hidden="true">2.</strong> 依赖类型论</a></li><li class="chapter-item expanded "><a href="propositions_and_proofs.html"><strong aria-hidden="true">3.</strong> 命题和证明</a></li><li class="chapter-item expanded "><a href="quantifiers_and_equality.html"><strong aria-hidden="true">4.</strong> 量词与等价</a></li><li class="chapter-item expanded "><a href="tactics.html"><strong aria-hidden="true">5.</strong> 证明策略</a></li><li class="chapter-item expanded "><a href="interacting_with_lean.html" class="active"><strong aria-hidden="true">6.</strong> Interacting with Lean</a></li><li class="chapter-item expanded "><a href="inductive_types.html"><strong aria-hidden="true">7.</strong> Inductive Types</a></li><li class="chapter-item expanded "><a href="induction_and_recursion.html"><strong aria-hidden="true">8.</strong> Induction and Recursion</a></li><li class="chapter-item expanded "><a href="structures_and_records.html"><strong aria-hidden="true">9.</strong> 结构体和记录</a></li><li class="chapter-item expanded "><a href="type_classes.html"><strong aria-hidden="true">10.</strong> Type Classes</a></li><li class="chapter-item expanded "><a href="conv.html"><strong aria-hidden="true">11.</strong> 转换策略模式</a></li><li class="chapter-item expanded "><a href="axioms_and_computation.html"><strong aria-hidden="true">12.</strong> Axioms and Computation</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title_page.html">Lean 4定理证明</a></li><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> 介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li></ol></li><li class="chapter-item expanded "><a href="dependent_type_theory.html"><strong aria-hidden="true">2.</strong> 依赖类型论</a></li><li class="chapter-item expanded "><a href="propositions_and_proofs.html"><strong aria-hidden="true">3.</strong> 命题和证明</a></li><li class="chapter-item expanded "><a href="quantifiers_and_equality.html"><strong aria-hidden="true">4.</strong> 量词与等价</a></li><li class="chapter-item expanded "><a href="tactics.html"><strong aria-hidden="true">5.</strong> 证明策略</a></li><li class="chapter-item expanded "><a href="interacting_with_lean.html" class="active"><strong aria-hidden="true">6.</strong> 使用Lean进行工作</a></li><li class="chapter-item expanded "><a href="inductive_types.html"><strong aria-hidden="true">7.</strong> Inductive Types</a></li><li class="chapter-item expanded "><a href="induction_and_recursion.html"><strong aria-hidden="true">8.</strong> Induction and Recursion</a></li><li class="chapter-item expanded "><a href="structures_and_records.html"><strong aria-hidden="true">9.</strong> 结构体和记录</a></li><li class="chapter-item expanded "><a href="type_classes.html"><strong aria-hidden="true">10.</strong> Type Classes</a></li><li class="chapter-item expanded "><a href="conv.html"><strong aria-hidden="true">11.</strong> 转换策略模式</a></li><li class="chapter-item expanded "><a href="axioms_and_computation.html"><strong aria-hidden="true">12.</strong> Axioms and Computation</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -103,7 +83,6 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
                 <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
@@ -120,33 +99,26 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Lean中文教程</h1>
 
                     <div class="right-buttons">
-                        
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
-                        
                         <a href="https://github.com/subfish-zhou/theorem_proving_in_lean4_zh_CN" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -154,8 +126,6 @@
                         </ul>
                     </div>
                 </div>
-                
-
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
@@ -167,51 +137,18 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#interacting-with-lean" id="interacting-with-lean">Interacting with Lean</a></h1>
-<p>You are now familiar with the fundamentals of dependent type theory,
-both as a language for defining mathematical objects and a language
-for constructing proofs. The one thing you are missing is a mechanism
-for defining new data types. We will fill this gap in the next
-chapter, which introduces the notion of an <em>inductive data type</em>. But
-first, in this chapter, we take a break from the mechanics of type
-theory to explore some pragmatic aspects of interacting with Lean.</p>
-<p>Not all of the information found here will be useful to you right
-away. We recommend skimming this section to get a sense of Lean's
-features, and then returning to it as necessary.</p>
-<h2><a class="header" href="#a-name_importing_filesa-importing-files" id="a-name_importing_filesa-importing-files"><a name="_importing_files"></a> Importing Files</a></h2>
-<p>The goal of Lean's front end is to interpret user input, construct
-formal expressions, and check that they are well formed and type
-correct. Lean also supports the use of various editors, which provide
-continuous checking and feedback. More information can be found on the
-Lean <a href="http://leanprover.github.io/documentation/">documentation pages</a>.</p>
-<p>The definitions and theorems in Lean's standard library are spread
-across multiple files. Users may also wish to make use of additional
-libraries, or develop their own projects across multiple files. When
-Lean starts, it automatically imports the contents of the library
-<code>Init</code> folder, which includes a number of fundamental definitions
-and constructions. As a result, most of the examples we present here
-work &quot;out of the box.&quot;</p>
-<p>If you want to use additional files, however, they need to be imported
-manually, via an <code>import</code> statement at the beginning of a file. The
-command</p>
+                        <h1 id="使用lean进行工作"><a class="header" href="#使用lean进行工作">使用Lean进行工作</a></h1>
+<p>你现在已经熟悉了依赖类型论的基本原理，它既是一种定义数学对象的语言，也是一种构造证明的语言。现在你缺少一个定义新数据类型的机制。下一章介绍<em>归纳数据类型</em>的概念来帮你完成这个目标。但首先，在这一章中，我们从类型论的机制中抽身出来，探索与Lean交互的一些实用性问题。</p>
+<p>并非所有的知识都能马上对你有用。可以略过这一节，然后在必要时再回到这一节以了解Lean的特性。</p>
+<h2 id="导入文件"><a class="header" href="#导入文件">导入文件</a></h2>
+<p>Lean的前端的目标是解释用户的输入，构建形式化的表达式，并检查它们是否形式良好和类型正确。Lean还支持使用各种编辑器，这些编辑器提供持续的检查和反馈。更多信息可以在Lean<a href="http://leanprover.github.io/documentation/">文档</a>上找到。</p>
+<p>Lean的标准库中的定义和定理分布在多个文件中。用户也可能希望使用额外的库，或在多个文件中开发自己的项目。当Lean启动时，它会自动导入库中<code>Init'</code>文件夹的内容，其中包括一些基本定义和结构。因此，我们在这里介绍的大多数例子都是“开箱即用”的。</p>
+<p>然而，如果你想使用其他文件，需要通过文件开头的`import'语句手动导入。命令</p>
 <pre><code>import Bar.Baz.Blah
 </code></pre>
-<p>imports the file <code>Bar/Baz/Blah.olean</code>, where the descriptions are
-interpreted relative to the Lean <em>search path</em>. Information as to how
-the search path is determined can be found on the
-<a href="http://leanprover.github.io/documentation/">documentation pages</a>.
-By default, it includes the standard library directory, and (in some contexts)
-the root of the user's local project. One can also specify imports relative to the current directory; for example,
-Importing is transitive. In other words, if you import <code>Foo</code> and <code>Foo</code> imports <code>Bar</code>,
-then you also have access to the contents of <code>Bar</code>, and do not need to import it explicitly.</p>
-<h2><a class="header" href="#more-on-sections" id="more-on-sections">More on Sections</a></h2>
-<p>Lean provides various sectioning mechanisms to help structure a
-theory. You saw in <a href="./dependent_type_theory.html#_variables_and_sections">Variables and Sections</a> that the
-<code>section</code> command makes it possible not only to group together
-elements of a theory that go together, but also to declare variables
-that are inserted as arguments to theorems and definitions, as
-necessary. Remember that the point of the <code>variable</code> command is to
-declare variables for use in theorems, as in the following example:</p>
+<p>导入文件<code>Bar/Baz/Blah.olean</code>，其中的描述是相对于Lean<em>搜索路径</em>解释的。关于如何确定搜索路径的信息可以在<a href="http://leanprover.github.io/documentation/">文档</a>中找到。默认情况下，它包括标准库目录，以及（在某些情况下）用户的本地项目的根目录。你也可以指定相对于当前目录的导入；例如，导入是传递性的。换句话说，如果你导入了 <code>Foo</code>，并且<code>Foo</code>导入了<code>Bar</code>，那么你也可以访问<code>Bar</code>的内容，而不需要明确导入它。</p>
+<h2 id="小节续"><a class="header" href="#小节续">小节（续）</a></h2>
+<p>Lean提供了各种分段机制来帮助构造理论。你在<a href="./dependent_type_theory.html#%E5%8F%98%E9%87%8F%E5%92%8C%E5%B0%8F%E8%8A%82">变量和小节</a>中看到，<code>section</code>命令不仅可以将理论中的元素组合在一起，还可以在必要时声明变量，作为定理和定义的参数插入。请记住，<code>variable</code>命令的意义在于声明变量，以便在定理中使用，如下面的例子：</p>
 <pre><code class="language-lean">section
 variable (x y : Nat)
 
@@ -233,20 +170,9 @@ theorem t2 : double (x * y) = double x * y := by
 
 end
 </code></pre>
-<p>The definition of <code>double</code> does not have to declare <code>x</code> as an
-argument; Lean detects the dependence and inserts it
-automatically. Similarly, Lean detects the occurrence of <code>x</code> in
-<code>t1</code> and <code>t2</code>, and inserts it automatically there, too.
-Note that double does <em>not</em> have <code>y</code> as argument. Variables are only
-included in declarations where they are actually used.</p>
-<h2><a class="header" href="#more-on-namespaces" id="more-on-namespaces">More on Namespaces</a></h2>
-<p>In Lean, identifiers are given by hierarchical <em>names</em> like
-<code>Foo.Bar.baz</code>. We saw in <a href="./dependent_type_theory.html#_namespaces">Namespaces</a> that Lean provides
-mechanisms for working with hierarchical names. The command
-<code>namespace foo</code> causes <code>foo</code> to be prepended to the name of each
-definition and theorem until <code>end foo</code> is encountered. The command
-<code>open foo</code> then creates temporary <em>aliases</em> to definitions and
-theorems that begin with prefix <code>foo</code>.</p>
+<p><code>double</code>的定义不需要声明<code>x</code>作为参数；Lean检测到这种依赖关系并自动插入。同样，Lean检测到<code>x</code>在<code>t1</code>和<code>t2</code>中的出现，也会自动插入。注意，double<em>没有</em><code>y</code>作为参数。变量只包括在实际使用的声明中。</p>
+<h2 id="命名空间续"><a class="header" href="#命名空间续">命名空间（续）</a></h2>
+<p>在Lean中，标识符是由层次化的<em>名称</em>给出的，如<code>Foo.Bar.baz</code>。我们在<a href="./dependent_type_theory.html#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4">命名空间</a>一节中看到，Lean提供了处理分层名称的机制。命令<code>namespace foo</code>导致<code>foo</code>被添加到每个定义和定理的名称中，直到遇到<code>end foo</code>。命令<code>open foo</code>然后为以<code>foo</code>开头的定义和定理创建临时的<em>别名</em>。</p>
 <pre><code class="language-lean">namespace Foo
 def bar : Nat := 1
 end Foo
@@ -256,20 +182,15 @@ open Foo
 #check bar
 #check Foo.bar
 </code></pre>
-<p>The following definition</p>
+<p>下面的定义</p>
 <pre><code class="language-lean">def Foo.bar : Nat := 1
 </code></pre>
-<p>is treated as a macro, and expands to</p>
+<p>被看成一个宏；展开成</p>
 <pre><code class="language-lean">namespace Foo
 def bar : Nat := 1
 end Foo
 </code></pre>
-<p>Although the names of theorems and definitions have to be unique, the
-aliases that identify them do not. When we open a namespace, an
-identifier may be ambiguous. Lean tries to use type information to
-disambiguate the meaning in context, but you can always disambiguate
-by giving the full name. To that end, the string <code>_root_</code> is an
-explicit description of the empty prefix.</p>
+<p>尽管定理和定义的名称必须是唯一的，但标识它们的别名却不是。当我们打开一个命名空间时，一个标识符可能是模糊的。Lean试图使用类型信息来消除上下文中的含义，但你总是可以通过给出全名来消除歧义。为此，字符串<code>_root_</code>是对空前缀的明确表述。</p>
 <pre><code class="language-lean">def String.add (a b : String) : String :=
   a ++ b
 
@@ -289,7 +210,7 @@ open String
 #check add true false       -- Bool
 #check add Nat Nat          -- Type
 </code></pre>
-<p>We can prevent the shorter alias from being created by using the <code>protected</code> keyword:</p>
+<p>我们可以通过使用<code>protected</code>关键字来阻止创建较短的别名：</p>
 <pre><code class="language-lean">protected def Foo.bar : Nat := 1
 
 open Foo
@@ -297,49 +218,30 @@ open Foo
 -- #check bar -- error
 #check Foo.bar
 </code></pre>
-<p>This is often used for names like <code>Nat.rec</code> and <code>Nat.recOn</code>, to prevent
-overloading of common names.</p>
-<p>The <code>open</code> command admits variations. The command</p>
+<p>这通常用于像<code>Nat.rec</code>和<code>Nat.recOn</code>这样的名称，以防止普通名称的重载。</p>
+<p><code>open</code>命令允许变量。命令</p>
 <pre><code class="language-lean">open Nat (succ zero gcd)
 #check zero     -- Nat
 #eval gcd 15 6  -- 3
 </code></pre>
-<p>creates aliases for only the identifiers listed. The command</p>
+<p>仅对列出的标识符创建了别名。命令</p>
 <pre><code class="language-lean">open Nat hiding succ gcd
 #check zero     -- Nat
 -- #eval gcd 15 6  -- error
 #eval Nat.gcd 15 6  -- 3
 </code></pre>
-<p>creates aliases for everything in the <code>Nat</code> namespace <em>except</em> the identifiers listed.</p>
+<p>给<code>Nat</code>命名空间中<em>除去</em>被列出的标识符都创建了别名。命令</p>
 <pre><code class="language-lean">open Nat renaming mul → times, add → plus
 #eval plus (times 2 2) 3  -- 7
 </code></pre>
-<p>creates aliases renaming <code>Nat.mul</code> to <code>times</code> and <code>Nat.add</code> to <code>plus</code>.</p>
-<p>It is sometimes useful to <code>export</code> aliases from one namespace to another, or to the top level. The command</p>
+<p>将<code>Nat.mul</code>更名为<code>times</code>，<code>Nat.add</code>更名为<code>plus</code>。</p>
+<p>有时，将别名从一个命名空间导出到另一个命名空间，或者导出到上一层是很有用的。命令</p>
 <pre><code class="language-lean">export Nat (succ add sub)
 </code></pre>
-<p>creates aliases for <code>succ</code>, <code>add</code>, and <code>sub</code> in the current
-namespace, so that whenever the namespace is open, these aliases are
-available. If this command is used outside a namespace, the aliases
-are exported to the top level.</p>
-<h2><a class="header" href="#attributes" id="attributes">Attributes</a></h2>
-<p>The main function of Lean is to translate user input to formal
-expressions that are checked by the kernel for correctness and then
-stored in the environment for later use. But some commands have other
-effects on the environment, either assigning attributes to objects in
-the environment, defining notation, or declaring instances of type
-classes, as described in <a href="./type_classes.html">Chapter Type Classes</a>. Most of
-these commands have global effects, which is to say, that they remain
-in effect not only in the current file, but also in any file that
-imports it. However, such commands often support the <code>local</code> modifier,
-which indicates that they only have effect until
-the current <code>section</code> or <code>namespace</code> is closed, or until the end
-of the current file.</p>
-<p>In <a href="./tactics.html#_using_the_simp">Section Using the Simplifier</a>,
-we saw that theorems can be annotated with the <code>[simp]</code> attribute,
-which makes them available for use by the simplifier.
-The following example defines the prefix relation on lists,
-proves that this relation is reflexive, and assigns the <code>[simp]</code> attribute to that theorem.</p>
+<p>在当前命名空间中为<code>succ</code>、<code>add</code>和<code>sub</code>创建别名，这样无论何时命名空间被打开，这些别名都可以使用。如果这个命令在名字空间之外使用，那么这些别名会被输出到上一层。</p>
+<h2 id="属性"><a class="header" href="#属性">属性</a></h2>
+<p>Lean的主要功能是把用户的输入翻译成形式化的表达式，由内核检查其正确性，然后存储在环境中供以后使用。但是有些命令对环境有其他的影响，或者给环境中的对象分配属性，定义符号，或者声明类型类的实例，如<a href="./type_classes.html">类型类</a>一章所述。这些命令大多具有全局效应，也就是说，它们不仅在当前文件中保持有效，而且在任何导入它的文件中也保持有效。然而，这类命令通常支持<code>local</code>修饰符，这表明它们只在当前<code>section</code>或<code>namespace</code>关闭前或当前文件结束前有效。</p>
+<p>在<a href="./tactics.html#%E7%AE%80%E5%8C%96">简化</a>一节中，我们看到可以用<code>[simp]</code>属性来注释定理，这使它们可以被简化器使用。下面的例子定义了列表的前缀关系，证明了这种关系是自反的，并为该定理分配了<code>[simp]</code>属性。</p>
 <pre><code class="language-lean">def isPrefix (l₁ : List α) (l₂ : List α) : Prop :=
   ∃ t, l₁ ++ t = l₂
 
@@ -349,21 +251,19 @@ proves that this relation is reflexive, and assigns the <code>[simp]</code> attr
 example : isPrefix [1, 2, 3] [1, 2, 3] := by
   simp
 </code></pre>
-<p>The simplifier then proves <code>isPrefix [1, 2, 3] [1, 2, 3]</code> by rewriting it to <code>True</code>.</p>
-<p>One can also assign the attribute any time after the definition takes place:</p>
-<pre><code class="language-lean"><span class="boring">def isPrefix (l₁ : List α) (l₂ : List α) : Prop :=
-</span><span class="boring"> ∃ t, l₁ ++ t = l₂
-</span>theorem List.isPrefix_self (as : List α) : isPrefix as as :=
+<p>然后简化器通过将其改写为<code>True</code>来证明<code>isPrefix [1, 2, 3] [1, 2, 3]</code>。</p>
+<p>你也可以在做出定义后的任何时候分配属性：</p>
+<pre><code class="language-lean"># def isPrefix (l₁ : List α) (l₂ : List α) : Prop :=
+#  ∃ t, l₁ ++ t = l₂
+theorem List.isPrefix_self (as : List α) : isPrefix as as :=
   ⟨[], by simp⟩
 
 attribute [simp] List.isPrefix_self
 </code></pre>
-<p>In all these cases, the attribute remains in effect in any file that
-imports the one in which the declaration occurs. Adding the <code>local</code>
-modifier restricts the scope:</p>
-<pre><code class="language-lean"><span class="boring">def isPrefix (l₁ : List α) (l₂ : List α) : Prop :=
-</span><span class="boring"> ∃ t, l₁ ++ t = l₂
-</span>section
+<p>在所有这些情况下，该属性在任何导入该声明的文件中仍然有效。添加<code>local</code>修饰符可以限制范围：</p>
+<pre><code class="language-lean"># def isPrefix (l₁ : List α) (l₂ : List α) : Prop :=
+#  ∃ t, l₁ ++ t = l₂
+section
 
 theorem List.isPrefix_self (as : List α) : isPrefix as as :=
   ⟨[], by simp⟩
@@ -379,10 +279,7 @@ end
 -- example : isPrefix [1, 2, 3] [1, 2, 3] := by
 --  simp
 </code></pre>
-<p>For another example, we can use the <code>instance</code> command to assign the
-notation <code>≤</code> to the <code>isPrefix</code> relation. That command, which will
-be explained in <a href="./type_classes.html">Chapter Type Classes</a>, works by
-assigning an <code>[instance]</code> attribute to the associated definition.</p>
+<p>另一个例子，我们可以使用<code>instance</code>命令来给<code>isPrefix</code>关系分配符号<code>≤</code>。该命令将在<a href="./type_classes.html">类型类</a>中解释，它的工作原理是给相关定义分配一个<code>[instance]</code>属性。</p>
 <pre><code class="language-lean">def isPrefix (l₁ : List α) (l₂ : List α) : Prop :=
   ∃ t, l₁ ++ t = l₂
 
@@ -392,10 +289,10 @@ instance : LE (List α) where
 theorem List.isPrefix_self (as : List α) : as ≤ as :=
   ⟨[], by simp⟩
 </code></pre>
-<p>That assignment can also be made local:</p>
-<pre><code class="language-lean"><span class="boring">def isPrefix (l₁ : List α) (l₂ : List α) : Prop :=
-</span><span class="boring">  ∃ t, l₁ ++ t = l₂
-</span>def instLe : LE (List α) :=
+<p>这个分配也可以是局部的：</p>
+<pre><code class="language-lean"># def isPrefix (l₁ : List α) (l₂ : List α) : Prop :=
+#   ∃ t, l₁ ++ t = l₂
+def instLe : LE (List α) :=
   { le := isPrefix }
 
 section
@@ -410,34 +307,11 @@ end
 -- example (as : List α) : as ≤ as :=
 --  ⟨[], by simp⟩
 </code></pre>
-<p>In <a href="#notation">Section Notation</a> below, we will discuss Lean's
-mechanisms for defining notation, and see that they also support the
-<code>local</code> modifier. However, in <a href="#setting_options">Section Setting Options</a>, we will
-discuss Lean's mechanisms for setting options, which does <em>not</em> follow
-this pattern: options can <em>only</em> be set locally, which is to say,
-their scope is always restricted to the current section or current
-file.</p>
-<h2><a class="header" href="#more-on-implicit-arguments" id="more-on-implicit-arguments">More on Implicit Arguments</a></h2>
-<p>In <a href="./dependent_type_theory.html#_implicit_args">Section Implicit Arguments</a>,
-we saw that if Lean displays the type
-of a term <code>t</code> as <code>{x : α} → β x</code>, then the curly brackets
-indicate that <code>x</code> has been marked as an <em>implicit argument</em> to
-<code>t</code>. This means that whenever you write <code>t</code>, a placeholder, or
-&quot;hole,&quot; is inserted, so that <code>t</code> is replaced by <code>@t _</code>. If you
-don't want that to happen, you have to write <code>@t</code> instead.</p>
-<p>Notice that implicit arguments are inserted eagerly. Suppose we define
-a function <code>f (x : Nat) {y : Nat} (z : Nat)</code> with the arguments
-shown. Then, when we write the expression <code>f 7</code> without further
-arguments, it is parsed as <code>f 7 _</code>. Lean offers a weaker annotation,
-<code>{{y : ℕ}}</code>, which specifies that a placeholder should only be added
-<em>before</em> a subsequent explicit argument. This annotation can also be
-written using as <code>⦃y : Nat⦄</code>, where the unicode brackets are entered
-as <code>\{{</code> and <code>\}}</code>, respectively. With this annotation, the
-expression <code>f 7</code> would be parsed as is, whereas <code>f 7 3</code> would be
-parsed as <code>f 7 _ 3</code>, just as it would be with the strong annotation.</p>
-<p>To illustrate the difference, consider the following example, which
-shows that a reflexive euclidean relation is both symmetric and
-transitive.</p>
+<p>在下面的<a href="#%E7%AC%A6%E5%8F%B7">符号</a>一节中，我们将讨论Lean定义符号的机制，并看到它们也支持<code>local</code>修饰符。然而，在<a href="#%E8%AE%BE%E7%BD%AE%E9%80%89%E9%A1%B9">设置选项</a>一节中，我们将讨论Lean设置选项的机制，它并<em>不</em>遵循这种模式：选项<em>只能</em>在局部设置，也就是说，它们的范围总是限制在当前小节或当前文件中。</p>
+<h2 id="隐参数续"><a class="header" href="#隐参数续">隐参数（续）</a></h2>
+<p>在<a href="./dependent_type_theory.html#%E9%9A%90%E5%8F%82%E6%95%B0">隐参数</a>一节中，我们看到，如果Lean将术语<code>t</code>的类型显示为<code>{x : α} → β x</code>，那么大括号表示<code>x</code>被标记为<code>t</code>的<em>隐参数</em>。这意味着每当你写<code>t</code>时，就会插入一个占位符，或者说“洞”，这样<code>t</code>就会被<code>@t _</code>取代。如果你不希望这种情况发生，你必须写<code>@t</code>来代替。</p>
+<p>请注意，隐参数是急于插入的。假设我们定义一个函数<code>f (x : Nat) {y : Nat} (z : Nat)</code>。那么，当我们写表达式<code>f 7</code>时，没有进一步的参数，它会被解析为<code>f 7 _</code>。Lean提供了一个较弱的注释，<code>{{y : ℕ}}</code>，它指定了一个占位符只应在后一个显式参数之前添加。这个注释也可以写成<code>⦃y : Nat⦄</code>，其中的unicode括号输入方式为<code>\{{</code>和<code>\}}</code>。有了这个注释，表达式<code>f 7</code>将被解析为原样，而<code>f 7 3</code>将被解析为<code>f 7 _ 3</code>，就像使用强注释一样。</p>
+<p>为了说明这种区别，请看下面的例子，它表明一个自反的欧几里得关系既是对称的又是传递的。</p>
 <pre><code class="language-lean">def reflexive {α : Type u} (r : α → α → Prop) : Prop :=
   ∀ (a : α), r a a
 
@@ -474,13 +348,7 @@ variable (euclr : euclidean r)
 
 #check euclr  -- r ?m1 ?m2 → r ?m1 ?m3 → r ?m2 ?m3
 </code></pre>
-<p>The results are broken down into small steps: <code>th1</code> shows that a
-relation that is reflexive and euclidean is symmetric, and <code>th2</code>
-shows that a relation that is symmetric and euclidean is
-transitive. Then <code>th3</code> combines the two results. But notice that we
-have to manually disable the implicit arguments in <code>th1</code>, <code>th2</code>,
-and <code>euclr</code>, because otherwise too many implicit arguments are
-inserted. The problem goes away if we use weak implicit arguments:</p>
+<p>这些结果被分解成几个小步骤。<code>th1</code>表明自反和欧氏的关系是对称的，<code>th2</code>表明对称和欧氏的关系是传递的。然后<code>th3</code>结合这两个结果。但是请注意，我们必须手动禁用<code>th1</code>、<code>th2</code>和<code>euclr</code>中的隐参数，否则会插入太多的隐参数。如果我们使用弱隐式参数，这个问题就会消失：</p>
 <pre><code class="language-lean">def reflexive {α : Type u} (r : α → α → Prop) : Prop :=
   ∀ (a : α), r a a
 
@@ -517,101 +385,48 @@ variable (euclr : euclidean r)
 
 #check euclr  -- euclidean r
 </code></pre>
-<p>There is a third kind of implicit argument that is denoted with square
-brackets, <code>[</code> and <code>]</code>. These are used for type classes, as
-explained in <a href="./type_classes.html">Chapter Type Classes</a>.</p>
-<h2><a class="header" href="#notation" id="notation">Notation</a></h2>
-<p>Identifiers in Lean can include any alphanumeric characters, including
-Greek characters (other than ∀ , Σ , and λ , which, as we have seen,
-have a special meaning in the dependent type theory). They can also
-include subscripts, which can be entered by typing <code>\_</code> followed by
-the desired subscripted character.</p>
-<p>Lean's parser is extensible, which is to say, we can define new notation.</p>
-<p>Lean's syntax can be extended and customized by users at every level,
-ranging from basic &quot;mixfix&quot; notations to custom elaborators.  In fact,
-all builtin syntax is parsed and processed using the same mechanisms
-and APIs open to users.  In this section, we will describe and explain
-the various extension points.</p>
-<p>While introducing new notations is a relatively rare feature in
-programming languages and sometimes even frowned upon because of its
-potential to obscure code, it is an invaluable tool in formalization
-for expressing established conventions and notations of the respective
-field succinctly in code.  Going beyond basic notations, Lean's
-ability to factor out common boilerplate code into (well-behaved)
-macros and to embed entire custom domain specific languages (DSLs) to
-textually encode subproblems efficiently and readably can be of great
-benefit to both programmers and proof engineers alike.</p>
-<h3><a class="header" href="#notations-and-precedence" id="notations-and-precedence">Notations and Precedence</a></h3>
-<p>The most basic syntax extension commands allow introducing new (or
-overloading existing) prefix, infix, and postfix operators.</p>
-<pre><code class="language-lean">infixl:65   &quot; + &quot; =&gt; HAdd.hAdd  -- left-associative
-infix:50    &quot; = &quot; =&gt; Eq         -- non-associative
-infixr:80   &quot; ^ &quot; =&gt; HPow.hPow  -- right-associative
+<p>还有第三种隐式参数，用方括号表示，<code>[</code>和<code>]</code>。这些是用于类型类的，在<a href="./type_classes.html">类型类</a>中解释。</p>
+<h2 id="符号"><a class="header" href="#符号">符号</a></h2>
+<p>Lean中的标识符可以包括任何字母数字字符，包括希腊字母（除了∀、Σ和λ，它们在依赖类型论中有特殊的含义）。它们还可以包括下标，可以通过输入<code>\_</code>，然后再输入所需的下标字符。</p>
+<p>Lean的解析器是可扩展的，也就是说，我们可以定义新的符号。</p>
+<p>Lean的语法可以由用户在各个层面进行扩展和定制，从基本的“mixfix”符号到自定义的阐释器。事实上，所有内置的语法都是使用对用户开放的相同机制和API进行解析和处理的。 在本节中，我们将描述和解释各种扩展点。</p>
+<p>虽然在编程语言中引入新的符号是一个相对罕见的功能，有时甚至因为它有可能使代码变得模糊不清而被人诟病，但它是形式化的一个宝贵工具，可以在代码中简洁地表达各自领域的既定惯例和符号。 除了基本的符号之外，Lean的能力是将普通的样板代码分解成（良好的）宏，并嵌入整个定制的特定领域语言（DSL，domain specific language），对子问题进行高效和可读的文本编码，这对程序员和证明工程师都有很大的好处。</p>
+<h3 id="符号和优先级"><a class="header" href="#符号和优先级">符号和优先级</a></h3>
+<p>最基本的语法扩展命令允许引入新的（或重载现有的）前缀、下缀和后缀运算符：</p>
+<pre><code class="language-lean">infixl:65   &quot; + &quot; =&gt; HAdd.hAdd  -- 左结合
+infix:50    &quot; = &quot; =&gt; Eq         -- 非结合
+infixr:80   &quot; ^ &quot; =&gt; HPow.hPow  -- 右结合
 prefix:100  &quot;-&quot;   =&gt; Neg.neg
-<span class="boring">set_option quotPrecheck false
-</span>postfix:max &quot;⁻¹&quot;  =&gt; Inv.inv
+set_option quotPrecheck false
+postfix:max &quot;⁻¹&quot;  =&gt; Inv.inv
 </code></pre>
-<p>After the initial command name describing the operator kind (its
-&quot;fixity&quot;), we give the <em>parsing precedence</em> of the operator preceded
-by a colon <code>:</code>, then a new or existing token surrounded by double
-quotes (the whitespace is used for pretty printing), then the function
-this operator should be translated to after the arrow <code>=&gt;</code>.</p>
-<p>The precedence is a natural number describing how &quot;tightly&quot; an
-operator binds to its arguments, encoding the order of operations.  We
-can make this more precise by looking at the commands the above unfold to:</p>
+<p>句法：</p>
+<p>运算符种类（其“结合方式”） : 解析优先级 &quot;新的或现有的符号&quot; =&gt; 这个符号应该翻译成的函数</p>
+<p>优先级是一个自然数，描述一个运算符与它的参数结合的“紧密程度”，编码操作的顺序。我们可以通过查看上述展开的命令来使之更加精确：</p>
 <pre><code class="language-lean">notation:65 lhs:65 &quot; + &quot; rhs:66 =&gt; HAdd.hAdd lhs rhs
 notation:50 lhs:51 &quot; = &quot; rhs:51 =&gt; Eq lhs rhs
 notation:80 lhs:81 &quot; ^ &quot; rhs:80 =&gt; HPow.hPow lhs rhs
 notation:100 &quot;-&quot; arg:100 =&gt; Neg.neg arg
-<span class="boring">set_option quotPrecheck false
-</span>notation:1024 arg:1024 &quot;⁻¹&quot; =&gt; Inv.inv arg  -- `max` is a shorthand for precedence 1024
+# set_option quotPrecheck false
+notation:1024 arg:1024 &quot;⁻¹&quot; =&gt; Inv.inv arg  -- `max` is a shorthand for precedence 1024
 </code></pre>
-<p>It turns out that all commands from the first code block are in fact
-command <em>macros</em> translating to the more general <code>notation</code> command.
-We will learn about writing such macros below.  Instead of a single
-token, the <code>notation</code> command accepts a mixed sequence of tokens and
-named term placeholders with precedences, which can be referenced on
-the right-hand side of <code>=&gt;</code> and will be replaced by the respective
-term parsed at that position.  A placeholder with precedence <code>p</code>
-accepts only notations with precedence at least <code>p</code> in that place.
-Thus the string <code>a + b + c</code> cannot be parsed as the equivalent of
-<code>a + (b + c)</code> because the right-hand side operand of an <code>infixl</code> notation
-has precedence one greater than the notation itself.  In contrast,
-<code>infixr</code> reuses the notation's precedence for the right-hand side
-operand, so <code>a ^ b ^ c</code> <em>can</em> be parsed as <code>a ^ (b ^ c)</code>.  Note that
-if we used <code>notation</code> directly to introduce an infix notation like</p>
-<pre><code class="language-lean"><span class="boring">set_option quotPrecheck false
-</span>notation:65 lhs:65 &quot; ~ &quot; rhs:65 =&gt; wobble lhs rhs
+<p>事实证明，第一个代码块中的所有命令实际上都是命令<em>宏</em>，翻译成更通用的<code>notation</code>命令。我们将在下面学习如何编写这种宏。 <code>notation</code>命令不接受单一的记号，而是接受一个混合的记号序列和有优先级的命名项占位符，这些占位符可以在<code>=&gt;</code>的右侧被引用，并将被在该位置解析的相应项所取代。 优先级为<code>p</code>的占位符在该处只接受优先级至少为<code>p</code>的记号。因此，字符串<code>a + b + c</code>不能被解析为等同于<code>a + (b + c)</code>，因为<code>infixl</code>符号的右侧操作数的优先级比该符号本身大。 相反，<code>infixr</code>重用了符号右侧操作数的优先级，所以<code>a ^ b ^ c</code> <em>可以</em>被解析为<code>a ^ (b ^ c)</code>。 注意，如果我们直接使用<code>notation</code>来引入一个infix符号，如</p>
+<pre><code class="language-lean"># set_option quotPrecheck false
+notation:65 lhs:65 &quot; ~ &quot; rhs:65 =&gt; wobble lhs rhs
 </code></pre>
-<p>where the precedences do not sufficiently determine associativity,
-Lean's parser will default to right associativity.  More precisely,
-Lean's parser follows a local <em>longest parse</em> rule in the presence of
-ambiguous grammars: when parsing the right-hand side of <code>a ~</code> in
-<code>a ~ b ~ c</code>, it will continue parsing as long as possible (as the current
-precedence allows), not stopping after <code>b</code> but parsing <code>~ c</code> as well.
-Thus the term is equivalent to <code>a ~ (b ~ c)</code>.</p>
-<p>As mentioned above, the <code>notation</code> command allows us to define
-arbitrary <em>mixfix</em> syntax freely mixing tokens and placeholders.</p>
-<pre><code class="language-lean"><span class="boring">set_option quotPrecheck false
-</span>notation:max &quot;(&quot; e &quot;)&quot; =&gt; e
+<p>在上文没有充分确定结合规则的情况下，Lean的解析器将默认为右结合。 更确切地说，Lean的解析器在存在模糊语法的情况下遵循一个局部的<em>最长解析</em>规则：当解析<code>a ~</code>中<code>a ~ b ~ c</code>的右侧时，它将继续尽可能长的解析（在当前的上下文允许的情况下），不在<code>b</code>之后停止，而是同时解析<code>~ c</code>。因此该术语等同于<code>a ~ (b ~ c)</code>。</p>
+<p>如上所述，<code>notation</code>命令允许我们定义任意的<em>mixfix</em>语法，自由地混合记号和占位符。</p>
+<pre><code class="language-lean"># set_option quotPrecheck false
+notation:max &quot;(&quot; e &quot;)&quot; =&gt; e
 notation:10 Γ &quot; ⊢ &quot; e &quot; : &quot; τ =&gt; Typing Γ e τ
 </code></pre>
-<p>Placeholders without precedence default to <code>0</code>, i.e. they accept notations of any precedence in their place.
-If two notations overlap, we again apply the longest parse rule:</p>
+<p>没有优先级的占位符默认为<code>0</code>，也就是说，它们接受任何优先级的符号来代替它们。如果两个记号重叠，我们再次应用最长解析规则：</p>
 <pre><code class="language-lean">notation:65 a &quot; + &quot; b:66 &quot; + &quot; c:66 =&gt; a + b - c
 #eval 1 + 2 + 3  -- 0
 </code></pre>
-<p>The new notation is preferred to the binary notation since the latter,
-before chaining, would stop parsing after <code>1 + 2</code>.  If there are
-multiple notations accepting the same longest parse, the choice will
-be delayed until elaboration, which will fail unless exactly one
-overload is type correct.</p>
-<h2><a class="header" href="#coercions" id="coercions">Coercions</a></h2>
-<p>In Lean, the type of natural numbers, <code>Nat</code>, is different from the
-type of integers, <code>Int</code>. But there is a function <code>Int.ofNat</code> that
-embeds the natural numbers in the integers, meaning that we can view
-any natural number as an integer, when needed. Lean has mechanisms to
-detect and insert <em>coercions</em> of this sort.</p>
+<p>新的符号比二进制符号要好，因为后者在连锁之前，会在<code>1 + 2</code>之后停止解析。 如果有多个符号接受同一个最长的解析，选择将被推迟到阐述，这将失败，除非正好有一个重载是类型正确的。</p>
+<h2 id="强制转换"><a class="header" href="#强制转换">强制转换</a></h2>
+<p>在Lean中，自然数的类型<code>Nat</code>，与整数的类型<code>Int</code>不同。但是有一个函数`Int.ofNat``将自然数嵌入整数中，这意味着我们可以在需要时将任何自然数视为整数。Lean有机制来检测和插入这种<em>强制转换</em>。</p>
 <pre><code class="language-lean">variable (m n : Nat)
 variable (i j : Int)
 
@@ -619,17 +434,8 @@ variable (i j : Int)
 #check i + m + j  -- i + Int.ofNat m + j : Int
 #check i + m + n  -- i + Int.ofNat m + Int.ofNat n : Int
 </code></pre>
-<h2><a class="header" href="#displaying-information" id="displaying-information">Displaying Information</a></h2>
-<p>There are a number of ways in which you can query Lean for information
-about its current state and the objects and theorems that are
-available in the current context. You have already seen two of the
-most common ones, <code>#check</code> and <code>#eval</code>. Remember that <code>#check</code>
-is often used in conjunction with the <code>@</code> operator, which makes all
-of the arguments to a theorem or definition explicit. In addition, you
-can use the <code>#print</code> command to get information about any
-identifier. If the identifier denotes a definition or theorem, Lean
-prints the type of the symbol, and its definition. If it is a constant
-or an axiom, Lean indicates that fact, and shows the type.</p>
+<h2 id="显示信息"><a class="header" href="#显示信息">显示信息</a></h2>
+<p>有很多方法可以让你查询Lean的当前状态以及当前上下文中可用的对象和定理的信息。你已经看到了两个最常见的方法，<code>#check</code>和<code>#eval</code>。请记住，<code>#check</code>经常与<code>@</code>操作符一起使用，它使定理或定义的所有参数显式化。此外，你可以使用<code>#print</code>命令来获得任何标识符的信息。如果标识符表示一个定义或定理，Lean会打印出符号的类型，以及它的定义。如果它是一个常数或公理，Lean会指出它并显示其类型。</p>
 <pre><code class="language-lean">-- examples with equality
 #check Eq
 #check @Eq
@@ -650,12 +456,11 @@ def foo {α : Type u} (x : α) : α := x
 #check @foo
 #print foo
 </code></pre>
-<h2><a class="header" href="#setting-options" id="setting-options">Setting Options</a></h2>
-<p>Lean maintains a number of internal variables that can be set by users
-to control its behavior. The syntax for doing so is as follows:</p>
+<h2 id="设置选项"><a class="header" href="#设置选项">设置选项</a></h2>
+<p>Lean维护着一些内部变量，用户可以通过设置这些变量来控制其行为。语法如下：</p>
 <pre><code>set_option &lt;name&gt; &lt;value&gt;
 </code></pre>
-<p>One very useful family of options controls the way Lean's <em>pretty- printer</em> displays terms. The following options take an input of true or false:</p>
+<p>有一系列非常有用的选项可以控制Lean的<em>漂亮打印机</em>显示项的方式。下列选项的输入值为真或假：</p>
 <pre><code>pp.explicit  : display implicit arguments
 pp.universes : display hidden universe parameters
 pp.notation  : display output using defined notations
@@ -669,12 +474,10 @@ set_option pp.notation false
 #reduce (fun x =&gt; x + 2) = (fun x =&gt; x + 3)
 #check (fun x =&gt; x + 1) 1
 </code></pre>
-<p>The command <code>set_option pp.all true</code> carries out these settings all
-at once, whereas <code>set_option pp.all false</code> reverts to the previous
-values. Pretty printing additional information is often very useful
-when you are debugging a proof, or trying to understand a cryptic
-error message. Too much information can be overwhelming, though, and
-Lean's defaults are generally sufficient for ordinary interactions.</p>
+<p>命令<code>set_option pp.all true</code>一次性执行这些设置，而<code>set_option pp.all false</code>则恢复到之前的值。当你调试一个证明，或试图理解一个神秘的错误信息时，漂亮地打印额外的信息往往是非常有用的。不过太多的信息可能会让人不知所措，Lean的默认值一般来说对普通的交互是足够的。</p>
+<blockquote>
+<p>译者注：在Lean3的教程中有一节“Elaboration Hints”，在本教程中被注释掉了。有兴趣的读者可以去查阅。</p>
+</blockquote>
 <!--
 Elaboration Hints
 -----------------
@@ -708,21 +511,9 @@ Lean also has a family of attributes that control the elaboration strategy. A de
 Once again, these attributes can be assigned and reassigned after an object is defined, and you can use the ``local`` modifier to limit their scope. Moreover, using the ``@`` symbol in front of an identifier in an expression instructs the elaborator to use the ``[elab_simple]`` strategy; the idea is that, when you provide the tricky parameters explicitly, you want the elaborator to weigh that information heavily. In fact, Lean offers an alternative annotation, ``@@``, which leaves parameters before the first higher-order parameter implicit. For example, ``@@eq.subst`` leaves the type of the equation implicit, but makes the context of the substitution explicit.
 
 -->
-<h2><a class="header" href="#using-the-library" id="using-the-library">Using the Library</a></h2>
-<p>To use Lean effectively you will inevitably need to make use of
-definitions and theorems in the library. Recall that the <code>import</code>
-command at the beginning of a file imports previously compiled results
-from other files, and that importing is transitive; if you import
-<code>Foo</code> and <code>Foo</code> imports <code>Bar</code>, then the definitions and theorems
-from <code>Bar</code> are available to you as well. But the act of opening a
-namespace, which provides shorter names, does not carry over. In each
-file, you need to open the namespaces you wish to use.</p>
-<p>In general, it is important for you to be familiar with the library
-and its contents, so you know what theorems, definitions, notations,
-and resources are available to you. Below we will see that Lean's
-editor modes can also help you find things you need, but studying the
-contents of the library directly is often unavoidable. Lean's standard
-library can be found online, on GitHub:</p>
+<h2 id="使用库"><a class="header" href="#使用库">使用库</a></h2>
+<p>为了有效地使用Lean，你将不可避免地需要使用库中的定义和定理。回想一下，文件开头的<code>import</code>命令会从其他文件中导入之前编译的结果，而且导入是传递的；如果你导入了<code>Foo</code>，<code>Foo</code>又导入了<code>Bar</code>，那么<code>Bar</code>的定义和定理也可以被你利用。但是打开一个命名空间的行为，提供了更短的名字，并没有延续下去。在每个文件中，你需要打开你想使用的命名空间。</p>
+<p>一般来说，你必须熟悉库和它的内容，这样你就知道有哪些定理、定义、符号和资源可供你使用。下面我们将看到Lean的编辑器模式也可以帮助你找到你需要的东西，但直接研究库的内容往往是不可避免的。Lean的标准库可以在网上找到，在GitHub上。</p>
 <ul>
 <li>
 <p><a href="https://github.com/leanprover/lean4/tree/master/src/Init">https://github.com/leanprover/lean4/tree/master/src/Init</a></p>
@@ -731,47 +522,21 @@ library can be found online, on GitHub:</p>
 <p><a href="https://github.com/leanprover/lean4/tree/master/src/Std">https://github.com/leanprover/lean4/tree/master/src/Std</a></p>
 </li>
 </ul>
-<p>You can see the contents of these directories and files using GitHub's
-browser interface. If you have installed Lean on your own computer,
-you can find the library in the <code>lean</code> folder, and explore it with
-your file manager. Comment headers at the top of each file provide
-additional information.</p>
-<p>Lean's library developers follow general naming guidelines to make it
-easier to guess the name of a theorem you need, or to find it using
-tab completion in editors with a Lean mode that supports this, which
-is discussed in the next section. Identifiers are generally
-<code>camelCase</code>, and types are <code>CamelCase</code>. For theorem names,
-we rely on descriptive names where the different components are separated
-by <code>_</code>s. Often the name of theorem simply describes the conclusion:</p>
+<p>你可以使用GitHub的浏览器界面查看这些目录和文件的内容。如果你在自己的电脑上安装了Lean，你可以在<code>lean</code>文件夹中找到这个库，用你的文件管理器探索它。每个文件顶部的注释标题提供了额外的信息。</p>
+<p>Lean库的开发者遵循一般的命名准则，以便于猜测你所需要的定理的名称，或者在支持Lean模式的编辑器中用Tab自动补全来找到它，这将在下一节讨论。标识符一般是<code>camelCase</code>，而类型是<code>CamelCase</code>。对于定理的名称，我们依靠描述性的名称，其中不同的组成部分用<code>_</code>分开。通常情况下，定理的名称只是描述结论。</p>
 <pre><code class="language-lean">#check Nat.succ_ne_zero
 #check Nat.zero_add
 #check Nat.mul_one
 #check Nat.le_of_succ_le_succ
 </code></pre>
-<p>Remember that identifiers in Lean can be organized into hierarchical
-namespaces. For example, the theorem named <code>le_of_succ_le_succ</code> in the
-namespace <code>Nat</code> has full name <code>Nat.le_of_succ_le_succ</code>, but the shorter
-name is made available by the command <code>open Nat</code> (for names not marked as
-<code>protected</code>). We will see in <a href="./inductive_types.html">Chapter Inductive Types</a>
-and <a href="./structures_and_records.html">Chapter Structures and Records</a>
-that defining structures and inductive data types in Lean generates
-associated operations, and these are stored in
-a namespace with the same name as the type under definition. For
-example, the product type comes with the following operations:</p>
+<p>Lean中的标识符可以被组织到分层的命名空间中。例如，命名空间<code>Nat</code>中名为<code>le_of_succ_le_succ</code>的定理有全称<code>Nat.le_of_succ_le_succ</code>，但较短的名称可由命令<code>open Nat</code>提供（对于未标记为<code>protected</code>的名称）。我们将在<a href="./inductive_types.html">归纳类型</a>和<a href="./structures_and_records.html">结构体和记录</a>中看到，在Lean中定义结构体和归纳数据类型会产生相关操作，这些操作存储在与被定义类型同名的命名空间。例如，乘积类型带有以下操作：</p>
 <pre><code class="language-lean">#check @Prod.mk
 #check @Prod.fst
 #check @Prod.snd
 #check @Prod.rec
 </code></pre>
-<p>The first is used to construct a pair, whereas the next two,
-<code>Prod.fst</code> and <code>Prod.snd</code>, project the two elements. The last,
-<code>Prod.rec</code>, provides another mechanism for defining functions on a
-product in terms of a function on the two components. Names like
-<code>Prod.rec</code> are <em>protected</em>, which means that one has to use the full
-name even when the <code>Prod</code> namespace is open.</p>
-<p>With the propositions as types correspondence, logical connectives are
-also instances of inductive types, and so we tend to use dot notation
-for them as well:</p>
+<p>第一个用于构建一个对，而接下来的两个，<code>Prod.fst</code>和<code>Prod.snd</code>，投影两个元素。最后一个，<code>Prod.rec</code>，提供了另一种机制，用两个元素的函数来定义乘积上的函数。像<code>Prod.rec</code>这样的名字是<em>受保护</em>的，这意味着即使<code>Prod</code>名字空间是打开的，也必须使用全名。</p>
+<p>由于命题即类型的对应原则，逻辑连接词也是归纳类型的实例，因此我们也倾向于对它们使用点符号：</p>
 <pre><code class="language-lean">#check @And.intro
 #check @And.casesOn
 #check @And.left
@@ -784,56 +549,43 @@ for them as well:</p>
 #check @Eq.refl
 #check @Eq.subst
 </code></pre>
-<h2><a class="header" href="#auto-bound-implicit-arguments" id="auto-bound-implicit-arguments">Auto Bound Implicit Arguments</a></h2>
-<p>In the previous section, we have shown how implicit arguments make functions more convenient to use.
-However, functions such as <code>compose</code> are still quite verbose to define. Note that the universe
-polymorphic <code>compose</code> is even more verbose than the one previously defined.</p>
+<h2 id="自动约束隐参数"><a class="header" href="#自动约束隐参数">自动约束隐参数</a></h2>
+<p>在上一节中，我们已经展示了隐参数是如何使函数更方便使用的。然而，像<code>compose</code>这样的函数在定义时仍然相当冗长。宇宙多态的<code>compose</code>比之前定义的函数还要啰嗦。</p>
 <pre><code class="language-lean">universe u v w
 def compose {α : Type u} {β : Type v} {γ : Type w}
             (g : β → γ) (f : α → β) (x : α) : γ :=
   g (f x)
 </code></pre>
-<p>You can avoid the <code>universe</code> command by providing the universe parameters when defining <code>compose</code>.</p>
+<p>你可以通过在定义<code>compose</code>时提供宇宙参数来避免使用<code>universe</code>命令。</p>
 <pre><code class="language-lean">def compose.{u, v, w}
             {α : Type u} {β : Type v} {γ : Type w}
             (g : β → γ) (f : α → β) (x : α) : γ :=
   g (f x)
 </code></pre>
-<p>Lean 4 supports a new feature called <em>auto bound implicit arguments</em>. It makes functions such as
-<code>compose</code> much more convenient to write. When Lean processes the header of a declaration,
-any unbound identifier is automatically added as an implicit argument <em>if</em> it is a single lower case or
-greek letter. With this feature we can write <code>compose</code> as</p>
+<p>Lean 4支持一个名为<em>自动约束隐参数</em>的新特性。它使诸如<code>compose</code>这样的函数在编写时更加方便。当Lean处理一个声明的头时，<em>如果</em>它是一个小写字母或希腊字母，任何未约束的标识符都会被自动添加为隐式参数。有了这个特性，我们可以把<code>compose</code>写成</p>
 <pre><code class="language-lean">def compose (g : β → γ) (f : α → β) (x : α) : γ :=
   g (f x)
 
 #check @compose
 -- {β : Sort u_1} → {γ : Sort u_2} → {α : Sort u_3} → (β → γ) → (α → β) → α → γ
 </code></pre>
-<p>Note that Lean inferred a more general type using <code>Sort</code> instead of <code>Type</code>.</p>
-<p>Although we love this feature and use it extensively when implementing Lean,
-we realize some users may feel uncomfortable with it. Thus, you can disable it using
-the command <code>set_option autoBoundImplicitLocal false</code>.</p>
+<p>请注意，Lean使用<code>Sort</code>而不是<code>Type</code>推断出了一个更通用的类型。</p>
+<p>虽然我们很喜欢这个功能，并且在实现Lean时广泛使用，但我们意识到有些用户可能会对它感到不舒服。因此，你可以使用<code>set_option autoBoundImplicitLocal false</code>命令将其禁用。</p>
 <pre><code class="language-lean">set_option autoBoundImplicitLocal false
 /- The following definition produces `unknown identifier` errors -/
 -- def compose (g : β → γ) (f : α → β) (x : α) : γ :=
 --   g (f x)
 </code></pre>
-<h2><a class="header" href="#implicit-lambdas" id="implicit-lambdas">Implicit Lambdas</a></h2>
-<p>In Lean 3 stdlib, we find many
-<a href="https://github.com/leanprover/lean/blob/master/library/init/category/reader.lean#L39">instances</a> of the dreadful <code>@</code>+<code>_</code> idiom.
-It is often used when we the expected type is a function type with implicit arguments,
-and we have a constant (<code>reader_t.pure</code> in the example) which also takes implicit arguments. In Lean 4, the elaborator automatically introduces lambdas
-for consuming implicit arguments. We are still exploring this feature and analyzing its impact, but the experience so far has been very positive. Here is the example from the link above using Lean 4 implicit lambdas.</p>
-<pre><code class="language-lean"><span class="boring">variable (ρ : Type) (m : Type → Type) [Monad m]
-</span>instance : Monad (ReaderT ρ m) where
+<h2 id="隐式lambda"><a class="header" href="#隐式lambda">隐式Lambda</a></h2>
+<p>在Lean 3 stdlib中，我们发现了许多<a href="https://github.com/leanprover/lean/blob/master/library/init/category/reader.lean#L39">例子</a>包含丑陋的<code>@</code>+<code>_</code>惯用法。当我们的预期类型是一个带有隐参数的函数类型，而我们有一个常量（例子中的<code>reader_t.pure</code>）也需要隐参数时，就会经常使用这个惯用法。在Lean 4中，阐释器自动引入了lambda来消除隐参数。我们仍在探索这一功能并分析其影响，但到目前为止的结果是非常积极的。下面是上面链接中使用Lean 4隐式lambda的例子。</p>
+<pre><code class="language-lean"># variable (ρ : Type) (m : Type → Type) [Monad m]
+instance : Monad (ReaderT ρ m) where
   pure := ReaderT.pure
   bind := ReaderT.bind
 </code></pre>
-<p>Users can disable the implicit lambda feature by using <code>@</code> or writing
-a lambda expression with <code>{}</code> or <code>[]</code> binder annotations.  Here are
-few examples</p>
-<pre><code class="language-lean"><span class="boring">namespace ex2
-</span>def id1 : {α : Type} → α → α :=
+<p>用户可以通过使用<code>@</code>或用包含<code>{}</code>或<code>[]</code>的约束标记编写的lambda表达式来禁用隐式lambda功能。下面是几个例子</p>
+<pre><code class="language-lean"># namespace ex2
+def id1 : {α : Type} → α → α :=
   fun x =&gt; x
 
 def listId : List ({α : Type} → α → α) :=
@@ -854,15 +606,12 @@ def id4 : {α : Type} → α → α :=
 -- because we used the binder annotation `{...}`
 def id5 : {α : Type} → α → α :=
   fun {α} x =&gt; id1 x
-<span class="boring">end ex2
-</span></code></pre>
-<h2><a class="header" href="#sugar-for-simple-functions" id="sugar-for-simple-functions">Sugar for Simple Functions</a></h2>
-<p>In Lean 3, we can create simple functions from infix operators by
-using parentheses. For example, <code>(+1)</code> is sugar for <code>fun x, x + 1</code>. In
-Lean 4, we generalize this notation using <code>·</code> As a placeholder. Here
-are a few examples:</p>
-<pre><code class="language-lean"><span class="boring">namespace ex3
-</span>#check (· + 1)
+# end ex2
+</code></pre>
+<h2 id="简单函数语法糖"><a class="header" href="#简单函数语法糖">简单函数语法糖</a></h2>
+<p>在Lean 3中，我们可以通过使用小括号从infix运算符中创建简单的函数。例如，<code>(+1)</code>是<code>fun x, x + 1</code>的语法糖。在Lean 4中，我们用<code>·</code>作为占位符来扩展这个符号。这里有几个例子：</p>
+<pre><code class="language-lean">namespace ex3
+#check (· + 1)
 -- fun a =&gt; a + 1
 #check (2 - ·)
 -- fun a =&gt; 2 - a
@@ -877,21 +626,14 @@ def f (x y z : Nat) :=
 
 #eval [(1, 2), (3, 4), (5, 6)].map (·.1)
 -- [1, 3, 5]
-<span class="boring">end ex3
-</span></code></pre>
-<p>As in Lean 3, the notation is activated using parentheses, and the lambda abstraction is created by collecting the nested <code>·</code>s.
-The collection is interrupted by nested parentheses. In the following example, two different lambda expressions are created.</p>
+# end ex3
+</code></pre>
+<p>如同在Lean 3中，符号是用圆括号激活的，lambda抽象是通过收集嵌套的<code>·</code>创建的。这个集合被嵌套的小括号打断。在下面的例子中创建了两个不同的lambda表达式。</p>
 <pre><code class="language-lean">#check (Prod.mk · (· + 1))
 -- fun a =&gt; (a, fun b =&gt; b + 1)
 </code></pre>
-<h2><a class="header" href="#named-arguments" id="named-arguments">Named Arguments</a></h2>
-<p>Named arguments enable you to specify an argument for a parameter by
-matching the argument with its name rather than with its position in
-the parameter list.  If you don't remember the order of the parameters
-but know their names, you can send the arguments in any order. You may
-also provide the value for an implicit parameter when Lean failed to
-infer it. Named arguments also improve the readability of your code by
-identifying what each argument represents.</p>
+<h2 id="命名参数"><a class="header" href="#命名参数">命名参数</a></h2>
+<p>命名参数使你可以通过用参数的名称而不是参数列表中的位置来指定参数。 如果你不记得参数的顺序但知道它们的名字，你可以以任何顺序传入参数。当Lean未能推断出一个隐参数时，你也可以提供该参数的值。命名参数还可以通过识别每个参数所代表的内容来提高你的代码的可读性。</p>
 <pre><code class="language-lean">def sum (xs : List Nat) :=
   xs.foldl (init := 0) (·+·)
 
@@ -902,8 +644,7 @@ example {a b : Nat} {p : Nat → Nat → Nat → Prop} (h₁ : p a b b) (h₂ : 
     : p a a b :=
   Eq.subst (motive := fun x =&gt; p a x b) h₂ h₁
 </code></pre>
-<p>In the following examples, we illustrate the interaction between named
-and default arguments.</p>
+<p>在下面的例子中，我们说明了命名参数和默认参数之间的交互。</p>
 <pre><code class="language-lean">def f (x : Nat) (y : Nat := 1) (w : Nat := 2) (z : Nat) :=
   x + y + w - z
 
@@ -936,8 +677,7 @@ example (x : α) : g x = fun (c : α) =&gt; x + c := rfl
 
 example (x y : α) : g x y = fun (c : α) =&gt; x + y + c := rfl
 </code></pre>
-<p>You can use <code>..</code> to provide missing explicit arguments as <code>_</code>.
-This feature combined with named arguments is useful for writing patterns. Here is an example:</p>
+<p>你可以使用<code>..</code>来提供缺少的显式参数作为<code>_</code>。这个功能与命名参数相结合，对编写模式很有用。下面是一个例子：</p>
 <pre><code class="language-lean">inductive Term where
   | var    (name : String)
   | num    (val : Nat)
@@ -952,8 +692,7 @@ def getBinderType : Term → Option Term
   | Term.lambda (type := t) .. =&gt; some t
   | _ =&gt; none
 </code></pre>
-<p>Ellipses are also useful when explicit argument can be automatically
-inferred by Lean, and we want to avoid a sequence of <code>_</code>s.</p>
+<p>当显式参数可以由Lean自动推断时，省略号也很有用，而我们想避免一连串的<code>_</code>。</p>
 <pre><code class="language-lean">example (f : Nat → Nat) (a b c : Nat) : f (a + b + c) = f (a + (b + c)) :=
   congrArg f (Nat.add_assoc ..)
 </code></pre>
@@ -962,67 +701,38 @@ inferred by Lean, and we want to avoid a sequence of <code>_</code>s.</p>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="tactics.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
-
-                        
                             <a rel="next" href="inductive_types.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
-
                         <div style="clear: both"></div>
                     </nav>
                 </div>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="tactics.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
-
-                
                     <a rel="next" href="inductive_types.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
-
-        
-
-        
-
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
-
-        
-
-        
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        
-
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
-
-        
-
     </body>
 </html>

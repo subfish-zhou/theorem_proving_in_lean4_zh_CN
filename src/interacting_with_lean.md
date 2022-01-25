@@ -326,51 +326,37 @@ variable (euclr : euclidean r)
 #check euclr  -- euclidean r
 ```
 
-还有第三种隐式参数，用方括号表示，``[``和````]``。这些是用于类型类的，在[Chapter Type Classes](./type_classes.md)中解释。
+还有第三种隐式参数，用方括号表示，``[``和``]``。这些是用于类型类的，在[类型类](./type_classes.md)中解释。
 
 符号
 ------------
 
-Lean中的标识符可以包括任何字母数字字符，包括希腊字母（除了∀、Σ和λ，正如我们已经看到的，它们在依赖类型理论中有特殊的含义）。它们还可以包括下标，可以通过输入``\_``，然后再输入所需的下标字符。
+Lean中的标识符可以包括任何字母数字字符，包括希腊字母（除了∀、Σ和λ，它们在依赖类型论中有特殊的含义）。它们还可以包括下标，可以通过输入``\_``，然后再输入所需的下标字符。
 
 Lean的解析器是可扩展的，也就是说，我们可以定义新的符号。
 
-Lean的语法可以由用户在各个层面进行扩展和定制，从基本的 "mixfix "符号到自定义的阐述者。 事实上，所有内置的语法都是使用对用户开放的相同机制和API进行解析和处理的。 在本节中，我们将描述和解释各种扩展点。
+Lean的语法可以由用户在各个层面进行扩展和定制，从基本的“mixfix”符号到自定义的阐释器。事实上，所有内置的语法都是使用对用户开放的相同机制和API进行解析和处理的。 在本节中，我们将描述和解释各种扩展点。
 
-虽然在编程语言中引入新的符号是一个相对罕见的功能，有时甚至因为它有可能使代码变得模糊不清而被人诟病，但它是形式化的一个宝贵工具，可以在代码中简洁地表达各自领域的既定惯例和符号。 除了基本的符号之外，Lean的能力是将普通的模板代码分解成（良好的）宏，并嵌入整个定制的特定领域语言（DSL），对子问题进行高效和可读的文本编码，这对程序员和证明工程师都有很大的好处。
+虽然在编程语言中引入新的符号是一个相对罕见的功能，有时甚至因为它有可能使代码变得模糊不清而被人诟病，但它是形式化的一个宝贵工具，可以在代码中简洁地表达各自领域的既定惯例和符号。 除了基本的符号之外，Lean的能力是将普通的样板代码分解成（良好的）宏，并嵌入整个定制的特定领域语言（DSL，domain specific language），对子问题进行高效和可读的文本编码，这对程序员和证明工程师都有很大的好处。
 
-###记号和优先级
+### 符号和优先级
 
-最基本的语法扩展命令允许引入新的（或重载现有的）前缀、下缀和后缀运算符。
-There is a third kind of implicit argument that is denoted with square brackets, ``[`` and ``]``. These are used for type classes, as explained in [Chapter Type Classes](./type_classes.md).
-
-Notation
-------------
-
-Identifiers in Lean can include any alphanumeric characters, including Greek characters (other than ∀ , Σ , and λ , which, as we have seen, have a special meaning in the dependent type theory). They can also include subscripts, which can be entered by typing ``\_`` followed by the desired subscripted character.
-
-Lean's parser is extensible, which is to say, we can define new notation.
-
-Lean's syntax can be extended and customized by users at every level, ranging from basic "mixfix" notations to custom elaborators.  In fact, all builtin syntax is parsed and processed using the same mechanisms and APIs open to users.  In this section, we will describe and explain the various extension points.
-
-While introducing new notations is a relatively rare feature in programming languages and sometimes even frowned upon because of its potential to obscure code, it is an invaluable tool in formalization for expressing established conventions and notations of the respective field succinctly in code.  Going beyond basic notations, Lean's ability to factor out common boilerplate code into (well-behaved) macros and to embed entire custom domain specific languages (DSLs) to textually encode subproblems efficiently and readably can be of great benefit to both programmers and proof engineers alike.
-
-### Notations and Precedence
-
-The most basic syntax extension commands allow introducing new (or overloading existing) prefix, infix, and postfix operators.
+最基本的语法扩展命令允许引入新的（或重载现有的）前缀、下缀和后缀运算符：
 
 ```lean
-infixl:65   " + " => HAdd.hAdd  -- left-associative
-infix:50    " = " => Eq         -- non-associative
-infixr:80   " ^ " => HPow.hPow  -- right-associative
+infixl:65   " + " => HAdd.hAdd  -- 左结合
+infix:50    " = " => Eq         -- 非结合
+infixr:80   " ^ " => HPow.hPow  -- 右结合
 prefix:100  "-"   => Neg.neg
-# set_option quotPrecheck false
+set_option quotPrecheck false
 postfix:max "⁻¹"  => Inv.inv
 ```
 
-After the initial command name describing the operator kind (its "fixity"), we give the *parsing precedence* of the operator preceded by a colon `:`, then a new or existing token surrounded by double quotes (the whitespace is used for pretty printing), then the function this operator should be translated to after the arrow `=>`.
+句法：
 
-The precedence is a natural number describing how "tightly" an operator binds to its arguments, encoding the order of operations.  We can make this more precise by looking at the commands the above unfold to:
+运算符种类（其“结合方式”） : 解析优先级 "新的或现有的符号" => 这个符号应该翻译成的函数
+
+优先级是一个自然数，描述一个运算符与它的参数结合的“紧密程度”，编码操作的顺序。我们可以通过查看上述展开的命令来使之更加精确：
 
 ```lean
 notation:65 lhs:65 " + " rhs:66 => HAdd.hAdd lhs rhs
@@ -381,16 +367,16 @@ notation:100 "-" arg:100 => Neg.neg arg
 notation:1024 arg:1024 "⁻¹" => Inv.inv arg  -- `max` is a shorthand for precedence 1024
 ```
 
-It turns out that all commands from the first code block are in fact command *macros* translating to the more general `notation` command. We will learn about writing such macros below.  Instead of a single token, the `notation` command accepts a mixed sequence of tokens and named term placeholders with precedences, which can be referenced on the right-hand side of `=>` and will be replaced by the respective term parsed at that position.  A placeholder with precedence `p` accepts only notations with precedence at least `p` in that place. Thus the string `a + b + c` cannot be parsed as the equivalent of `a + (b + c)` because the right-hand side operand of an `infixl` notation has precedence one greater than the notation itself.  In contrast, `infixr` reuses the notation's precedence for the right-hand side operand, so `a ^ b ^ c` *can* be parsed as `a ^ (b ^ c)`.  Note that if we used `notation` directly to introduce an infix notation like
+事实证明，第一个代码块中的所有命令实际上都是命令*宏*，翻译成更通用的`notation`命令。我们将在下面学习如何编写这种宏。 `notation`命令不接受单一的记号，而是接受一个混合的记号序列和有优先级的命名项占位符，这些占位符可以在`=>`的右侧被引用，并将被在该位置解析的相应项所取代。 优先级为`p`的占位符在该处只接受优先级至少为`p`的记号。因此，字符串`a + b + c`不能被解析为等同于`a + (b + c)`，因为`infixl`符号的右侧操作数的优先级比该符号本身大。 相反，`infixr`重用了符号右侧操作数的优先级，所以`a ^ b ^ c` *可以*被解析为`a ^ (b ^ c)`。 注意，如果我们直接使用`notation`来引入一个infix符号，如
 
 ```lean
 # set_option quotPrecheck false
 notation:65 lhs:65 " ~ " rhs:65 => wobble lhs rhs
 ```
 
-where the precedences do not sufficiently determine associativity, Lean's parser will default to right associativity.  More precisely, Lean's parser follows a local *longest parse* rule in the presence of ambiguous grammars: when parsing the right-hand side of `a ~` in `a ~ b ~ c`, it will continue parsing as long as possible (as the current precedence allows), not stopping after `b` but parsing `~ c` as well. Thus the term is equivalent to `a ~ (b ~ c)`.
+在上文没有充分确定结合规则的情况下，Lean的解析器将默认为右结合。 更确切地说，Lean的解析器在存在模糊语法的情况下遵循一个局部的*最长解析*规则：当解析`a ~`中`a ~ b ~ c`的右侧时，它将继续尽可能长的解析（在当前的上下文允许的情况下），不在`b`之后停止，而是同时解析`~ c`。因此该术语等同于`a ~ (b ~ c)`。
 
-As mentioned above, the `notation` command allows us to define arbitrary *mixfix* syntax freely mixing tokens and placeholders.
+如上所述，`notation`命令允许我们定义任意的*mixfix*语法，自由地混合记号和占位符。
 
 ```lean
 # set_option quotPrecheck false
@@ -398,21 +384,19 @@ notation:max "(" e ")" => e
 notation:10 Γ " ⊢ " e " : " τ => Typing Γ e τ
 ```
 
-Placeholders without precedence default to `0`, i.e. they accept notations of any precedence in their place.
-If two notations overlap, we again apply the longest parse rule:
+没有优先级的占位符默认为`0`，也就是说，它们接受任何优先级的符号来代替它们。如果两个记号重叠，我们再次应用最长解析规则：
 
 ```lean
 notation:65 a " + " b:66 " + " c:66 => a + b - c
 #eval 1 + 2 + 3  -- 0
 ```
 
-The new notation is preferred to the binary notation since the latter, before chaining, would stop parsing after `1 + 2`.  If there are multiple notations accepting the same longest parse, the choice will be delayed until elaboration, which will fail unless exactly one overload is type correct.
+新的符号比二进制符号要好，因为后者在连锁之前，会在`1 + 2`之后停止解析。 如果有多个符号接受同一个最长的解析，选择将被推迟到阐述，这将失败，除非正好有一个重载是类型正确的。
 
-
-Coercions
+强制转换
 ---------
 
-In Lean, the type of natural numbers, ``Nat``, is different from the type of integers, ``Int``. But there is a function ``Int.ofNat`` that embeds the natural numbers in the integers, meaning that we can view any natural number as an integer, when needed. Lean has mechanisms to detect and insert *coercions* of this sort.
+在Lean中，自然数的类型``Nat``，与整数的类型``Int``不同。但是有一个函数`Int.ofNat``将自然数嵌入整数中，这意味着我们可以在需要时将任何自然数视为整数。Lean有机制来检测和插入这种*强制转换*。
 
 ```lean
 variable (m n : Nat)
@@ -423,10 +407,10 @@ variable (i j : Int)
 #check i + m + n  -- i + Int.ofNat m + Int.ofNat n : Int
 ```
 
-Displaying Information
+显示信息
 ----------------------
 
-There are a number of ways in which you can query Lean for information about its current state and the objects and theorems that are available in the current context. You have already seen two of the most common ones, ``#check`` and ``#eval``. Remember that ``#check`` is often used in conjunction with the ``@`` operator, which makes all of the arguments to a theorem or definition explicit. In addition, you can use the ``#print`` command to get information about any identifier. If the identifier denotes a definition or theorem, Lean prints the type of the symbol, and its definition. If it is a constant or an axiom, Lean indicates that fact, and shows the type.
+有很多方法可以让你查询Lean的当前状态以及当前上下文中可用的对象和定理的信息。你已经看到了两个最常见的方法，`#check`和`#eval`。请记住，`#check`经常与`@`操作符一起使用，它使定理或定义的所有参数显式化。此外，你可以使用`#print`命令来获得任何标识符的信息。如果标识符表示一个定义或定理，Lean会打印出符号的类型，以及它的定义。如果它是一个常数或公理，Lean会指出它并显示其类型。
 
 ```lean
 -- examples with equality
@@ -450,16 +434,16 @@ def foo {α : Type u} (x : α) : α := x
 #print foo
 ```
 
-Setting Options
+设置选项
 ---------------
 
-Lean maintains a number of internal variables that can be set by users to control its behavior. The syntax for doing so is as follows:
+Lean维护着一些内部变量，用户可以通过设置这些变量来控制其行为。语法如下：
 
 ```
 set_option <name> <value>
 ```
 
-One very useful family of options controls the way Lean's *pretty- printer* displays terms. The following options take an input of true or false:
+有一系列非常有用的选项可以控制Lean的*漂亮打印机*显示项的方式。下列选项的输入值为真或假：
 
 ```
 pp.explicit  : display implicit arguments
@@ -479,9 +463,9 @@ set_option pp.notation false
 #check (fun x => x + 1) 1
 ```
 
-The command ``set_option pp.all true`` carries out these settings all at once, whereas ``set_option pp.all false`` reverts to the previous values. Pretty printing additional information is often very useful when you are debugging a proof, or trying to understand a cryptic error message. Too much information can be overwhelming, though, and Lean's defaults are generally sufficient for ordinary interactions.
+命令``set_option pp.all true``一次性执行这些设置，而``set_option pp.all false``则恢复到之前的值。当你调试一个证明，或试图理解一个神秘的错误信息时，漂亮地打印额外的信息往往是非常有用的。不过太多的信息可能会让人不知所措，Lean的默认值一般来说对普通的交互是足够的。
 
-
+> 译者注：在Lean3的教程中有一节“Elaboration Hints”，在本教程中被注释掉了。有兴趣的读者可以去查阅。
 
 <!--
 Elaboration Hints
@@ -539,7 +523,7 @@ Lean库的开发者遵循一般的命名准则，以便于猜测你所需要的�
 #check Nat.le_of_succ_le_succ
 ```
 
-Remember that identifiers in Lean can be organized into hierarchical namespaces. For example, the theorem named ``le_of_succ_le_succ`` in the namespace ``Nat`` has full name ``Nat.le_of_succ_le_succ``, but the shorter name is made available by the command ``open Nat`` (for names not marked as `protected`). We will see in [Chapter Inductive Types](./inductive_types.md) and [Chapter Structures and Records](./structures_and_records.md) that defining structures and inductive data types in Lean generates associated operations, and these are stored in a namespace with the same name as the type under definition. For example, the product type comes with the following operations:
+Lean中的标识符可以被组织到分层的命名空间中。例如，命名空间``Nat``中名为``le_of_succ_le_succ``的定理有全称``Nat.le_of_succ_le_succ``，但较短的名称可由命令``open Nat``提供（对于未标记为`protected`的名称）。我们将在[归纳类型](./inductive_types.md)和[结构体和记录](./structures_and_records.md)中看到，在Lean中定义结构体和归纳数据类型会产生相关操作，这些操作存储在与被定义类型同名的命名空间。例如，乘积类型带有以下操作：
 
 ```lean
 #check @Prod.mk
@@ -548,9 +532,9 @@ Remember that identifiers in Lean can be organized into hierarchical namespaces.
 #check @Prod.rec
 ```
 
-The first is used to construct a pair, whereas the next two, ``Prod.fst`` and ``Prod.snd``, project the two elements. The last, ``Prod.rec``, provides another mechanism for defining functions on a product in terms of a function on the two components. Names like ``Prod.rec`` are *protected*, which means that one has to use the full name even when the ``Prod`` namespace is open.
+第一个用于构建一个对，而接下来的两个，``Prod.fst``和``Prod.snd``，投影两个元素。最后一个，``Prod.rec``，提供了另一种机制，用两个元素的函数来定义乘积上的函数。像``Prod.rec``这样的名字是*受保护*的，这意味着即使``Prod``名字空间是打开的，也必须使用全名。
 
-With the propositions as types correspondence, logical connectives are also instances of inductive types, and so we tend to use dot notation for them as well:
+由于命题即类型的对应原则，逻辑连接词也是归纳类型的实例，因此我们也倾向于对它们使用点符号：
 
 ```lean
 #check @And.intro
@@ -566,12 +550,10 @@ With the propositions as types correspondence, logical connectives are also inst
 #check @Eq.subst
 ```
 
-Auto Bound Implicit Arguments
+自动约束隐参数
 -----------------
 
-In the previous section, we have shown how implicit arguments make functions more convenient to use.
-However, functions such as `compose` are still quite verbose to define. Note that the universe
-polymorphic `compose` is even more verbose than the one previously defined.
+在上一节中，我们已经展示了隐参数是如何使函数更方便使用的。然而，像`compose`这样的函数在定义时仍然相当冗长。宇宙多态的`compose`比之前定义的函数还要啰嗦。
 
 ```lean
 universe u v w
@@ -580,7 +562,7 @@ def compose {α : Type u} {β : Type v} {γ : Type w}
   g (f x)
 ```
 
-You can avoid the `universe` command by providing the universe parameters when defining `compose`.
+你可以通过在定义`compose`时提供宇宙参数来避免使用`universe`命令。
 
 ```lean
 def compose.{u, v, w}
@@ -589,7 +571,7 @@ def compose.{u, v, w}
   g (f x)
 ```
 
-Lean 4 supports a new feature called *auto bound implicit arguments*. It makes functions such as `compose` much more convenient to write. When Lean processes the header of a declaration, any unbound identifier is automatically added as an implicit argument *if* it is a single lower case or greek letter. With this feature we can write `compose` as
+Lean 4支持一个名为*自动约束隐参数*的新特性。它使诸如`compose`这样的函数在编写时更加方便。当Lean处理一个声明的头时，*如果*它是一个小写字母或希腊字母，任何未约束的标识符都会被自动添加为隐式参数。有了这个特性，我们可以把`compose`写成
 
 ```lean
 def compose (g : β → γ) (f : α → β) (x : α) : γ :=
@@ -598,9 +580,10 @@ def compose (g : β → γ) (f : α → β) (x : α) : γ :=
 #check @compose
 -- {β : Sort u_1} → {γ : Sort u_2} → {α : Sort u_3} → (β → γ) → (α → β) → α → γ
 ```
-Note that Lean inferred a more general type using `Sort` instead of `Type`.
 
-Although we love this feature and use it extensively when implementing Lean, we realize some users may feel uncomfortable with it. Thus, you can disable it using the command `set_option autoBoundImplicitLocal false`.
+请注意，Lean使用`Sort`而不是`Type`推断出了一个更通用的类型。
+
+虽然我们很喜欢这个功能，并且在实现Lean时广泛使用，但我们意识到有些用户可能会对它感到不舒服。因此，你可以使用`set_option autoBoundImplicitLocal false`命令将其禁用。
 
 ```lean
 set_option autoBoundImplicitLocal false
@@ -609,10 +592,10 @@ set_option autoBoundImplicitLocal false
 --   g (f x)
 ```
 
-Implicit Lambdas
+隐式Lambda
 ---------------
 
-In Lean 3 stdlib, we find many [instances](https://github.com/leanprover/lean/blob/master/library/init/category/reader.lean#L39) of the dreadful `@`+`_` idiom. It is often used when we the expected type is a function type with implicit arguments, and we have a constant (`reader_t.pure` in the example) which also takes implicit arguments. In Lean 4, the elaborator automatically introduces lambdas for consuming implicit arguments. We are still exploring this feature and analyzing its impact, but the experience so far has been very positive. Here is the example from the link above using Lean 4 implicit lambdas.
+在Lean 3 stdlib中，我们发现了许多[例子](https://github.com/leanprover/lean/blob/master/library/init/category/reader.lean#L39)包含丑陋的`@`+`_`惯用法。当我们的预期类型是一个带有隐参数的函数类型，而我们有一个常量（例子中的`reader_t.pure`）也需要隐参数时，就会经常使用这个惯用法。在Lean 4中，阐释器自动引入了lambda来消除隐参数。我们仍在探索这一功能并分析其影响，但到目前为止的结果是非常积极的。下面是上面链接中使用Lean 4隐式lambda的例子。
 
 ```lean
 # variable (ρ : Type) (m : Type → Type) [Monad m]
@@ -621,7 +604,7 @@ instance : Monad (ReaderT ρ m) where
   bind := ReaderT.bind
 ```
 
-Users can disable the implicit lambda feature by using `@` or writing a lambda expression with `{}` or `[]` binder annotations.  Here are few examples
+用户可以通过使用`@`或用包含`{}`或`[]`的约束标记编写的lambda表达式来禁用隐式lambda功能。下面是几个例子
 
 ```lean
 # namespace ex2
@@ -649,13 +632,13 @@ def id5 : {α : Type} → α → α :=
 # end ex2
 ```
 
-Sugar for Simple Functions
+简单函数语法糖
 -------------------------
 
-In Lean 3, we can create simple functions from infix operators by using parentheses. For example, `(+1)` is sugar for `fun x, x + 1`. In Lean 4, we generalize this notation using `·` As a placeholder. Here are a few examples:
+在Lean 3中，我们可以通过使用小括号从infix运算符中创建简单的函数。例如，`(+1)`是`fun x, x + 1`的语法糖。在Lean 4中，我们用`·`作为占位符来扩展这个符号。这里有几个例子：
 
 ```lean
-# namespace ex3
+namespace ex3
 #check (· + 1)
 -- fun a => a + 1
 #check (2 - ·)
@@ -674,17 +657,17 @@ def f (x y z : Nat) :=
 # end ex3
 ```
 
-As in Lean 3, the notation is activated using parentheses, and the lambda abstraction is created by collecting the nested `·`s. The collection is interrupted by nested parentheses. In the following example, two different lambda expressions are created.
+如同在Lean 3中，符号是用圆括号激活的，lambda抽象是通过收集嵌套的`·`创建的。这个集合被嵌套的小括号打断。在下面的例子中创建了两个不同的lambda表达式。
 
 ```lean
 #check (Prod.mk · (· + 1))
 -- fun a => (a, fun b => b + 1)
 ```
 
-Named Arguments
+命名参数
 ---------------
 
-Named arguments enable you to specify an argument for a parameter by matching the argument with its name rather than with its position in the parameter list.  If you don't remember the order of the parameters but know their names, you can send the arguments in any order. You may also provide the value for an implicit parameter when Lean failed to infer it. Named arguments also improve the readability of your code by identifying what each argument represents.
+命名参数使你可以通过用参数的名称而不是参数列表中的位置来指定参数。 如果你不记得参数的顺序但知道它们的名字，你可以以任何顺序传入参数。当Lean未能推断出一个隐参数时，你也可以提供该参数的值。命名参数还可以通过识别每个参数所代表的内容来提高你的代码的可读性。
 
 ```lean
 def sum (xs : List Nat) :=
@@ -698,7 +681,7 @@ example {a b : Nat} {p : Nat → Nat → Nat → Prop} (h₁ : p a b b) (h₂ : 
   Eq.subst (motive := fun x => p a x b) h₂ h₁
 ```
 
-In the following examples, we illustrate the interaction between named and default arguments.
+在下面的例子中，我们说明了命名参数和默认参数之间的交互。
 
 ```lean
 def f (x : Nat) (y : Nat := 1) (w : Nat := 2) (z : Nat) :=
@@ -734,7 +717,7 @@ example (x : α) : g x = fun (c : α) => x + c := rfl
 example (x y : α) : g x y = fun (c : α) => x + y + c := rfl
 ```
 
-You can use `..` to provide missing explicit arguments as `_`. This feature combined with named arguments is useful for writing patterns. Here is an example:
+你可以使用`..`来提供缺少的显式参数作为`_`。这个功能与命名参数相结合，对编写模式很有用。下面是一个例子：
 
 ```lean
 inductive Term where
@@ -752,7 +735,7 @@ def getBinderType : Term → Option Term
   | _ => none
 ```
 
-Ellipses are also useful when explicit argument can be automatically inferred by Lean, and we want to avoid a sequence of `_`s.
+当显式参数可以由Lean自动推断时，省略号也很有用，而我们想避免一连串的`_`。
 
 ```lean
 example (f : Nat → Nat) (a b c : Nat) : f (a + b + c) = f (a + (b + c)) :=
