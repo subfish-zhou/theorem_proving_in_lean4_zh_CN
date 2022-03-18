@@ -1,38 +1,16 @@
-Induction and Recursion
+归纳和递归
 =======================
 
-In the previous chapter, we saw that inductive definitions provide a
-powerful means of introducing new types in Lean. Moreover, the
-constructors and the recursors provide the only means of defining
-functions on these types. By the propositions-as-types correspondence,
-this means that induction is the fundamental method of proof.
+在上一章中，我们看到归纳定义提供了在Lean中引入新类型的强大手段。此外，构造子和递归子提供了在这些类型上定义函数的唯一手段。命题即类型的对应关系，意味着归纳法是证明的基本方法。
 
-Lean provides natural ways of defining recursive functions, performing
-pattern matching, and writing inductive proofs. It allows you to
-define a function by specifying equations that it should satisfy, and
-it allows you to prove a theorem by specifying how to handle various
-cases that can arise. Behind the scenes, these descriptions are
-"compiled" down to primitive recursors, using a procedure that we
-refer to as the "equation compiler." The equation compiler is not part
-of the trusted code base; its output consists of terms that are
-checked independently by the kernel.
+Lean提供了定义递归函数、执行模式匹配和编写归纳证明的自然方法。它允许你通过指定它应该满足的方程来定义一个函数，它允许你通过指定如何处理可能出现的各种情况来证明一个定理。在它内部，这些描述被“方程编译器”程序“编译”成原始递归子。方程编译器不是可信代码库的一部分；它的输出包括由内核独立检查的项。
 
-Pattern Matching
+模式匹配
 ----------------
 
-The interpretation of schematic patterns is the first step of the
-compilation process. We have seen that the ``casesOn`` recursor can
-be used to define functions and prove theorems by cases, according to
-the constructors involved in an inductively defined type. But
-complicated definitions may use several nested ``casesOn``
-applications, and may be hard to read and understand. Pattern matching
-provides an approach that is more convenient, and familiar to users of
-functional programming languages.
+对示意图模式的解释是编译过程的第一步。我们已经看到，`casesOn`递归子可以通过分情况讨论来定义函数和证明定理，根据归纳定义类型所涉及的构造子。但是复杂的定义可能会使用几个嵌套的``casesOn``应用，而且可能很难阅读和理解。模式匹配提供了一种更方便的方法，并且为函数式编程语言的用户所熟悉。
 
-Consider the inductively defined type of natural numbers. Every
-natural number is either ``zero`` or ``succ x``, and so you can define
-a function from the natural numbers to an arbitrary type by specifying
-a value in each of those cases:
+考虑一下自然数的归纳定义类型。每个自然数要么是``zero``，要么是``succ x``，因此你可以通过在每个情况下指定一个值来定义一个从自然数到任意类型的函数:
 
 ```lean
 open Nat
@@ -46,16 +24,9 @@ def isZero : Nat → Bool
   | succ x => false
 ```
 
-The equations used to define these function hold definitionally:
+用来定义这些函数的方程在定义上是成立的：
 
 ```lean
-# open Nat
-# def sub1 : Nat → Nat
-#   | zero   => zero
-#   | succ x => x
-# def isZero : Nat → Bool
-#   | zero   => true
-#   | succ x => false
 example : sub1 0 = 0 := rfl
 example (x : Nat) : sub1 (succ x) = x := rfl
 
@@ -66,7 +37,7 @@ example : sub1 7 = 6 := rfl
 example (x : Nat) : isZero (x + 3) = false := rfl
 ```
 
-Instead of ``zero`` and ``succ``, we can use more familiar notation:
+我们可以用一些更耳熟能详的符号，而不是``zero``和``succ``：
 
 ```lean
 def sub1 : Nat → Nat
@@ -78,12 +49,9 @@ def isZero : Nat → Bool
   | x+1 => false
 ```
 
-Because addition and the zero notation have been assigned the
-``[matchPattern]`` attribute, they can be used in pattern matching. Lean
-simply normalizes these expressions until the constructors ``zero``
-and ``succ`` are exposed.
+因为加法和零符号已经被赋予`[matchPattern]`属性，它们可以被用于模式匹配。Lean简单地将这些表达式规范化，直到显示构造子``zero``和``succ``。
 
-Pattern matching works with any inductive type, such as products and option types:
+模式匹配适用于任何归纳类型，如乘积和选项类型：
 
 ```lean
 def swap : α × β → β × α
@@ -97,8 +65,7 @@ def bar : Option Nat → Nat
   | none   => 0
 ```
 
-Here we use it not only to define a function, but also to carry out a
-proof by cases:
+在这里，我们不仅用它来定义一个函数，而且还用它来进行案例证明：
 
 ```lean
 # namespace Hidden
@@ -112,7 +79,7 @@ theorem not_not : ∀ (b : Bool), not (not b) = b
 # end Hidden
 ```
 
-Pattern matching can also be used to destruct inductively defined propositions:
+模式匹配也可以用来解构归纳定义的命题：
 
 ```lean
 example (p q : Prop) : p ∧ q → q ∧ p
@@ -123,11 +90,9 @@ example (p q : Prop) : p ∨ q → q ∨ p
   | Or.inr hq => Or.inl hq
 ```
 
-This provides a compact way of unpacking hypotheses that make use of logical connectives.
+这样解决带逻辑连接词的命题就很紧凑。
 
-In all these examples, pattern matching was used to carry out a single
-case distinction. More interestingly, patterns can involve nested
-constructors, as in the following examples.
+在所有这些例子中，模式匹配被用来进行单一案例的区分。更有趣的是，模式可以涉及嵌套的构造子，如下面的例子。
 
 ```lean
 def sub2 : Nat → Nat
@@ -136,13 +101,7 @@ def sub2 : Nat → Nat
   | x+2 => x
 ```
 
-The equation compiler first splits on cases as to whether the input is
-``zero`` or of the form ``succ x``.  It then does a case split on
-whether ``x`` is of the form ``zero`` or ``succ x``.  It determines
-the necessary case splits from the patterns that are presented to it,
-and raises an error if the patterns fail to exhaust the cases. Once
-again, we can use arithmetic notation, as in the version below. In
-either case, the defining equations hold definitionally.
+方程编译器首先对输入是``zero``还是``succ x``的形式进行分类讨论。 然后对`x`是``zero``还是``succ x``的形式进行分类讨论。它从提交给它的模式中确定必要的案例拆分，如果模式不能穷尽案例，则会引发错误。同时，我们可以使用算术符号，如下面的版本。在任何一种情况下，定义方程都是成立的。
 
 ```lean
 # def sub2 : Nat → Nat
@@ -156,11 +115,7 @@ example : sub2 (x+2) = x := rfl
 example : sub2 5 = 3 := rfl
 ```
 
-You can write ``#print sub2`` to see how the function was compiled to
-recursors. (Lean will tell you that ``sub2`` has been defined in terms
-of an internal auxiliary function, ``sub2.match_1``, but you can print
-that out too.) Lean uses these auxiliary functions to compile `match` expressions.
-Actually, the definition above is expanded to
+你可以写``#print sub2``来看看这个函数是如何被编译成递归子的。(Lean会告诉你`sub2`已经被定义为内部辅助函数`sub2.match_1`，但你也可以把它打印出来)。Lean使用这些辅助函数来编译`match`表达式。实际上，上面的定义被扩展为
 
 ```lean
 def sub2 : Nat → Nat :=
@@ -171,7 +126,7 @@ def sub2 : Nat → Nat :=
     | x+2 => x
 ```
 
-Here are some more examples of nested pattern matching:
+下面是一些嵌套模式匹配的例子：
 
 ```lean
 example (p q : α → Prop)
@@ -185,9 +140,7 @@ def foo : Nat × Nat → Nat
   | (m+1, n+1) => 2
 ```
 
-The equation compiler can process multiple arguments sequentially. For
-example, it would be more natural to define the previous example as a
-function of two arguments:
+方程编译器可以按顺序处理多个参数。例如，将前面的例子定义为两个参数的函数会更自然：
 
 ```lean
 def foo : Nat → Nat → Nat
@@ -196,7 +149,7 @@ def foo : Nat → Nat → Nat
   | m+1, n+1 => 2
 ```
 
-Here is another example:
+另一例：
 
 ```lean
 def bar : List Nat → List Nat → Nat
@@ -206,11 +159,9 @@ def bar : List Nat → List Nat → Nat
   | a :: as, b :: bs => a + b
 ```
 
-Note that the patterns are separated by commas.
+这些模式是由逗号分隔的。
 
-In each of the following examples, splitting occurs on only the first
-argument, even though the others are included among the list of
-patterns.
+在下面的每个例子中，尽管其他参数包括在模式列表中，但只对第一个参数进行了分割。
 
 ```lean
 # namespace Hidden
@@ -228,21 +179,9 @@ def cond : Bool → α → α → α
 # end Hidden
 ```
 
-Notice also that, when the value of an argument is not needed in the
-definition, you can use an underscore instead. This underscore is
-known as a *wildcard pattern*, or an *anonymous variable*. In contrast
-to usage outside the equation compiler, here the underscore does *not*
-indicate an implicit argument. The use of underscores for wildcards is
-common in functional programming languages, and so Lean adopts that
-notation. [Section wildcards and overlapping patterns](#wildcards_and_overlapping_patterns)
-expands on the notion of a wildcard, and [Section Inaccessible Patterns](#inaccessible_terms) explains how
-you can use implicit arguments in patterns as well.
+还要注意的是，当定义中不需要一个参数的值时，你可以用下划线来代替。这个下划线被称为*通配符模式*，或*匿名变量*。与方程编译器之外的用法不同，这里的下划线并*不*表示一个隐参数。使用下划线表示通配符在函数式编程语言中是很常见的，所以Lean采用了这种符号。[通配符和重叠模式](#通配符和重叠模式)一节阐述了通配符的概念，而[不可访问模式](#inaccessible_terms)一节解释了你如何在模式中使用隐参数。
 
-As described in [Chapter Inductive Types](./inductive_types.md),
-inductive data types can depend on parameters. The following example defines
-the ``tail`` function using pattern matching. The argument ``α : Type``
-is a parameter and occurs before the colon to indicate it does not participate in the pattern matching.
-Lean also allows parameters to occur after ``:``, but it cannot pattern match on them.
+正如[归纳类型](./inductive_types.md)一章中所描述的，归纳数据类型可以依赖于参数。下面的例子使用模式匹配定义了``tail``函数。参数``α : Type``是一个参数，出现在冒号之前，表示它不参与模式匹配。Lean也允许参数出现在``:``之后，但它不能对其进行模式匹配。
 
 ```lean
 def tail1 {α : Type u} : List α → List α
@@ -254,19 +193,14 @@ def tail2 : {α : Type u} → List α → List α
   | α, a :: as => as
 ```
 
-Despite the different placement of the parameter ``α`` in these two
-examples, in both cases it treated in the same way, in that it does
-not participate in a case split.
+尽管参数``α``在这两个例子中的位置不同，但在这两种情况下，它的处理方式是一样的，即它不参与案例分割。
 
-Lean can also handle more complex forms of pattern matching, in which
-arguments to dependent types pose additional constraints on the
-various cases. Such examples of *dependent pattern matching* are
-considered in the [Section Dependent Pattern Matching](#dependent_pattern_matching).
+Lean也可以处理更复杂的模式匹配形式，其中从属类型的参数对各种情况构成了额外的约束。这种*依赖模式匹配*的例子在[依赖模式匹配](#dependent_pattern_matching)一节中考虑。
 
-<a name="wildcards_and_overlapping_patterns"></a>Wildcards and Overlapping Patterns
+通配符和重叠模式
 ----------------------------------
 
-Consider one of the examples from the last section:
+考虑上节的一个例子：
 
 ```lean
 def foo : Nat → Nat → Nat
@@ -282,11 +216,7 @@ def foo : Nat → Nat → Nat
   | m, n => 2
 ```
 
-In the second presentation, the patterns overlap; for example, the
-pair of arguments ``0 0`` matches all three cases. But Lean handles
-the ambiguity by using the first applicable equation, so in this example
-the net result is the same. In particular, the following equations hold
-definitionally:
+在第二种表述中，模式是重叠的；例如，一对参数``0 0``符合所有三种情况。但是Lean通过使用第一个适用的方程来处理这种模糊性，所以在这个例子中，最终结果是一样的。特别是，以下方程在定义上是成立的：
 
 ```lean
 # def foo : Nat → Nat → Nat
@@ -299,7 +229,7 @@ example : foo (m+1) 0     = 1 := rfl
 example : foo (m+1) (n+1) = 2 := rfl
 ```
 
-Since the values of ``m`` and ``n`` are not needed, we can just as well use wildcard patterns instead.
+由于不需要``m``和``n``的值，我们也可以用通配符模式代替。
 
 ```lean
 def foo : Nat → Nat → Nat
@@ -308,25 +238,11 @@ def foo : Nat → Nat → Nat
   | _, _ => 2
 ```
 
-You can check that this definition of ``foo`` satisfies the same
-definitional identities as before.
+你可以检查这个``foo``的定义是否满足与之前相同的定义特性。
 
-Some functional programming languages support *incomplete
-patterns*. In these languages, the interpreter produces an exception
-or returns an arbitrary value for incomplete cases. We can simulate
-the arbitrary value approach using the ``Inhabited`` type
-class. Roughly, an element of ``Inhabited α`` is a witness to the fact
-that there is an element of ``α``; in the [Chapter Type Classes](./type_classes.md)
-we will see that Lean can be instructed that suitable
-base types are inhabited, and can automatically infer that other
-constructed types are inhabited. On this basis, the
-standard library provides an arbitrary element, ``arbitrary``, of
-any inhabited type.
+一些函数式编程语言支持*不完整的模式*。在这些语言中，解释器对不完整的情况产生一个异常或返回一个任意的值。我们可以使用``Inhabited``（含元素的）类型类来模拟任意值的方法。粗略的说，``Inhabited α``的一个元素是对``α``拥有一个元素的见证；在[类型类](./type_classes.md)中，我们将看到Lean可以被告知合适的基础类型是含元素的，并且可以自动推断出其他构造类型是含元素的。在此基础上，标准库提供了一个任意元素``arbitrary``，任何含元素的类型。
 
-We can also use the type ``Option α`` to simulate incomplete patterns.
-The idea is to return ``some a`` for the provided patterns, and use
-``none`` for the incomplete cases. The following example demonstrates
-both approaches.
+我们还可以使用类型`Option α`来模拟不完整的模式。我们的想法是对所提供的模式返回`some a`，而对不完整的情况使用`none`。下面的例子演示了这两种方法。
 
 ```lean
 def f1 : Nat → Nat → Nat
@@ -350,9 +266,9 @@ example : f2 (a+1) 0     = some 2 := rfl
 example : f2 (a+1) (b+1) = none   := rfl
 ```
 
-The equation compiler is clever. If you leave out any of the cases in
-the following definition, the error message will let you know what has
-not been covered.
+The equation compiler is clever. If you leave out any of the cases in the following definition, the error message will let you know what has not been covered.
+
+方程编译器是很聪明的。如果你遗漏了以下定义中的任何一种情况，错误信息会告诉你遗漏了哪个。
 
 ```lean
 def bar : Nat → List Nat → Bool → Nat
@@ -364,7 +280,7 @@ def bar : Nat → List Nat → Bool → Nat
   | a+1, b :: _, _     => a + b
 ```
 
-It will also use an "if ... then ... else" instead of a ``casesOn`` in appropriate situations.
+某些情况也可以用“if ... then ... else”代替``casesOn``。
 
 ```lean
 def foo : Char → Nat
@@ -375,12 +291,18 @@ def foo : Char → Nat
 #print foo.match_1
 ```
 
-<a name="structural_recursion_and_induction"></a>Structural Recursion and Induction
+结构化递归和归纳
 ----------------------------------
 
-What makes the equation compiler powerful is that it also supports
-recursive definitions. In the next three sections, we will describe,
-respectively:
+方程编译器的强大之处在于，它还支持递归定义。在接下来的三节中，我们将分别介绍。
+
+- 结构性递归定义
+- 有根有据的递归定义
+- 相互递归的定义
+
+一般来说，方程编译器处理以下形式的输入。
+
+What makes the equation compiler powerful is that it also supports recursive definitions. In the next three sections, we will describe, respectively:
 
 - structurally recursive definitions
 - well-founded recursive definitions
@@ -395,33 +317,13 @@ def foo (a : α) : (b : β) → γ
   | [patternsₙ] => tₙ
 ```
 
-Here ``(a : α)`` is a sequence of parameters, ``(b : β)`` is the
-sequence of arguments on which pattern matching takes place, and ``γ``
-is any type, which can depend on ``a`` and ``b``. Each line should
-contain the same number of patterns, one for each element of ``β``. As we
-have seen, a pattern is either a variable, a constructor applied to
-other patterns, or an expression that normalizes to something of that
-form (where the non-constructors are marked with the ``[matchPattern]``
-attribute). The appearances of constructors prompt case splits, with
-the arguments to the constructors represented by the given
-variables. In [Section Dependent Pattern Matching](#dependent_pattern_matching),
-we will see that it is sometimes necessary to include explicit terms in patterns that
-are needed to make an expression type check, though they do not play a
-role in pattern matching. These are called "inaccessible patterns" for
-that reason. But we will not need to use such inaccessible patterns
-before [Section Dependent Pattern Matching](#dependent_pattern_matching).
+这里`(a : α)`是一个参数序列，`(b : β)`是进行模式匹配的参数序列，`γ`是任何类型，它可以取决于`a`和`b``。每一行应该包含相同数量的模式，`β``的每个元素都有一个。正如我们所看到的，模式要么是一个变量，要么是应用于其他模式的构造函数，要么是一个归一化为该形式的表达式（其中非构造函数用``[matchPattern]``属性标记）。构造函数的出现会提示案例拆分，构造函数的参数由给定的变量表示。在[依赖模式匹配](#dependent_pattern_matching)一节中，我们将看到有时有必要在模式中包含明确的术语，这些术语需要进行表达式类型检查，尽管它们在模式匹配中没有起到作用。由于这个原因，这些被称为 "不可访问的模式"。但是在[依赖模式匹配](#dependent_pattern_matching)一节之前，我们将不需要使用这种不可访问的模式。
 
-As we saw in the last section, the terms ``t₁, ..., tₙ`` can make use
-of any of the parameters ``a``, as well as any of the variables that
-are introduced in the corresponding patterns. What makes recursion and
-induction possible is that they can also involve recursive calls to
-``foo``. In this section, we will deal with *structural recursion*, in
-which the arguments to ``foo`` occurring on the right-hand side of the
-``:=`` are subterms of the patterns on the left-hand side. The idea is
-that they are structurally smaller, and hence appear in the inductive
-type at an earlier stage. Here are some examples of structural
-recursion from the last chapter, now defined using the equation
-compiler:
+正如我们在上一节所看到的，术语`t₁，...，tₙ`可以利用任何一个参数`a`，以及在相应模式中引入的任何一个变量。使得递归和归纳成为可能的是，它们也可以涉及对``foo``的递归调用。在本节中，我们将处理*结构性递归*，其中`foo'的参数出现在`:='的右侧，是左侧模式的子项。我们的想法是，它们在结构上更小，因此在归纳类型中出现在更早的阶段。下面是上一章的一些结构递归的例子，现在用方程编译器来定义。
+
+Here ``(a : α)`` is a sequence of parameters, ``(b : β)`` is the sequence of arguments on which pattern matching takes place, and ``γ`` is any type, which can depend on ``a`` and ``b``. Each line should contain the same number of patterns, one for each element of ``β``. As we have seen, a pattern is either a variable, a constructor applied to other patterns, or an expression that normalizes to something of that form (where the non-constructors are marked with the ``[matchPattern]`` attribute). The appearances of constructors prompt case splits, with the arguments to the constructors represented by the given variables. In [Section Dependent Pattern Matching](#dependent_pattern_matching), we will see that it is sometimes necessary to include explicit terms in patterns that are needed to make an expression type check, though they do not play a role in pattern matching. These are called "inaccessible patterns" for that reason. But we will not need to use such inaccessible patterns before [Section Dependent Pattern Matching](#dependent_pattern_matching).
+
+As we saw in the last section, the terms ``t₁, ..., tₙ`` can make use of any of the parameters ``a``, as well as any of the variables that are introduced in the corresponding patterns. What makes recursion and induction possible is that they can also involve recursive calls to ``foo``. In this section, we will deal with *structural recursion*, in which the arguments to ``foo`` occurring on the right-hand side of the ``:=`` are subterms of the patterns on the left-hand side. The idea is that they are structurally smaller, and hence appear in the inductive type at an earlier stage. Here are some examples of structural recursion from the last chapter, now defined using the equation compiler:
 
 ```lean
 open Nat
@@ -441,19 +343,9 @@ def mul : Nat → Nat → Nat
   | n, succ m => add (mul n m) n
 ```
 
-The proof of ``zero_add`` makes it clear that proof by induction is
-really a form of recursion in Lean.
+The proof of ``zero_add`` makes it clear that proof by induction is really a form of recursion in Lean.
 
-The example above shows that the defining equations for ``add`` hold
-definitionally, and the same is true of ``mul``. The equation compiler
-tries to ensure that this holds whenever possible, as is the case with
-straightforward structural induction. In other situations, however,
-reductions hold only *propositionally*, which is to say, they are
-equational theorems that must be applied explicitly. The equation
-compiler generates such theorems internally. They are not meant to be
-used directly by the user; rather, the `simp` tactic
-is configured to use them when necessary. Thus both of the following
-proofs of `zero_add` work:
+The example above shows that the defining equations for ``add`` hold definitionally, and the same is true of ``mul``. The equation compiler tries to ensure that this holds whenever possible, as is the case with straightforward structural induction. In other situations, however, reductions hold only *propositionally*, which is to say, they are equational theorems that must be applied explicitly. The equation compiler generates such theorems internally. They are not meant to be used directly by the user; rather, the `simp` tactic is configured to use them when necessary. Thus both of the following proofs of `zero_add` work:
 
 ```lean
 open Nat
@@ -496,11 +388,7 @@ definitional reductions only, to carry out the first step.
     end hidden
 -->
 
-As with definition by pattern matching, parameters to a structural
-recursion or induction may appear before the colon. Such parameters
-are simply added to the local context before the definition is
-processed. For example, the definition of addition may also be written
-as follows:
+As with definition by pattern matching, parameters to a structural recursion or induction may appear before the colon. Such parameters are simply added to the local context before the definition is processed. For example, the definition of addition may also be written as follows:
 
 ```lean
 open Nat
@@ -534,12 +422,7 @@ example : fib (n + 2) = fib (n + 1) + fib n := rfl
 example : fib 7 = 21 := rfl
 ```
 
-Here, the value of the ``fib`` function at ``n + 2`` (which is
-definitionally equal to ``succ (succ n)``) is defined in terms of the
-values at ``n + 1`` (which is definitionally equivalent to ``succ n``)
-and the value at ``n``. This is a notoriously inefficient way of
-computing the fibonacci function, however, with an execution time that
-is exponential in ``n``. Here is a better way:
+Here, the value of the ``fib`` function at ``n + 2`` (which is definitionally equal to ``succ (succ n)``) is defined in terms of the values at ``n + 1`` (which is definitionally equivalent to ``succ n``) and the value at ``n``. This is a notoriously inefficient way of computing the fibonacci function, however, with an execution time that is exponential in ``n``. Here is a better way:
 
 ```lean
 def fibFast (n : Nat) : Nat :=
@@ -564,11 +447,7 @@ def fibFast (n : Nat) : Nat :=
 
 In both cases, Lean generates the auxiliary function `fibFast.loop`.
 
-To handle structural recursion, the equation compiler uses
-*course-of-values* recursion, using constants ``below`` and ``brecOn``
-that are automatically generated with each inductively defined
-type. You can get a sense of how it works by looking at the types of
-``Nat.below`` and ``Nat.brecOn``:
+To handle structural recursion, the equation compiler uses *course-of-values* recursion, using constants ``below`` and ``brecOn`` that are automatically generated with each inductively defined type. You can get a sense of how it works by looking at the types of ``Nat.below`` and ``Nat.brecOn``:
 
 ```lean
 variable (C : Nat → Type u)
@@ -580,16 +459,9 @@ variable (C : Nat → Type u)
 #check (@Nat.brecOn C : (n : Nat) → ((n : Nat) → @Nat.below C n → C n) → C n)
 ```
 
-The type ``@Nat.below C (3 : nat)`` is a data structure that stores elements of ``C 0``, ``C 1``, and ``C 2``.
-The course-of-values recursion is implemented by ``Nat.brecOn``. It enables us to define the value of a dependent
-function of type ``(n : Nat) → C n`` at a particular input ``n`` in terms of all the previous values of the function,
-presented as an element of ``@Nat.below C n``.
+The type ``@Nat.below C (3 : nat)`` is a data structure that stores elements of ``C 0``, ``C 1``, and ``C 2``. The course-of-values recursion is implemented by ``Nat.brecOn``. It enables us to define the value of a dependent function of type ``(n : Nat) → C n`` at a particular input ``n`` in terms of all the previous values of the function, presented as an element of ``@Nat.below C n``.
 
-The use of course-of-values recursion is one of the techniques the equation compiler uses to justify to
-the Lean kernel that a function terminates. It does not affect the code generator which compiles recursive
-functions as other functional programming language compilers. Recall that `#eval fib <n>` is exponential on `<n>`.
-On the other hand, `#reduce fib <n>` is efficient because it uses the definition sent to the kernel that
-is based on the `brecOn` construction.
+The use of course-of-values recursion is one of the techniques the equation compiler uses to justify to the Lean kernel that a function terminates. It does not affect the code generator which compiles recursive functions as other functional programming language compilers. Recall that `#eval fib <n>` is exponential on `<n>`. On the other hand, `#reduce fib <n>` is efficient because it uses the definition sent to the kernel that is based on the `brecOn` construction.
 
 ```lean
 def fib : Nat → Nat
@@ -630,13 +502,13 @@ You are encouraged to experiment with similar examples in the exercises below.
 <a name="_well_founded_recursion_and_induction:"></a> Well-Founded Recursion and Induction
 ------------------------------------
 
-Dependent type theory is powerful enough to encode and justify
-well-founded recursion. Let us start with the logical background that
-is needed to understand how it works.
+依赖类型论强大到足以编码和论证有根有据的递归。让我们从理解它的工作原理所需的逻辑背景开始。
 
-Lean's standard library defines two predicates, ``Acc r a`` and
-``WellFounded r``, where ``r`` is a binary relation on a type ``α``,
-and ``a`` is an element of type ``α``.
+Lean的标准库定义了两个谓词，``Acc r a``和``WellFounded r``，其中``r``是一个类型``α``上的二元关系，``a``是一个类型``α``的元素。
+
+Dependent type theory is powerful enough to encode and justify well-founded recursion. Let us start with the logical background that is needed to understand how it works.
+
+Lean's standard library defines two predicates, ``Acc r a`` and ``WellFounded r``, where ``r`` is a binary relation on a type ``α``, and ``a`` is an element of type ``α``.
 
 ```lean
 variable (α : Sort u)
@@ -646,22 +518,9 @@ variable (r : α → α → Prop)
 #check (WellFounded r : Prop)
 ```
 
-The first, ``Acc``, is an inductively defined predicate. According to
-its definition, ``Acc r x`` is equivalent to
-``∀ y, r y x → Acc r y``. If you think of ``r y x`` as denoting a kind of order relation
-``y ≺ x``, then ``Acc r x`` says that ``x`` is accessible from below,
-in the sense that all its predecessors are accessible. In particular,
-if ``x`` has no predecessors, it is accessible. Given any type ``α``,
-we should be able to assign a value to each accessible element of
-``α``, recursively, by assigning values to all its predecessors first.
+The first, ``Acc``, is an inductively defined predicate. According to its definition, ``Acc r x`` is equivalent to ``∀ y, r y x → Acc r y``. If you think of ``r y x`` as denoting a kind of order relation ``y ≺ x``, then ``Acc r x`` says that ``x`` is accessible from below, in the sense that all its predecessors are accessible. In particular, if ``x`` has no predecessors, it is accessible. Given any type ``α``, we should be able to assign a value to each accessible element of ``α``, recursively, by assigning values to all its predecessors first.
 
-The statement that ``r`` is well founded, denoted ``WellFounded r``,
-is exactly the statement that every element of the type is
-accessible. By the above considerations, if ``r`` is a well-founded
-relation on a type ``α``, we should have a principle of well-founded
-recursion on ``α``, with respect to the relation ``r``. And, indeed,
-we do: the standard library defines ``WellFounded.fix``, which serves
-exactly that purpose.
+The statement that ``r`` is well founded, denoted ``WellFounded r``, is exactly the statement that every element of the type is accessible. By the above considerations, if ``r`` is a well-founded relation on a type ``α``, we should have a principle of well-founded recursion on ``α``, with respect to the relation ``r``. And, indeed, we do: the standard library defines ``WellFounded.fix``, which serves exactly that purpose.
 
 ```lean
 set_option codegen false
@@ -673,28 +532,13 @@ def f {α : Sort u}
       : (x : α) → C x := WellFounded.fix h F
 ```
 
-There is a long cast of characters here, but the first block we have
-already seen: the type, ``α``, the relation, ``r``, and the
-assumption, ``h``, that ``r`` is well founded. The variable ``C``
-represents the motive of the recursive definition: for each element
-``x : α``, we would like to construct an element of ``C x``. The
-function ``F`` provides the inductive recipe for doing that: it tells
-us how to construct an element ``C x``, given elements of ``C y`` for
-each predecessor ``y`` of ``x``.
+There is a long cast of characters here, but the first block we have already seen: the type, ``α``, the relation, ``r``, and the assumption, ``h``, that ``r`` is well founded. The variable ``C`` represents the motive of the recursive definition: for each element ``x : α``, we would like to construct an element of ``C x``. The function ``F`` provides the inductive recipe for doing that: it tells us how to construct an element ``C x``, given elements of ``C y`` for each predecessor ``y`` of ``x``.
 
-Note that ``WellFounded.fix`` works equally well as an induction
-principle. It says that if ``≺`` is well founded and you want to prove
-``∀ x, C x``, it suffices to show that for an arbitrary ``x``, if we
-have ``∀ y ≺ x, C y``, then we have ``C x``.
+Note that ``WellFounded.fix`` works equally well as an induction principle. It says that if ``≺`` is well founded and you want to prove ``∀ x, C x``, it suffices to show that for an arbitrary ``x``, if we have ``∀ y ≺ x, C y``, then we have ``C x``.
 
-In the example above we set the option `codegen` to false because the code
-generator currently does not support `WellFounded.fix`. The function
-`WellFounded.fix` is another tool Lean uses to justify that a function
-terminates.
+In the example above we set the option `codegen` to false because the code generator currently does not support `WellFounded.fix`. The function `WellFounded.fix` is another tool Lean uses to justify that a function terminates.
 
-Lean knows that the usual order ``<`` on the natural numbers is well
-founded. It also knows a number of ways of constructing new well
-founded orders from others, for example, using lexicographic order.
+Lean knows that the usual order ``<`` on the natural numbers is well founded. It also knows a number of ways of constructing new well founded orders from others, for example, using lexicographic order.
 
 Here is essentially the definition of division on the natural numbers that is found in the standard library.
 
@@ -716,15 +560,9 @@ def div := WellFounded.fix (measure id).wf div.F
 #reduce div 8 2 -- 4
 ```
 
-The definition is somewhat inscrutable. Here the recursion is on
-``x``, and ``div.F x f : Nat → Nat`` returns the "divide by ``y``"
-function for that fixed ``x``. You have to remember that the second
-argument to ``div.F``, the recipe for the recursion, is a function
-that is supposed to return the divide by ``y`` function for all values
-``x₁`` smaller than ``x``.
+The definition is somewhat inscrutable. Here the recursion is on ``x``, and ``div.F x f : Nat → Nat`` returns the "divide by ``y``" function for that fixed ``x``. You have to remember that the second argument to ``div.F``, the recipe for the recursion, is a function that is supposed to return the divide by ``y`` function for all values ``x₁`` smaller than ``x``.
 
-The equation compiler is designed to make definitions like this more
-convenient. It accepts the following:
+The equation compiler is designed to make definitions like this more convenient. It accepts the following:
 
 **TODO: waiting for well-founded support in Lean 4**
 
@@ -928,7 +766,7 @@ We can then use a mutual recursive definition to count the number of constants o
     -- END
 
 
-<a name="_dependent_pattern_matching"></a> Dependent Pattern Matching
+依赖模式匹配
 --------------------------
 
 All the examples of pattern matching we considered in

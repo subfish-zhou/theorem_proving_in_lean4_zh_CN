@@ -9,7 +9,7 @@
 - [量词与等价](./quantifiers_and_equality.md)
 - [证明策略](./tactics.md)
 - [使用Lean进行工作](./interacting_with_lean.md)
-- [Inductive Types](./inductive_types.md)
+- [归纳类型](./inductive_types.md)
 - [Induction and Recursion](./induction_and_recursion.md)
 - [结构体和记录](./structures_and_records.md)
 - [Type Classes](./type_classes.md)

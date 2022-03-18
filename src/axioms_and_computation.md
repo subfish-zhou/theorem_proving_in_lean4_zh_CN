@@ -1,138 +1,38 @@
 Axioms and Computation
 ======================
 
-We have seen that the version of the Calculus of Constructions that
-has been implemented in Lean includes dependent function types,
-inductive types, and a hierarchy of universes that starts with an
-impredicative, proof-irrelevant ``Prop`` at the bottom. In this
-chapter, we consider ways of extending the CIC with additional axioms
-and rules. Extending a foundational system in such a way is often
-convenient; it can make it possible to prove more theorems, as well as
-make it easier to prove theorems that could have been proved
-otherwise. But there can be negative consequences of adding additional
-axioms, consequences which may go beyond concerns about their
-correctness. In particular, the use of axioms bears on the
-computational content of definitions and theorems, in ways we will
-explore here.
+我们已经看到，已经在Lean中实现的构造演算的版本包括依赖函数类型、归纳类型和一个宇宙层次结构，这个层次结构从底部的非直谓的、与证明无关的``Prop``开始。在这一章中，我们考虑用额外的公理和规则来扩展CIC的方法。以这种方式扩展基础系统通常是很方便的；它可以证明更多的定理，也可以使原本的证明变得更容易。但是增加额外的公理可能会有负面的后果，这些后果可能超出了对其正确性的关注。特别是，公理的使用对定义和定理的计算内容有影响，我们将在此探讨。
 
-Lean is designed to support both computational and classical
-reasoning. Users that are so inclined can stick to a "computationally
-pure" fragment, which guarantees that closed expressions in the system
-evaluate to canonical normal forms. In particular, any closed
-computationally pure expression of type ``Nat``, for example, will
-reduce to a numeral.
+Lean的设计既支持计算推理也支持经典推理。有此倾向的用户可以坚持使用“计算上纯粹”的片段，这保证了系统中的封闭表达式可以评估为典型的正常形式。例如，任何类型为``Nat``的封闭计算上纯粹的表达式，将还原为一个数字。
 
-Lean's standard library defines an additional axiom, propositional
-extensionality, and a quotient construction which in turn implies the
-principle of function extensionality. These extensions are used, for
-example, to develop theories of sets and finite sets. We will see
-below that using these theorems can block evaluation in Lean's kernel,
-so that closed terms of type ``Nat`` no longer evaluate to numerals. But
-Lean erases types and propositional information when compiling
-definitions to bytecode for its virtual machine evaluator, and since
-these axioms only add new propositions, they are compatible with that
-computational interpretation. Even computationally inclined users may
-wish to use the classical law of the excluded middle to reason about
-computation. This also blocks evaluation in the kernel, but it is
-compatible with compilation to bytecode.
+Lean的标准库定义了一个额外的公理，即命题扩展性，以及一个商结构，可导致函数扩展性。例如，这些扩展性被用来发展集合和有限集合的理论。我们将在下面看到，使用这些定理可以在Lean的内核中阻止求值，因此类型``Nat``的封闭项不再计算为数字。但是Lean在为其虚拟机求值器编译定义到字节码时，会抹去类型和命题信息，而且由于这些公理只是增加了新的命题，它们与这种计算解释是兼容的。即使是有计算倾向的用户也可能希望使用经典的排中律来推理计算。这也会阻止内核中的求值，但它与编译为字节码兼容。
 
-The standard library also defines a choice principle that is entirely
-antithetical to a computational interpretation, since it magically
-produces "data" from a proposition asserting its existence. Its use is
-essential to some classical constructions, and users can import it
-when needed. But expressions that use this construction to produce
-data do not have computational content, and in Lean we are required to
-mark such definitions as ``noncomputable`` to flag that fact.
+标准库还定义了一个与计算解释完全对立的选择原则，因为它神奇地从一个断言其存在的命题中产生了“数据”。它的使用对于一些经典的构造来说是必不可少的，用户可以在需要时导入它。但是使用这种结构来产生数据的表达式并没有计算内容，在Lean中，我们需要把这种定义标记为``noncomputable``，以表明这一事实。
 
-Using a clever trick (known as Diaconescu's theorem), one can use
-propositional extensionality, function extensionality, and choice to
-derive the law of the excluded middle. As noted above, however, use of
-the law of the excluded middle is still compatible with bytecode
-compilation and code extraction, as are other classical principles, as
-long as they are not used to manufacture data.
+使用一个巧妙的技巧(被称为Diaconescu定理)，我们可以使用命题扩展性、函数扩展性和选择原则来推导排中律。然而，如上所述，使用排中律仍然与字节码编译和代码提取兼容，就像其他经典原则一样，只要它们不被用来制造数据。
 
-To summarize, then, on top of the underlying framework of universes,
-dependent function types, and inductive types, the standard library
-adds three additional components:
+总而言之，在宇宙、依赖函数类型和归纳类型的基础框架之上，标准库增加了三个额外的组成部分。
 
--  the axiom of propositional extensionality
--  a quotient construction, which implies function extensionality
--  a choice principle, which produces data from an existential proposition.
+- 命题扩展性公理
+- 一个商结构，它意味着函数的扩展性
+- 选择原则，从一个存在性命题中产生数据。
 
-The first two of these block normalization within Lean, but are
-compatible with bytecode evaluation, whereas the third is not amenable
-to computational interpretation. We will spell out the details more
-precisely below.
+其中前两个是在Lean内部的标准化，但与字节码求值兼容，而第三个则不适合于计算解释。我们将在下文中更精确地阐述这些细节。
 
-Historical and Philosophical Context
+历史和哲学背景
 ------------------------------------
 
-For most of its history, mathematics was essentially computational:
-geometry dealt with constructions of geometric objects, algebra was
-concerned with algorithmic solutions to systems of equations, and
-analysis provided means to compute the future behavior of systems
-evolving over time. From the proof of a theorem to the effect that
-"for every ``x``, there is a ``y`` such that ...", it was generally
-straightforward to extract an algorithm to compute such a ``y`` given
-``x``.
+数学在历史中大部分时间都表现为计算性的：几何学处理几何对象的构造，代数关注方程组的算法解，而分析提供了计算随时间演变的系统的未来行为的手段。从一个定理的证明来看，“对于每一个`x`，都有一个`y`，以便......”，一般来说，开发一个算法，从给定的`x`来计算`y`是很直接的思路。
 
-In the nineteenth century, however, increases in the complexity of
-mathematical arguments pushed mathematicians to develop new styles of
-reasoning that suppress algorithmic information and invoke
-descriptions of mathematical objects that abstract away the details of
-how those objects are represented. The goal was to obtain a powerful
-"conceptual" understanding without getting bogged down in
-computational details, but this had the effect of admitting
-mathematical theorems that are simply *false* on a direct
-computational reading.
+然而在19世纪，数学论证复杂性的增加促使数学家开发新的推理方式，轻视算法信息，重视对数学对象的描述，抽象出这些对象如何被表示的细节。这样做的目的是为了获得强大的“概念性”理解，而不被计算细节所困扰，但这样做的结果是承认了那些在直接的计算性解释中根本就是*假*的数学定理。
 
-There is still fairly uniform agreement today that computation is
-important to mathematics. But there are different views as to how best
-to address computational concerns. From a *constructive* point of
-view, it is a mistake to separate mathematics from its computational
-roots; every meaningful mathematical theorem should have a direct
-computational interpretation. From a *classical* point of view, it is
-more fruitful to maintain a separation of concerns: we can use one
-language and body of methods to write computer programs, while
-maintaining the freedom to use a nonconstructive theories and methods
-to reason about them. Lean is designed to support both of these
-approaches. Core parts of the library are developed constructively,
-but the system also provides support for carrying out classical
-mathematical reasoning.
+今天，人们仍然相当一致地认为计算对数学是重要的。但是，对于如何最好地解决计算问题，人们有不同的看法。从*结构主义*的观点来看，把数学从其计算的根源中分离出来是一个错误；每个有意义的数学定理都应该有一个直接的计算解释。从*经典*的角度来看，分别看待会更有成效：我们可以使用一种语言和方法体系来编写计算机程序，同时保持使用非结构性理论和方法来自由推理。Lean的设计是为了支持这两种方法。库的核心部分是结构性地开发的，但该系统也为进行经典的数学推理提供支持。
 
-Computationally, the purest part of dependent type theory avoids the
-use of ``Prop`` entirely. Inductive types and dependent function types
-can be viewed as data types, and terms of these types can be
-"evaluated" by applying reduction rules until no more rules can be
-applied. In principle, any closed term (that is, term with no free
-variables) of type ``Nat`` should evaluate to a numeral, ``succ
-(... (succ zero)...)``.
+在计算上，依赖类型论的最纯粹部分完全避免了使用``Prop``。归纳类型和依赖函数类型可以被看作是数据类型，这些类型的项可以通过应用规约规则进行“求值”，直到没有规则可以应用为止。原则上，任何类型为`Nat`的封闭项（即没有自由变量的项）都应该算为一个数字，`succ (...(succ zero）...)`。
 
-Introducing a proof-irrelevant ``Prop`` and marking theorems
-irreducible represents a first step towards separation of
-concerns. The intention is that elements of a type ``p : Prop`` should
-play no role in computation, and so the particular construction of a
-term ``t : p`` is "irrelevant" in that sense. One can still define
-computational objects that incorporate elements of type ``Prop``; the
-point is that these elements can help us reason about the effects of
-the computation, but can be ignored when we extract "code" from the
-term. Elements of type ``Prop`` are not entirely innocuous,
-however. They include equations ``s = t : α`` for any type ``α``, and
-such equations can be used as casts, to type check terms. Below, we
-will see examples of how such casts can block computation in the
-system. However, computation is still possible under an evaluation
-scheme that erases propositional content, ignores intermediate typing
-constraints, and reduces terms until they reach a normal form. This is
-precisely what Lean's virtual machine does.
+引入一个与证明无关的`Prop`，并将定理标记为不可还原的，代表了向分离两种倾向迈出的第一步。我们的意图是，一个元素``p : Prop``不应该在计算中扮演任何角色，所以项`t : p`的具体构造在这个意义上是“不相关的”。我们仍然可以定义包含`Prop`类型元素的计算对象；问题是这些元素可以帮助我们推理计算的效果，但是当我们从项中提取“代码”时，可以忽略不计。然而，`Prop`类型的元素并不完全是无害的。它们包括方程``s = t : α``，适用于任何类型的``α``，这样的方程可以被用作转换，对项进行类型检查。下面，我们将看到这样的转换如何阻止系统的计算的例子。然而，在一个抹去命题内容、忽略中间类型约束、减少项直到它们达到正常形式的评估方案下，计算仍然是可能的。这正是Lean的虚拟机所做的。
 
-Having adopted a proof-irrelevant ``Prop``, one might consider it
-legitimate to use, for example, the law of the excluded middle,
-``p ∨ ¬p``, where ``p`` is any proposition. Of course, this, too, can block
-computation according to the rules of CIC, but it does not block
-bytecode evaluation, as described above. It is only the choice
-principles discussed in :numref:`choice` that completely erase the
-distinction between the proof-irrelevant and data-relevant parts of
-the theory.
+在采用了与证明无关的``Prop``之后，人们可能认为使用排中律是合法的，例如，``p ∨ ¬p``，其中``p``是任何命题。当然，根据CIC的规则，这也可以阻止计算，但它不会阻止字节码的求值，如上所述。只有在(选择)[#选择]一节中讨论的选择原则才完全消除了理论中与证明无关的部分和与数据有关的部分之间的区别。
 
 Propositional Extensionality
 ----------------------------
@@ -144,12 +44,7 @@ axiom propext {a b : Prop} : (a ↔ b) → a = b
 # end Hidden
 ```
 
-It asserts that when two propositions imply one another, they are
-actually equal. This is consistent with set-theoretic interpretations
-in which any element ``a : Prop`` is either empty or the singleton set
-``{*}``, for some distinguished element ``*``. The axiom has the
-effect that equivalent propositions can be substituted for one another
-in any context:
+It asserts that when two propositions imply one another, they are actually equal. This is consistent with set-theoretic interpretations in which any element ``a : Prop`` is either empty or the singleton set ``{*}``, for some distinguished element ``*``. The axiom has the effect that equivalent propositions can be substituted for one another in any context:
 
 ```lean
 theorem thm₁ (a b c d e : Prop) (h : a ↔ b) : (c ∧ a ∧ d → e) ↔ (c ∧ b ∧ d → e) :=
@@ -775,7 +670,7 @@ extensionally equal, we have the following chain of equalities:
 
 As a result, ``f₁`` is equal to ``f₂``.
 
-Choice
+选择
 ------
 
 To state the final axiom defined in the standard library, we need the

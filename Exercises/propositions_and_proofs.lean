@@ -13,6 +13,7 @@ example : p ∧ q ↔ q ∧ p :=
 -- https://github.com/leanprover-community/mathlib4/blob/master/Mathlib/Init/Logic.lean
 example : p ∧ q ↔ q ∧ p := ⟨λ ⟨hp, hq⟩ => ⟨hq, hp⟩, λ ⟨hp, hq⟩ => ⟨hq, hp⟩⟩
 -- Here we don't provide more proof from Mathlib4, you can find it by yourself.
+-- In Chapter *Induction and Recursion*, a technic called pattern matching could simplify those proofs.
 
 example : p ∨ q ↔ q ∨ p := 
   Iff.intro

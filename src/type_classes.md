@@ -1,11 +1,9 @@
 # Type classes
 
-Type classes were introduced as a principled way of enabling
-ad-hoc polymorphism in functional programming languages. We first observe that it
-would be easy to implement an ad-hoc polymorphic function (such as addition) if the
-function simply took the type-specific implementation of addition as an argument
-and then called that implementation on the remaining arguments. For example,
-suppose we declare a structure in Lean to hold implementations of addition
+类型类是作为在函数式编程语言中支持特殊多态性的一种原则性方法而引入的。我们首先注意到，如果函数简单地将特定类型的实现作为参数，然后在其余参数上调用该实现，则很容易实现特定的多态函数(如加法)。例如，假设我们在Lean中声明一个结构来保存加法的实现
+
+Type classes were introduced as a principled way of enabling ad-hoc polymorphism in functional programming languages. We first observe that it would be easy to implement an ad-hoc polymorphic function (such as addition) if the function simply took the type-specific implementation of addition as an argument and then called that implementation on the remaining arguments. For example, suppose we declare a structure in Lean to hold implementations of addition
+
 ```lean
 # namespace Ex
 structure Add (a : Type) where
@@ -56,10 +54,7 @@ class Add (a : Type) where
 -- Add.add : {a : Type} → [self : Add a] → a → a → a
 # end Ex
 ```
-where the square brackets indicate that the argument of type `Add a` is *instance implicit*,
-i.e. that it should be synthesized using typeclass resolution. This version of
-`add` is the Lean analogue of the Haskell term `add :: Add a => a -> a -> a`.
-Similarly, we can register an instance by
+where the square brackets indicate that the argument of type `Add a` is *instance implicit*, i.e. that it should be synthesized using typeclass resolution. This version of `add` is the Lean analogue of the Haskell term `add :: Add a => a -> a -> a`. Similarly, we can register an instance by
 ```lean
 # namespace Ex
 # class Add (a : Type) where
