@@ -467,11 +467,11 @@ example (p q r : Prop) : p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r) := by
       | intro hp hr => constructor; exact hp; apply Or.inr; exact hr
 ```
 
-<<<<<<< HEAD
+<!-- <<<<<<< HEAD -->
 你将在[归纳类型](./inductive_types.md)一章中看到，这些策略是相当通用的。``cases``策略可以用来分解递归定义类型的任何元素；``constructor``总是应用递归定义类型的第一个适用构造子。例如，你可以使用``cases``和``constructor``与一个存在量词：
-=======
-你将在[递归类型](./inductive_types.md)一章中看到，这些策略是相当通用的。``cases``策略可以用来分解递归定义类型的任何元素；``constructor``总是应用递归定义类型的第一个适用构造子。例如，你可以使用``cases``和``constructor``与一个存在量词：
->>>>>>> 9647471447f08eb78a8c7dde28bf1857dae49c9f
+<!-- ======= -->
+<!-- 你将在[递归类型](./inductive_types.md)一章中看到，这些策略是相当通用的。``cases``策略可以用来分解递归定义类型的任何元素；``constructor``总是应用递归定义类型的第一个适用构造子。例如，你可以使用``cases``和``constructor``与一个存在量词： -->
+<!-- >>>>>>> 9647471447f08eb78a8c7dde28bf1857dae49c9f -->
 
 ```lean
 example (p q : Nat → Prop) : (∃ x, p x) → ∃ x, p x ∨ q x := by
