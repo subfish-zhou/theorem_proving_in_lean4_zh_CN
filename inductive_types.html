@@ -1,0 +1,1062 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>归纳类型 - Lean中文教程</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title_page.html">Lean 4定理证明</a></li><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> 介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li></ol></li><li class="chapter-item expanded "><a href="dependent_type_theory.html"><strong aria-hidden="true">2.</strong> 依赖类型论</a></li><li class="chapter-item expanded "><a href="propositions_and_proofs.html"><strong aria-hidden="true">3.</strong> 命题和证明</a></li><li class="chapter-item expanded "><a href="quantifiers_and_equality.html"><strong aria-hidden="true">4.</strong> 量词与等价</a></li><li class="chapter-item expanded "><a href="tactics.html"><strong aria-hidden="true">5.</strong> 证明策略</a></li><li class="chapter-item expanded "><a href="interacting_with_lean.html"><strong aria-hidden="true">6.</strong> 使用Lean进行工作</a></li><li class="chapter-item expanded "><a href="inductive_types.html" class="active"><strong aria-hidden="true">7.</strong> 归纳类型</a></li><li class="chapter-item expanded "><a href="induction_and_recursion.html"><strong aria-hidden="true">8.</strong> Induction and Recursion</a></li><li class="chapter-item expanded "><a href="structures_and_records.html"><strong aria-hidden="true">9.</strong> 结构体和记录</a></li><li class="chapter-item expanded "><a href="type_classes.html"><strong aria-hidden="true">10.</strong> Type Classes</a></li><li class="chapter-item expanded "><a href="conv.html"><strong aria-hidden="true">11.</strong> 转换策略模式</a></li><li class="chapter-item expanded "><a href="axioms_and_computation.html"><strong aria-hidden="true">12.</strong> Axioms and Computation</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Lean中文教程</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/subfish-zhou/theorem_proving_in_lean4_zh_CN" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="归纳类型"><a class="header" href="#归纳类型">归纳类型</a></h1>
+<p>我们已经看到Lean的形式基础包括基本类型，<code>Prop, Type 0, Type 1, Type 2, ...</code>，并允许形成依值函数类型，<code>(x : α) → β</code>。在例子中，我们还使用了额外的类型，如<code>Bool</code>、<code>Nat</code>和<code>Int</code>，以及类型构造子，如<code>List</code>和乘积<code>×</code>。事实上，在Lean的库中，除了宇宙之外的每一个具体类型和除了依值箭头之外的每一个类型构造子都是一个被称为<em>归纳类型</em>的类型构造的一般类别的实例。值得注意的是，仅用类型宇宙、依值箭头类型和归纳类型就可以构建一个内涵丰富的数学大厦；其他一切都源于这些。</p>
+<p>直观地说，一个归纳类型是由一个指定的构造子列表建立起来的。在Lean中，指定这种类型的语法如下：</p>
+<pre><code>    inductive Foo where
+      | constructor₁ : ... → Foo
+      | constructor₂ : ... → Foo
+      ...
+      | constructorₙ : ... → Foo
+</code></pre>
+<p>我们的直觉是，每个构造子都指定了一种建立新的对象<code>Foo</code>的方法，可能是由以前构造的值构成。<code>Foo</code>类型只不过是由以这种方式构建的对象组成。归纳式声明中的第一个字符也可以用逗号而不是<code>|</code>来分隔构造子。</p>
+<p>我们将在下面看到，构造子的参数可以包括<code>Foo</code>类型的对象，但要遵守一定的“正向性”约束，即保证<code>Foo</code>的元素是自下而上构建的。粗略地说，每个<code>...</code>可以是由<code>Foo</code>和以前定义的类型构建的任何箭头类型，其中<code>Foo</code>如果出现，也只是作为依值箭头类型的“目标”。</p>
+<p>我们将提供一些归纳类型的例子。我们还把上述方案稍微扩展，即相互定义的归纳类型，以及所谓的<em>归纳族</em>。</p>
+<p>就像逻辑连接词一样，每个归纳类型都有引入规则，说明如何构造该类型的一个元素；还有消去规则，说明如何在另一个构造中“使用”该类型的一个元素。其实逻辑连接词也是归纳类型结构的例子。你已经看到了归纳类型的引入规则：它们只是在类型的定义中指定的构造子。消去规则提供了类型上的递归原则，其中也包括作为一种特殊情况的归纳原则。</p>
+<p>在下一章中，我们将介绍Lean的函数定义包，它提供了更方便的方法来定义归纳类型上的函数并进行归纳证明。但是由于归纳类型的概念是如此的基本，我们觉得从低级的、实践的理解开始是很重要的。我们将从归纳类型的一些基本例子开始，然后逐步上升到更详细和复杂的例子。</p>
+<h2 id="枚举式类型"><a class="header" href="#枚举式类型">枚举式类型</a></h2>
+<p>最简单的归纳类型是一个具有有限的、可枚举的元素列表的类型。</p>
+<pre><code class="language-lean">inductive Weekday where
+  | sunday : Weekday
+  | monday : Weekday
+  | tuesday : Weekday
+  | wednesday : Weekday
+  | thursday : Weekday
+  | friday : Weekday
+  | saturday : Weekday
+</code></pre>
+<p><code>inductive</code>命令创建了一个新类型<code>Weekday</code>。构造子都在<code>Weekday</code>命名空间中。</p>
+<pre><code class="language-lean">#check Weekday.sunday
+#check Weekday.monday
+
+open Weekday
+
+#check sunday
+#check monday
+</code></pre>
+<p>在声明<code>Weekday</code>的归纳类型时，可以省略<code>: Weekday</code>。</p>
+<pre><code class="language-lean">inductive Weekday where
+  | sunday
+  | monday
+  | tuesday
+  | wednesday
+  | thursday
+  | friday
+  | saturday
+</code></pre>
+<p>把<code>sunday</code>、<code>monday</code>、... 、<code>saturday</code>看作是<code>Weekday</code>的不同元素，没有其他有区别的属性。消去规则<code>Weekday.rec</code>，与<code>Weekday</code>类型及其构造子一起定义。它也被称为<em>递归子</em>，它是使该类型“归纳”的原因：它允许我们通过给每个构造子分配相应的值来定义<code>Weekday</code>的函数。直观的说，归纳类型是由构造子详尽地生成的，除了它们构造的元素外，没有其他元素。</p>
+<p>我们将使用<code>match</code>表达式来定义一个从<code>Weekday</code>到自然数的函数：</p>
+<pre><code class="language-lean">open Weekday
+
+def numberOfDay (d : Weekday) : Nat :=
+  match d with
+  | sunday    =&gt; 1
+  | monday    =&gt; 2
+  | tuesday   =&gt; 3
+  | wednesday =&gt; 4
+  | thursday  =&gt; 5
+  | friday    =&gt; 6
+  | saturday  =&gt; 7
+
+#eval numberOfDay Weekday.sunday  -- 1
+#eval numberOfDay Weekday.monday  -- 2
+#eval numberOfDay Weekday.tuesday -- 3
+</code></pre>
+<p>注意，<code>match</code>表达式是使用你声明归纳类型时生成的<em>递归子</em> <code>Weekday.rec</code>来编译的。</p>
+<pre><code class="language-lean">open Weekday
+
+def numberOfDay (d : Weekday) : Nat :=
+  match d with
+  | sunday    =&gt; 1
+  | monday    =&gt; 2
+  | tuesday   =&gt; 3
+  | wednesday =&gt; 4
+  | thursday  =&gt; 5
+  | friday    =&gt; 6
+  | saturday  =&gt; 7
+
+set_option pp.all true
+#print numberOfDay
+-- ... numberOfDay.match_1
+#print numberOfDay.match_1
+-- ... Weekday.casesOn ...
+#print Weekday.casesOn
+-- ... Weekday.rec ...
+#check @Weekday.rec
+/-
+@Weekday.rec.{u}
+ : {motive : Weekday → Sort u} →
+    motive Weekday.sunday →
+    motive Weekday.monday →
+    motive Weekday.tuesday →
+    motive Weekday.wednesday →
+    motive Weekday.thursday →
+    motive Weekday.friday →
+    motive Weekday.saturday →
+    (t : Weekday) → motive t
+-/
+</code></pre>
+<blockquote>
+<p>译者注：此处详细解释一下递归子<code>rec</code>。递归子作为归纳类型的消去规则，用于构造归纳类型到其他类型的函数。从最朴素的集合论直觉上讲，枚举类型的函数只需要规定每个元素的对应，也就是<code>match</code>的方式，但是要注意，<code>match</code>并不像其他Lean关键字那样是一种简单的语法声明，它实际上是一种功能，而这并不是类型论自带的功能。因此<code>match</code>需要一个类型论实现，也就是递归子。现在我们通过<code>#check @Weekday.rec</code>命令的输出来看递归子是如何工作的。首先回忆<code>@</code>是显式参数的意思。递归子是一个复杂的函数，输入的信息有1）motive：一个“目的”函数，表明想要拿当前类型构造什么类型。这个输出类型足够一般所以在u上；2）motive函数对所有枚举元素的输出值(这里就显得它非常“递归”)。这两点是准备工作，下面是这个函数的实际工作：输入一个具体的属于这个枚举类型的项<code>t</code>，输出结果<code>motive t</code>。下文在非枚举类型中，会直接用到这些递归子，届时可以更清晰地看到它们如何被使用。</p>
+</blockquote>
+<p>当声明一个归纳数据类型时，你可以使用<code>deriving Repr</code>来指示Lean生成一个函数，将<code>Weekday</code>对象转换为文本。这个函数被<code>#eval</code>命令用来显示<code>Weekday</code>对象。</p>
+<pre><code class="language-lean">inductive Weekday where
+  | sunday
+  | monday
+  | tuesday
+  | wednesday
+  | thursday
+  | friday
+  | saturday
+  deriving Repr
+
+open Weekday
+
+#eval tuesday   -- Weekday.tuesday
+</code></pre>
+<p>将与某一结构相关的定义和定理归入同名的命名空间通常很有用。例如，我们可以将<code>numberOfDay</code>函数放在<code>Weekday</code>命名空间中。然后当我们打开命名空间时，我们就可以使用较短的名称。</p>
+<p>我们可以定义从<code>Weekday</code>到<code>Weekday</code>的函数：</p>
+<pre><code class="language-lean">namespace Weekday
+def next (d : Weekday) : Weekday :=
+  match d with
+  | sunday    =&gt; monday
+  | monday    =&gt; tuesday
+  | tuesday   =&gt; wednesday
+  | wednesday =&gt; thursday
+  | thursday  =&gt; friday
+  | friday    =&gt; saturday
+  | saturday  =&gt; sunday
+
+def previous (d : Weekday) : Weekday :=
+  match d with
+  | sunday    =&gt; saturday
+  | monday    =&gt; sunday
+  | tuesday   =&gt; monday
+  | wednesday =&gt; tuesday
+  | thursday  =&gt; wednesday
+  | friday    =&gt; thursday
+  | saturday  =&gt; friday
+
+#eval next (next tuesday)      -- Weekday.thursday
+#eval next (previous tuesday)  -- Weekday.tuesday
+
+example : next (previous tuesday) = tuesday :=
+  rfl
+
+end Weekday
+</code></pre>
+<p>我们如何证明<code>next (previous d) = d</code>对于任何Weekday<code>d</code>的一般定理？你可以使用<code>match</code>来为每个构造子提供一个证明：</p>
+<pre><code class="language-lean">def next_previous (d : Weekday) : next (previous d) = d :=
+  match d with
+  | sunday    =&gt; rfl
+  | monday    =&gt; rfl
+  | tuesday   =&gt; rfl
+  | wednesday =&gt; rfl
+  | thursday  =&gt; rfl
+  | friday    =&gt; rfl
+  | saturday  =&gt; rfl
+</code></pre>
+<p>用策略证明更简洁：</p>
+<pre><code class="language-lean">def next_previous (d : Weekday) : next (previous d) = d := by
+  cases d &lt;;&gt; rfl
+</code></pre>
+<p>下面的<a href="#%E5%BD%92%E7%BA%B3%E7%B1%BB%E5%9E%8B%E7%9A%84%E7%AD%96%E7%95%A5">归纳类型的策略</a>一节将介绍额外的策略，这些策略是专门为利用归纳类型而设计。</p>
+<p>命题即类型的对应原则下，我们可以使用<code>match</code>来证明定理和定义函数。换句话说，通过案例证明是一种通过案例定义的方式，其中被“定义”的是一个证明而不是一段数据。</p>
+<p>Lean库中的<code>Bool</code>类型是一个枚举类型的实例。</p>
+<pre><code class="language-lean">namespace Hidden
+inductive Bool where
+  | false : Bool
+  | true  : Bool
+end Hidden
+</code></pre>
+<p>（为了运行这个例子，我们把它们放在一个叫做<code>Hidden</code>的命名空间中，这样像<code>Bool</code>这样的名字就不会和标准库中的 <code>Bool</code>冲突。这是必要的，因为这些类型是Lean“启动工作”的一部分，在系统启动时被自动导入）。</p>
+<p>作为一个练习，你应该思考这些类型的引入和消除规则的作用。作为进一步的练习，我们建议在<code>Bool</code>类型上定义布尔运算 <code>and</code>、<code>or</code>、<code>not</code>，并验证其共性。注意，你可以使用<code>match</code>来定义像<code>and</code>这样的二元运算：</p>
+<pre><code class="language-lean">namespace Hidden
+def and (a b : Bool) : Bool :=
+  match a with
+  | true  =&gt; b
+  | false =&gt; false
+end Hidden
+</code></pre>
+<p>同样地，大多数等式可以通过引入合适的<code>match</code>，然后使用<code>rfl</code>来证明。</p>
+<h2 id="带参数的构造子"><a class="header" href="#带参数的构造子">带参数的构造子</a></h2>
+<p>枚举类型是归纳类型的一种非常特殊的情况，其中构造子根本不需要参数。一般来说，“构造”可以依赖于数据，然后在构造参数中表示。考虑一下库中的乘积类型和求和类型的定义:</p>
+<pre><code class="language-lean">namespace Hidden
+inductive Prod (α : Type u) (β : Type v)
+  | mk : α → β → Prod α β
+
+inductive Sum (α : Type u) (β : Type v) where
+  | inl : α → Sum α β
+  | inr : β → Sum α β
+end Hidden
+</code></pre>
+<p>请注意，我们在构造子的目标中没有包括类型<code>α</code>和<code>β</code>。同时，思考一下这些例子中发生了什么。乘积类型有一个构造子<code>Prod.mk</code>，它需要两个参数。要在<code>Prod α β</code>上定义一个函数，我们可以假设输入的形式是<code>Prod.mk a b</code>，而我们必须指定输出，用<code>a</code>和<code>b</code>来表示。我们可以用它来定义<code>Prod</code>的两个投影。注意，标准库定义的符号<code>α × β</code>表示<code>Prod α β</code>，<code>(a, b)</code>表示<code>Prod.mk a b</code>。</p>
+<pre><code class="language-lean">def fst {α : Type u} {β : Type v} (p : Prod α β) : α :=
+  match p with
+  | Prod.mk a b =&gt; a
+
+def snd {α : Type u} {β : Type v} (p : Prod α β) : β :=
+  match p with
+  | Prod.mk a b =&gt; b
+</code></pre>
+<p>函数<code>fst</code>接收一个对<code>p</code>。<code>match</code>将<code>p</code>解释为一个对<code>Prod.mk a b</code>。还记得在<a href="./dependent_type_theory.html">依值类型论</a>中，为了给这些定义以最大的通用性，我们允许类型<code>α</code>和<code>β</code>属于任何宇宙。</p>
+<p>下面是另一个例子，我们用递归子<code>Prod.casesOn</code>代替<code>match</code>。</p>
+<pre><code class="language-lean">def prod_example (p : Bool × Nat) : Nat :=
+  Prod.casesOn (motive := fun _ =&gt; Nat) p (fun b n =&gt; cond b (2 * n) (2 * n + 1))
+
+#eval prod_example (true, 3)
+#eval prod_example (false, 3)
+</code></pre>
+<p>参数<code>motive</code>是用来指定你要构造的对象的类型，它是一个函数，因为它可能依赖于这个对。函数<code>cond</code>是一个布尔条件：<code>cond b t1 t2</code>，如果<code>b</code>为真，返回<code>t1</code>，否则返回<code>t2</code>。函数<code>prod_example</code>接收一个由布尔值<code>b</code>和一个数字<code>n</code>组成的对，并根据<code>b</code>为真或假返回<code>2 * n</code>或<code>2 * n + 1</code>。</p>
+<p>相比之下，和类型有<em>两个</em>构造子<code>inl</code>和<code>inr</code>（表示“向左引入”和“向右引入”），每个都需要<em>一个</em>（显式的）参数。要在<code>Sum α β</code>上定义一个函数，我们必须处理两种情况：要么输入的形式是<code>inl a</code>，由此必须依据<code>a</code>指定一个输出值；要么输入的形式是<code>inr b</code>，由此必须依据<code>b</code>指定一个输出值。</p>
+<pre><code class="language-lean">def sum_example (s : Sum Nat Nat) : Nat :=
+Sum.casesOn (motive := fun _ =&gt; Nat) s
+   (fun n =&gt; 2 * n)
+   (fun n =&gt; 2 * n + 1)
+
+#eval sum_example (Sum.inl 3)
+#eval sum_example (Sum.inr 3)
+</code></pre>
+<p>这个例子与前面的例子类似，但现在输入到<code>sum_example</code>的内容隐含了<code>inl n</code>或<code>inr n</code>的形式。在第一种情况下，函数返回<code>2 * n</code>，第二种情况下，它返回<code>2 * n + 1</code>。</p>
+<p>注意，乘积类型取决于参数<code>α β : Type</code>，这些参数是构造子和<code>Prod</code>的参数。Lean会检测这些参数何时可以从构造子的参数或返回类型中推断出来，并在这种情况下使其隐式。</p>
+<p>之后我们将看到当归纳类型的构造子从归纳类型本身获取参数时会发生什么。本节考虑的例子暂时不是这样：每个构造子只依赖于先前指定的类型。</p>
+<p>注意到一个有多个构造子的类型是析取的：<code>Sum α β</code>的一个元素要么是<code>inl a</code>的形式，要么是<code>inl b</code>的形式。一个有多个参数的构造子引入了合取信息：从<code>Prod.mk a b</code>的元素<code>Prod α β</code>中我们可以提取<code>a</code><em>和</em><code>b</code>。一个任意的归纳类型可以包括这两个特征，通过拥有任意数量的构造子，每个构造子都需要任意数量的参数。</p>
+<p>和函数定义一样，Lean的归纳定义语法可以让你把构造子的命名参数放在冒号之前：</p>
+<pre><code class="language-lean">namespace Hidden
+inductive Prod (α : Type u) (β : Type v) where
+  | mk (fst : α) (snd : β) : Prod α β
+
+inductive Sum (α : Type u) (β : Type v) where
+  | inl (a : α) : Sum α β
+  | inr (b : β) : Sum α β
+end Hidden
+</code></pre>
+<p>这些定义的结果与本节前面给出的定义基本相同。</p>
+<p>像<code>Prod</code>这样只有一个构造子的类型是纯粹的合取型：构造子只是将参数列表打包成一块数据，基本上是一个元组，后续参数的类型可以取决于初始参数的类型。我们也可以把这样的类型看作是一个“记录”或“结构体”。在Lean中，关键词<code>structure</code>可以用来同时定义这样一个归纳类型以及它的投影。</p>
+<pre><code class="language-lean">namespace Hidden
+structure Prod (α : Type u) (β : Type v) where
+  mk :: (fst : α) (snd : β)
+end Hidden
+</code></pre>
+<p>这个例子同时介绍了归纳类型<code>Prod</code>，它的构造子<code>mk</code>，通常的消去子（<code>rec</code>和<code>recOn</code>），以及投影<code>fst</code>和<code>snd</code>。</p>
+<p>如果你没有命名构造子，Lean使用<code>mk</code>作为默认值。例如，下面定义了一个记录，将一个颜色存储为RGB值的三元组：</p>
+<pre><code class="language-lean">structure Color where
+  (red : Nat) (green : Nat) (blue : Nat)
+  deriving Repr
+
+def yellow := Color.mk 255 255 0
+
+#eval Color.red yellow
+</code></pre>
+<p><code>yellow</code>的定义形成了有三个值的记录，而投影<code>Color.red</code>则返回红色成分。</p>
+<p>如果你在每个字段之间加一个换行符，就可以不用括号。</p>
+<pre><code class="language-lean">structure Color where
+  red : Nat
+  green : Nat
+  blue : Nat
+  deriving Repr
+</code></pre>
+<p><code>structure</code>命令对于定义代数结构特别有用，Lean提供了大量的基础设施来支持对它们的处理。例如，这里是一个半群的定义：</p>
+<pre><code class="language-lean">structure Semigroup where
+  carrier : Type u
+  mul : carrier → carrier → carrier
+  mul_assoc : ∀ a b c, mul (mul a b) c = mul a (mul b c)
+</code></pre>
+<p>更多例子见<a href="./structures_and_records.html">结构体和记录</a>。</p>
+<p>我们已经讨论了依值乘积类型<code>Sigma</code>：</p>
+<pre><code class="language-lean">namespace Hidden
+inductive Sigma {α : Type u} (β : α → Type v) where
+  | mk : (a : α) → β a → Sigma β
+end Hidden
+</code></pre>
+<p>库中另两个归纳类型的例子：</p>
+<pre><code class="language-lean">namespace Hidden
+inductive Option (α : Type u) where
+  | none : Option α
+  | some : α → Option α
+
+inductive Inhabited (α : Type u) where
+  | mk : α → Inhabited α
+end Hidden
+</code></pre>
+<p>在依值类型论的语义中，没有内置的部分函数的概念。一个函数类型<code>α → β</code>或一个依值函数类型<code>(a : α) → β</code>的每个元素都被假定为在每个输入端有一个值。<code>Option</code>类型提供了一种表示部分函数的方法。<code>Option β</code>的一个元素要么是<code>none</code>，要么是<code>some b</code>的形式，用于某个值<code>b : β</code>。因此我们可以认为<code>α → Option β</code>类型的元素<code>f</code>是一个从<code>α</code>到<code>β</code>的部分函数：对于每一个<code>a : α</code>，<code>f a</code>要么返回<code>none</code>，表示<code>f a</code>是“未定义”，要么返回<code>some b</code>。</p>
+<p><code>Inhabited α</code>的一个元素只是证明了<code>α</code>有一个元素的事实。稍后，我们将看到<code>Inhabited</code>是Lean中<em>类型族</em>的一个例子：Lean可以被告知合适的基础类型是含有元素的，并且可以在此基础上自动推断出其他构造类型是含有元素的。</p>
+<p>作为练习，我们鼓励你建立一个从<code>α</code>到<code>β</code>和<code>β</code>到<code>γ</code>的部分函数的组合概念，并证明其行为符合预期。我们也鼓励你证明<code>Bool</code>和<code>Nat</code>是含有元素的，两个含有元素的类型的乘积是含有元素的，以及到一个含有元素的类型的函数类型是含有元素的。</p>
+<h2 id="归纳定义的命题"><a class="header" href="#归纳定义的命题">归纳定义的命题</a></h2>
+<p>归纳定义的类型可以存在于任何类型宇宙中，包括最底层的类型，<code>Prop</code>。事实上，这正是逻辑连接词的定义方式。</p>
+<pre><code class="language-lean">namespace Hidden
+inductive False : Prop
+
+inductive True : Prop where
+  | intro : True
+
+inductive And (a b : Prop) : Prop where
+  | intro : a → b → And a b
+
+inductive Or (a b : Prop) : Prop where
+  | inl : a → Or a b
+  | inr : b → Or a b
+end Hidden
+</code></pre>
+<p>你应该想一想这些是如何产生你已经看到的引入和消去规则的。有一些规则规定了归纳类型的消去子可以“消去成”什么，或者说，哪些类型可以成为递归子的目标。粗略地说，<code>Prop</code>中的归纳类型的特点是，只能消去成<code>Prop</code>中的其他类型。这与以下理解是一致的：如果<code>p : Prop</code>，一个元素<code>hp : p</code>不携带任何数据。然而，这个规则有一个小的例外，我们将在<a href="#%E5%BD%92%E7%BA%B3%E6%97%8F">归纳族</a>y一节中讨论。</p>
+<p>甚至存在量词也是归纳式定义的：</p>
+<pre><code class="language-lean">namespace Hidden
+inductive Exists {α : Type u} (q : α → Prop) : Prop where
+  | intro : ∀ (a : α), q a → Exists q
+end Hidden
+</code></pre>
+<p>请记住，符号<code>∃ x : α, p</code>是<code>Exists (fun x : α =&gt; p)</code>的语法糖。</p>
+<p><code>False</code>, <code>True</code>, <code>And</code>和<code>Or</code>的定义与<code>Empty</code>, <code>Unit</code>, <code>Prod</code>和<code>Sum</code>的定义完全类似。不同的是，第一组产生的是<code>Prop</code>的元素，第二组产生的是<code>Type u</code>的元素，适用于某些<code>u</code>。类似地，<code>∃ x : α, p</code>是<code>Σ x : α, p</code>的<code>Prop</code>值的变体。</p>
+<p>这里可以提到另一个归纳类型，表示为<code>{x : α // p}</code>，它有点像<code>∃ x : α, P</code>和<code>Σ x : α, P</code>之间的混合。</p>
+<pre><code class="language-lean">namespace Hidden
+inductive Subtype {α : Type u} (p : α → Prop) where
+  | mk : (x : α) → p x → Subtype p
+end Hidden
+</code></pre>
+<p>事实上，在Lean中，<code>Subtype</code>是用结构体命令定义的。</p>
+<p>符号<code>{x : α // p x}</code>是<code>Subtype (fun x : α =&gt; p x)</code>的语法糖。它仿照集合理论中的子集表示法：<code>{x : α // p x}</code>表示具有属性<code>p</code>的<code>α</code>元素的集合。</p>
+<h2 id="定义自然数"><a class="header" href="#定义自然数">定义自然数</a></h2>
+<p>到目前为止，我们所看到的归纳定义的类型都是“无趣的”：构造子打包数据并将其插入到一个类型中，而相应的递归子则解压数据并对其进行操作。当构造子作用于被定义的类型中的元素时，事情就变得更加有趣了。一个典型的例子是自然数<code>Nat</code>类型：</p>
+<pre><code class="language-lean">namespace Hidden
+inductive Nat where
+  | zero : Nat
+  | succ : Nat → Nat
+end Hidden
+</code></pre>
+<p>有两个构造子，我们从<code>zero : Nat</code>开始；它不需要参数，所以我们一开始就有了它。相反，构造子<code>succ</code>只能应用于先前构造的<code>Nat</code>。将其应用于<code>zero</code>，得到<code>succ zero : Nat</code>。再次应用它可以得到<code>succ (succ zero) : Nat</code>，依此类推。直观地说，<code>Nat</code>是具有这些构造子的“最小”类型，这意味着它是通过从<code>zero</code>开始并重复应用<code>succ</code>这样无穷无尽地（并且自由地）生成的。</p>
+<p>和以前一样，<code>Nat</code>的递归子被设计用来定义一个从<code>Nat</code>到任何域的依值函数<code>f</code>，也就是一个<code>(n : nat) → motive n</code>的元素<code>f</code>，其中<code>motive : Nat → Sort u</code>。它必须处理两种情况：一种是输入为<code>zero</code>的情况，另一种是输入为 <code>succ n</code>的情况，其中<code>n : Nat</code>。在第一种情况下，我们只需指定一个适当类型的目标值，就像以前一样。但是在第二种情况下，递归子可以假设在<code>n</code>处的<code>f</code>的值已经被计算过了。因此，递归子的下一个参数是以<code>n</code>和<code>f n</code>来指定<code>f (succ n)</code>的值。</p>
+<p>如果我们检查递归子的类型，你会得到：</p>
+<pre><code class="language-lean">#check @Nat.rec
+/-
+  {motive : Nat → Sort u}
+  → motive Nat.zero
+  → ((n : Nat) → motive n → motive (Nat.succ n))
+  → (t : Nat) → motive t
+-/
+</code></pre>
+<p>隐参数<code>motive</code>，是被定义的函数的陪域。在类型论中，通常说<code>motive</code>是消去/递归的<em>动机</em>，因为它描述了我们希望构建的对象类型。接下来的两个参数指定了如何计算零和后继的情况，如上所述。它们也被称为小前提<code>minor premises</code>。最后，<code>t : Nat</code>，是函数的输入。它也被称为大前提<code>major premise</code>。</p>
+<p><code>Nat.recOn</code>与<code>Nat.rec</code>类似，但大前提发生在小前提之前。</p>
+<pre><code>@Nat.recOn :
+  {motive : Nat → Sort u}
+  → (t : Nat)
+  → motive Nat.zero
+  → ((n : Nat) → motive n → motive (Nat.succ n))
+  → motive t
+</code></pre>
+<p>例如，考虑自然数上的加法函数<code>add m n</code>。固定<code>m</code>，我们可以通过递归来定义<code>n</code>的加法。在基本情况下，我们将<code>add m zero</code>设为<code>m</code>。在后续步骤中，假设<code>add m n</code>的值已经确定，我们将<code>add m (succ n)</code>定义为<code>succ (add m n)</code>。</p>
+<pre><code class="language-lean">namespace Hidden
+inductive Nat where
+  | zero : Nat
+  | succ : Nat → Nat
+  deriving Repr
+
+def add (m n : Nat) : Nat :=
+  match n with
+  | Nat.zero   =&gt; m
+  | Nat.succ n =&gt; Nat.succ (add m n)
+
+open Nat
+
+#eval add (succ (succ zero)) (succ zero)
+end Hidden
+</code></pre>
+<p>将这些定义放入一个命名空间<code>Nat</code>是很有用的。然后我们可以继续在这个命名空间中定义熟悉的符号。现在加法的两个定义方程是成立的：</p>
+<pre><code class="language-lean">namespace Nat
+
+def add (m n : Nat) : Nat :=
+  match n with
+  | Nat.zero   =&gt; m
+  | Nat.succ n =&gt; Nat.succ (add m n)
+
+instance : Add Nat where
+  add := add
+
+theorem add_zero (m : Nat) : m + zero = m := rfl
+theorem add_succ (m n : Nat) : m + succ n = succ (m + n) := rfl
+
+end Nat
+# end Hidden
+</code></pre>
+<p>我们将在<a href="./type_classes.html">类型族</a>一章中解释<code>instance</code>命令如何工作。我们以后的例子将使用Lean自己的自然数版本。</p>
+<p>然而，证明像<code>zero + m = m</code>这样的事实，需要用归纳法证明。如上所述，归纳原则只是递归原则的一个特例，当陪域<code>motive n</code>是<code>Prop</code>的一个元素。它代表了熟悉的归纳证明模式：要证明<code>∀ n, motive n</code>，首先要证明<code>motive 0</code>，然后对于任意的<code>n</code>，假设<code>ih : motive n</code>并证明<code>motive (succ n)</code>。</p>
+<pre><code class="language-lean">open Nat
+
+theorem zero_add (n : Nat) : 0 + n = n :=
+  Nat.recOn (motive := fun x =&gt; 0 + x = x)
+   n
+   (show 0 + 0 = 0 from rfl)
+   (fun (n : Nat) (ih : 0 + n = n) =&gt;
+    show 0 + succ n = succ n from
+    calc
+       0 + succ n = succ (0 + n) := rfl
+                _ = succ n       := by rw [ih])
+</code></pre>
+<p>请注意，当<code>Nat.recOn</code>在证明中使用时，它实际上是变相的归纳原则。<code>rewrite</code>和<code>simp</code>策略在这样的证明中往往非常有效。在这种情况下，证明可以化简成：</p>
+<pre><code class="language-lean">open Nat
+
+theorem zero_add (n : Nat) : 0 + n = n :=
+  Nat.recOn (motive := fun x =&gt; 0 + x = x) n
+    rfl
+    (fun n ih =&gt; by simp [add_succ, ih])
+</code></pre>
+<p>另一个例子，让我们证明加法结合律，<code>∀ m n k, m + n + k = m + (n + k)</code>。(我们定义的符号<code>+</code>是向左结合的，所以<code>m + n + k</code>实际上是<code>(m + n) + k</code>。) 最难的部分是确定在哪个变量上做归纳。由于加法是由第二个参数的递归定义的，<code>k</code>是一个很好的猜测，一旦我们做出这个选择，证明几乎是顺理成章的：</p>
+<pre><code class="language-lean">open Nat
+theorem add_assoc (m n k : Nat) : m + n + k = m + (n + k) :=
+  Nat.recOn (motive := fun k =&gt; m + n + k = m + (n + k)) k
+    (show m + n + 0 = m + (n + 0) from rfl)
+    (fun k (ih : m + n + k = m + (n + k)) =&gt;
+      show m + n + succ k = m + (n + succ k) from
+      calc
+          m + n + succ k = succ (m + n + k) := rfl
+            _ = succ (m + (n + k)) := by rw [ih]
+            _ = m + succ (n + k) := rfl
+            _ = m + (n + succ k) := rfl)
+</code></pre>
+<p>你又可以化简证明：</p>
+<pre><code class="language-lean">open Nat
+theorem add_assoc (m n k : Nat) : m + n + k = m + (n + k) :=
+  Nat.recOn (motive := fun k =&gt; m + n + k = m + (n + k)) k
+    rfl
+    (fun k ih =&gt; by simp [Nat.add_succ, ih]; done)
+</code></pre>
+<p>假设我们试图证明加法交换律。选择第二个参数做归纳法，我们可以这样开始：</p>
+<pre><code class="language-lean">open Nat
+theorem add_comm (m n : Nat) : m + n = n + m :=
+  Nat.recOn (motive := fun x =&gt; m + x = x + m) n
+   (show m + 0 = 0 + m by rw [Nat.zero_add, Nat.add_zero])
+   (fun (n : Nat) (ih : m + n = n + m) =&gt;
+    show m + succ n = succ n + m from
+    calc m + succ n = succ (m + n) := rfl
+                  _ = succ (n + m) := by rw [ih]
+                  _ = succ n +  m  := sorry)
+</code></pre>
+<p>在这一点上，我们看到我们需要另一个事实，即<code>succ (n + m) = succ n + m</code>。你可以通过对<code>m</code>的归纳来证明这一点：</p>
+<pre><code class="language-lean">open Nat
+
+theorem succ_add (n m : Nat) : succ n + m = succ (n + m) :=
+  Nat.recOn (motive := fun x =&gt; succ n + x = succ (n + x)) m
+    (show succ n + 0 = succ (n + 0) from rfl)
+    (fun (m : Nat) (ih : succ n + m = succ (n + m)) =&gt;
+     show succ n + succ m = succ (n + succ m) from
+     calc succ n + succ m = succ (succ n + m) := rfl
+           _  = succ (succ (n + m))           := by rw [ih]
+           _  = succ (n + succ m)             := rfl)
+</code></pre>
+<p>然后你可以用<code>succ_add</code>代替前面证明中的<code>sorry</code>。然而，证明可以再次压缩：</p>
+<pre><code class="language-lean">namespace Hidden
+open Nat
+theorem succ_add (n m : Nat) : succ n + m = succ (n + m) :=
+  Nat.recOn (motive := fun x =&gt; succ n + x = succ (n + x)) m
+    rfl
+    (fun m ih =&gt; by simp only [add_succ, ih])
+
+theorem add_comm (m n : Nat) : m + n = n + m :=
+  Nat.recOn (motive := fun x =&gt; m + x = x + m) n
+    (by simp)
+    (fun m ih =&gt; by simp only [add_succ, succ_add, ih])
+end Hidden
+</code></pre>
+<h2 id="其他递归数据类型"><a class="header" href="#其他递归数据类型">其他递归数据类型</a></h2>
+<p>让我们再考虑一些归纳定义类型的例子。对于任何类型<code>α</code>，在库中定义了<code>α</code>的元素列表<code>List α</code>类型。</p>
+<pre><code class="language-lean">namespace Hidden
+inductive List (α : Type u) where
+| nil  : List α
+| cons : α → List α → List α
+
+namespace List
+
+def append (as bs : List α) : List α :=
+  match as with
+  | nil       =&gt; bs
+  | cons a as =&gt; cons a (append as bs)
+
+theorem nil_append (as : List α) : append nil as = as :=
+  rfl
+
+theorem cons_append (a : α) (as bs : List α)
+                    : append (cons a as) bs = cons a (append as bs) :=
+  rfl
+
+end List
+end Hidden
+</code></pre>
+<p>一个<code>α</code>类型的元素列表，要么是空列表<code>nil</code>，要么是一个元素<code>h : α</code>，后面是一个列表<code>t : List α</code>。第一个元素<code>h</code>，通常被称为列表的“头”，最后一个<code>t</code>，被称为“尾”。</p>
+<p>作为一个练习，请证明以下内容：</p>
+<pre><code class="language-lean">theorem append_nil (as : List α) : append as nil = as :=
+  sorry
+
+theorem append_assoc (as bs cs : List α)
+        : append (append as bs) cs = append as (append bs cs) :=
+  sorry
+</code></pre>
+<p>还可以尝试定义函数<code>length : {α : Type u} → List α → Nat</code>，返回一个列表的长度，并证明它的行为符合我们的期望（例如，<code>length (append as bs) = length as + length bs</code>）。</p>
+<p>另一个例子，我们可以定义二叉树的类型：</p>
+<pre><code class="language-lean">inductive BinaryTree where
+  | leaf : BinaryTree
+  | node : BinaryTree → BinaryTree → BinaryTree
+</code></pre>
+<p>事实上，我们甚至可以定义可数多叉树的类型：</p>
+<pre><code class="language-lean">inductive CBTree where
+  | leaf : CBTree
+  | sup : (Nat → CBTree) → CBTree
+
+namespace CBTree
+
+def succ (t : CBTree) : CBTree :=
+  sup (fun _ =&gt; t)
+
+def toCBTree : Nat → CBTree
+  | 0 =&gt; leaf
+  | n+1 =&gt; succ (toCBTree n)
+
+def omega : CBTree :=
+  sup toCBTree
+
+end CBTree
+</code></pre>
+<h2 id="归纳类型的策略"><a class="header" href="#归纳类型的策略">归纳类型的策略</a></h2>
+<p>归纳类型在Lean中有最根本的重要性，因此设计了一些方便使用的策略，这里讲几种。</p>
+<p><code>cases</code>策略适用于归纳定义类型的元素，正如其名称所示：它根据每个可能的构造子分解元素。在其最基本的形式中，它被应用于局部环境中的元素<code>x</code>。然后，它将目标还原为<code>x</code>被每个构成体所取代的情况。</p>
+<pre><code class="language-lean">example (p : Nat → Prop) (hz : p 0) (hs : ∀ n, p (Nat.succ n)) : ∀ n, p n := by
+  intro n
+  cases n
+  . exact hz  -- goal is p 0
+  . apply hs  -- goal is a : ℕ ⊢ p (succ a)
+</code></pre>
+<p>还有一些额外的修饰功能。首先，<code>cases</code>允许你使用<code>with</code>子句来选择每个选项的名称。例如在下一个例子中，我们为<code>succ</code>的参数选择<code>m</code>这个名字，这样第二个情况就指的是<code>succ m</code>。更重要的是，cases策略将检测局部环境中任何依赖于目标变量的项目。它将这些元素还原，进行拆分，并重新引入它们。在下面的例子中，注意假设<code>h : n ≠ 0</code>在第一个分支中变成<code>h : 0 ≠ 0</code>，在第二个分支中变成<code>h : succ m ≠ 0</code>。</p>
+<pre><code class="language-lean">open Nat
+
+example (n : Nat) (h : n ≠ 0) : succ (pred n) = n := by
+  cases n with
+  | zero =&gt;
+    -- goal: h : 0 ≠ 0 ⊢ succ (pred 0) = 0
+    apply absurd rfl h
+  | succ m =&gt;
+    -- second goal: h : succ m ≠ 0 ⊢ succ (pred (succ m)) = succ m
+    rfl
+</code></pre>
+<p><code>cases</code>可以用来产生数据，也可以用来证明命题。</p>
+<pre><code class="language-lean">def f (n : Nat) : Nat := by
+  cases n; exact 3; exact 7
+
+example : f 0 = 3 := rfl
+example : f 5 = 7 := rfl
+</code></pre>
+<p>再一次，cases将被还原，分隔，然后在背景中重新引入依赖。</p>
+<pre><code class="language-lean">def Tuple (α : Type) (n : Nat) :=
+  { as : List α // as.length = n }
+
+def f {n : Nat} (t : Tuple α n) : Nat := by
+  cases n; exact 3; exact 7
+
+def myTuple : Tuple Nat 3 :=
+  ⟨[0, 1, 2], rfl⟩
+
+example : f myTuple = 7 :=
+  rfl
+</code></pre>
+<p>下面是一个带有参数的多个构造子的例子。</p>
+<pre><code class="language-lean">inductive Foo where
+  | bar1 : Nat → Nat → Foo
+  | bar2 : Nat → Nat → Nat → Foo
+
+def silly (x : Foo) : Nat := by
+  cases x with
+  | bar1 a b =&gt; exact b
+  | bar2 c d e =&gt; exact e
+</code></pre>
+<p>每个构造子的备选项不需要按照构造子的声明顺序来求解。</p>
+<pre><code class="language-lean">inductive Foo where
+  | bar1 : Nat → Nat → Foo
+  | bar2 : Nat → Nat → Nat → Foo
+
+def silly (x : Foo) : Nat := by
+  cases x with
+  | bar2 c d e =&gt; exact e
+  | bar1 a b =&gt; exact b
+</code></pre>
+<p><code>with</code>的语法对于编写结构化证明很方便。Lean还提供了一个补充的<code>case</code>策略，它允许你专注于目标分配变量名。</p>
+<pre><code class="language-lean">inductive Foo where
+  | bar1 : Nat → Nat → Foo
+  | bar2 : Nat → Nat → Nat → Foo
+
+def silly (x : Foo) : Nat := by
+  cases x
+  case bar2 c d e =&gt; exact e
+  case bar1 a b =&gt; exact b
+</code></pre>
+<p><code>case</code>策略很聪明，它将把构造子与适当的目标相匹配。例如，我们可以按照相反的顺序填充上面的目标：</p>
+<pre><code class="language-lean">inductive Foo where
+  | bar1 : Nat → Nat → Foo
+  | bar2 : Nat → Nat → Nat → Foo
+
+def silly (x : Foo) : Nat := by
+  cases x
+  case bar1 a b =&gt; exact b
+  case bar2 c d e =&gt; exact e
+</code></pre>
+<p>你也可以使用<code>cases</code>伴随一个任意的表达式。假设该表达式出现在目标中，cases策略将概括该表达式，引入由此产生的全称变量，并对其进行处理。</p>
+<pre><code class="language-lean">open Nat
+
+example (p : Nat → Prop) (hz : p 0) (hs : ∀ n, p (succ n)) (m k : Nat)
+        : p (m + 3 * k) := by
+  cases m + 3 * k
+  exact hz   -- goal is p 0
+  apply hs   -- goal is a : ℕ ⊢ p (succ a)
+</code></pre>
+<p>可以认为这是在说“把<code>m + 3 * k</code>是零或者某个数字的后继的情况拆开”。其结果在功能上等同于以下：</p>
+<pre><code class="language-lean">open Nat
+
+example (p : Nat → Prop) (hz : p 0) (hs : ∀ n, p (succ n)) (m k : Nat)
+        : p (m + 3 * k) := by
+  generalize m + 3 * k = n
+  cases n
+  exact hz   -- goal is p 0
+  apply hs   -- goal is a : ℕ ⊢ p (succ a)
+</code></pre>
+<p>注意，表达式<code>m + 3 * k</code>被<code>generalize</code>删除了；重要的只是它的形式是<code>0</code>还是<code>succ a</code>。这种形式的<code>cases</code><em>不会</em>恢复任何同时提到方程中的表达式的假设（在本例中是<code>m + 3 * k</code>）。如果这样的术语出现在一个假设中，而你也想对其进行概括，你需要明确地恢复<code>revert</code>它。</p>
+<p>如果你所涉及的表达式没有出现在目标中，<code>cases</code>策略使用<code>have</code>来把表达式的类型放到上下文中。下面是一个例子：</p>
+<pre><code class="language-lean">example (p : Prop) (m n : Nat)
+        (h₁ : m &lt; n → p) (h₂ : m ≥ n → p) : p := by
+  cases Nat.lt_or_ge m n
+  case inl hlt =&gt; exact h₁ hlt
+  case inr hge =&gt; exact h₂ hge
+</code></pre>
+<p>定理<code>Nat.lt_or_ge m n</code>说<code>m &lt; n ∨ m ≥ n</code>，很自然地认为上面的证明是在这两种情况下的分割。在第一个分支中，我们有假设<code>h₁ : m &lt; n</code>，在第二个分支中，我们有假设<code>h₂ : m ≥ n</code>。上面的证明在功能上等同于以下：</p>
+<pre><code class="language-lean">example (p : Prop) (m n : Nat)
+        (h₁ : m &lt; n → p) (h₂ : m ≥ n → p) : p := by
+  have h : m &lt; n ∨ m ≥ n := Nat.lt_or_ge m n
+  cases h
+  case inl hlt =&gt; exact h₁ hlt
+  case inr hge =&gt; exact h₂ hge
+</code></pre>
+<p>在前两行之后，我们有<code>h : m &lt; n ∨ m ≥ n</code>作为假设，我们只需在此基础上做cases。</p>
+<p>下面是另一个例子，我们利用自然数相等的可判定性，对<code>m = n</code>和<code>m ≠ n</code>的情况进行拆分。</p>
+<pre><code class="language-lean">#check Nat.sub_self
+
+example (m n : Nat) : m - n = 0 ∨ m ≠ n := by
+  cases Decidable.em (m = n) with
+  | inl heq =&gt; rw [heq]; apply Or.inl; exact Nat.sub_self n
+  | inr hne =&gt; apply Or.inr; exact hne
+</code></pre>
+<p>如果你<code>open Classical</code>，你可以对任何命题使用排中律。但是使用<a href="./type_classes.html">类型族</a>推理，Lean实际上可以找到相关的决策程序，这意味着你可以在可计算函数中使用情况拆分。</p>
+<p>正如<code>cases</code>项可以用来进行分情况证明，<code>induction</code>项可以用来进行归纳证明。其语法与<code>cases</code>相似，只是参数只能是局部上下文中的一个项。下面是一个例子：</p>
+<pre><code class="language-lean">namespace Hidden
+theorem zero_add (n : Nat) : 0 + n = n := by
+  induction n with
+  | zero =&gt; rfl
+  | succ n ih =&gt; rw [Nat.add_succ, ih]
+end Hidden
+</code></pre>
+<p>和<code>cases</code>一样，我们可以使用<code>case</code>代替<code>with</code>。</p>
+<pre><code class="language-lean">namespace Hidden
+theorem zero_add (n : Nat) : 0 + n = n := by
+  induction n
+  case zero =&gt; rfl
+  case succ n ih =&gt; rw [Nat.add_succ, ih]
+end Hidden
+</code></pre>
+<p>更多例子：</p>
+<pre><code class="language-lean">namespace Hidden
+open Nat
+
+theorem zero_add (n : Nat) : 0 + n = n := by
+  induction n &lt;;&gt; simp [*, add_zero, add_succ]
+
+theorem succ_add (m n : Nat) : succ m + n = succ (m + n) := by
+  induction n &lt;;&gt; simp [*, add_zero, add_succ]
+
+theorem add_comm (m n : Nat) : m + n = n + m := by
+  induction n &lt;;&gt; simp [*, add_zero, add_succ, succ_add, zero_add]
+
+theorem add_assoc (m n k : Nat) : m + n + k = m + (n + k) := by
+  induction k &lt;;&gt; simp [*, add_zero, add_succ]
+end Hidden
+</code></pre>
+<p><code>induction</code>策略也支持用户定义的具有多个目标（又称主前提）的归纳原则。</p>
+<pre><code class="language-lean">/-
+theorem Nat.mod.inductionOn
+      {motive : Nat → Nat → Sort u}
+      (x y  : Nat)
+      (ind  : ∀ x y, 0 &lt; y ∧ y ≤ x → motive (x - y) y → motive x y)
+      (base : ∀ x y, ¬(0 &lt; y ∧ y ≤ x) → motive x y)
+      : motive x y :=
+-/
+
+example (x : Nat) {y : Nat} (h : y &gt; 0) : x % y &lt; y := by
+  induction x, y using Nat.mod.inductionOn with
+  | ind x y h₁ ih =&gt;
+    rw [Nat.mod_eq_sub_mod h₁.2]
+    exact ih h
+  | base x y h₁ =&gt;
+     have : ¬ 0 &lt; y ∨ ¬ y ≤ x := Iff.mp (Decidable.not_and_iff_or_not ..) h₁
+     match this with
+     | Or.inl h₁ =&gt; exact absurd h h₁
+     | Or.inr h₁ =&gt;
+       have hgt : y &gt; x := Nat.gt_of_not_le h₁
+       rw [← Nat.mod_eq_of_lt hgt] at hgt
+       assumption
+</code></pre>
+<p>你也可以在策略中使用<code>match</code>符号：</p>
+<pre><code class="language-lean">example : p ∨ q → q ∨ p := by
+  intro h
+  match h with
+  | Or.inl _  =&gt; apply Or.inr; assumption
+  | Or.inr h2 =&gt; apply Or.inl; exact h2
+</code></pre>
+<p>为了方便起见，模式匹配已经被整合到诸如<code>intro</code>和<code>funext</code>等策略中。</p>
+<pre><code class="language-lean">example : s ∧ q ∧ r → p ∧ r → q ∧ p := by
+  intro ⟨_, ⟨hq, _⟩⟩ ⟨hp, _⟩
+  exact ⟨hq, hp⟩
+
+example :
+    (fun (x : Nat × Nat) (y : Nat × Nat) =&gt; x.1 + y.2)
+    =
+    (fun (x : Nat × Nat) (z : Nat × Nat) =&gt; z.2 + x.1) := by
+  funext (a, b) (c, d)
+  show a + d = d + a
+  rw [Nat.add_comm]
+</code></pre>
+<p>我们用最后一个策略来结束本节，这个策略旨在促进归纳类型的工作，即<code>injection</code>注入策略。归纳类型的元素是自由生成的，也就是说，构造子是注入式的，并且有不相交的作用范围。<code>injection</code>策略是为了利用这一事实：</p>
+<pre><code class="language-lean">open Nat
+
+example (m n k : Nat) (h : succ (succ m) = succ (succ n))
+        : n + k = m + k := by
+  injection h with h'
+  injection h' with h''
+  rw [h'']
+</code></pre>
+<p>该策略的第一个实例在上下文中加入了<code>h' : succ m = succ n</code>，第二个实例加入了<code>h'' : m = n</code>。</p>
+<p><code>injection</code>策略还可以检测不同构造子被设置为相等时产生的矛盾，并使用它们来关闭目标。</p>
+<pre><code class="language-lean">open Nat
+
+
+example (m n : Nat) (h : succ m = 0) : n = n + 7 := by
+  injection h
+
+example (m n : Nat) (h : succ m = 0) : n = n + 7 := by
+  contradiction
+
+example (h : 7 = 4) : False := by
+  contradiction
+</code></pre>
+<p>如第二个例子所示，<code>contradiction</code>策略也能检测出这种形式的矛盾。</p>
+<h2 id="归纳族"><a class="header" href="#归纳族">归纳族</a></h2>
+<p>我们几乎已经完成了对Lean所接受的全部归纳定义的描述。到目前为止，你已经看到Lean允许你用任何数量的递归构造子引入归纳类型。事实上，一个归纳定义可以引入一个有索引的归纳类型的<em>家族</em>。</p>
+<p>归纳族是一个由以下形式的同时归纳定义的有索引的家族：</p>
+<pre><code>inductive foo : ... → Sort u where
+  | constructor₁ : ... → foo ...
+  | constructor₂ : ... → foo ...
+  ...
+  | constructorₙ : ... → foo ...
+</code></pre>
+<p>与普通的归纳定义不同，它构造了某个<code>Sort u</code>的元素，更一般的版本构造了一个函数<code>... → Sort u</code>，其中<code>...</code>表示一串参数类型，也称为<em>索引</em>。然后，每个构造子都会构造一个家族中某个成员的元素。一个例子是<code>Vector α n</code>的定义，它是长度为<code>n</code>的<code>α</code>元素的向量的类型：</p>
+<pre><code class="language-lean">namespace Hidden
+inductive Vector (α : Type u) : Nat → Type u where
+  | nil  : Vector α 0
+  | cons : α → {n : Nat} → Vector α n → Vector α (n+1)
+end Hidden
+</code></pre>
+<p>注意，<code>cons</code>构造子接收<code>Vector α n</code>的一个元素，并返回<code>Vector α (n+1)</code>的一个元素，从而使用家族中的一个成员的元素来构建另一个成员的元素。</p>
+<p>一个更奇特的例子是由Lean中相等类型的定义：</p>
+<pre><code class="language-lean"># namespace Hidden
+inductive Eq {α : Sort u} (a : α) : α → Prop where
+  | refl {} : Eq a a
+# end Hidden
+</code></pre>
+<p>对于每个固定的<code>α : Sort u</code>和<code>a : α</code>，这个定义构造了一个<code>Eq a x</code>的类型族，由<code>x : α</code>索引。然而，只有一个构造子<code>refl</code>，它是<code>Eq a a</code>的一个元素，构造子后面的大括号告诉Lean要把<code>refl</code>的参数明确化。直观地说，在<code>x</code>是<code>a</code>的情况下，构建<code>Eq a x</code>证明的唯一方法是使用自反性。请注意，<code>Eq a a</code>是<code>Eq a x</code>这个类型家族中唯一的类型。由Lean产生的消去规则如下：</p>
+<pre><code class="language-lean">universe u v
+
+#check (@Eq.rec : {α : Sort u} → {a : α} → {motive : (x : α) → a = x → Sort v}
+                  → motive a rfl → {b : α} → (h : a = b) → motive b h)
+</code></pre>
+<p>一个显著的事实是，所有关于相等的基本公理都来自构造子<code>refl</code>和消去子<code>Eq.rec</code>。然而，相等的定义是不典型的，见下一节的讨论。</p>
+<p>递归子<code>Eq.rec</code>也被用来定义代换：</p>
+<pre><code class="language-lean"># namespace Hidden
+theorem subst {α : Type u} {a b : α} {p : α → Prop} (h₁ : Eq a b) (h₂ : p a) : p b :=
+  Eq.rec (motive := fun x _ =&gt; p x) h₂ h₁
+# end Hidden
+</code></pre>
+<p>可以使用<code>match</code>定义<code>subst</code>。</p>
+<pre><code class="language-lean"># namespace Hidden
+theorem subst {α : Type u} {a b : α} {p : α → Prop} (h₁ : Eq a b) (h₂ : p a) : p b :=
+  match h₁ with
+  | rfl =&gt; h₂
+# end Hidden
+</code></pre>
+<p>实际上，Lean使用基于<code>Eq.rec</code>的定义来编译<code>match</code>表达式。、</p>
+<pre><code class="language-lean"># namespace Hidden
+theorem subst {α : Type u} {a b : α} {p : α → Prop} (h₁ : Eq a b) (h₂ : p a) : p b :=
+  match h₁ with
+  | rfl =&gt; h₂
+
+set_option pp.all true
+#print subst
+  -- ... subst.match_1 ...
+#print subst.match_1
+  -- ... Eq.casesOn ...
+#print Eq.casesOn
+  -- ... Eq.rec ...
+# end Hidden
+</code></pre>
+<p>使用递归子或<code>match</code>与<code>h₁ : a = b</code>，我们可以假设<code>a</code>和<code>b</code>相同，在这种情况下，<code>p b</code>和<code>p a</code>相同。</p>
+<p>证明<code>Eq</code>的对称和传递性并不难。在下面的例子中，我们证明<code>symm</code>，并留下<code>trans</code>和<code>congr</code>定理作为练习。</p>
+<pre><code class="language-lean"># namespace Hidden
+theorem symm {α : Type u} {a b : α} (h : Eq a b) : Eq b a :=
+  match h with
+  | rfl =&gt; rfl
+
+theorem trans {α : Type u} {a b c : α} (h₁ : Eq a b) (h₂ : Eq b c) : Eq a c :=
+  sorry
+
+theorem congr {α β : Type u} {a b : α} (f : α → β) (h : Eq a b) : Eq (f a) (f b) :=
+  sorry
+# end Hidden
+</code></pre>
+<p>在类型论文献中，有对归纳定义的进一步推广，例如，<em>归纳-递归</em>和<em>归纳-归纳</em>的原则。这些东西Lean暂不支持。</p>
+<h2 id="公理化细节"><a class="header" href="#公理化细节">公理化细节</a></h2>
+<p>我们已经通过例子描述了归纳类型和它们的语法。本节为那些对公理基础感兴趣的人提供额外的信息。</p>
+<p>我们已经看到，归纳类型的构造子需要<em>参量</em>（parameter，与argument都有“参数”译义，为区别此处译为参量）——即在整个归纳构造过程中保持固定的参数——和<em>索引</em>，即同时在构造中的类型族的参数。每个构造子都应该有一个类型，其中的参数类型是由先前定义的类型、参量和索引类型以及当前正在定义的归纳族建立起来的。要求是，如果后者存在，它只<em>严格正向</em>出现。这意味着它所出现的构造子的任何参数都是一个依值箭头类型，其中定义中的归纳类型只作为结果类型出现，其中的索引是以常量和先前的参数来给出。</p>
+<p>既然一个归纳类型对于某些<code>u</code>来说存在于在<code>Sort u</code>中，那么我们有理由问<em>哪些</em>宇宙层次的<code>u</code>可以被实例化。归纳类型族 <code>C</code>的定义中的每个构造子<code>c</code>的形式为</p>
+<pre><code>  c : (a : α) → (b : β[a]) → C a p[a,b]
+</code></pre>
+<p>其中<code>a</code>是一列数据类型的参量，<code>b</code>是一列构造子的参数，<code>p[a, b]</code>是索引，用于确定构造所处的归纳族的元素。（请注意，这种描述有些误导，因为构造子的参数可以以任何顺序出现，只要依赖关系是合理的）。对<code>C</code>的宇宙层级的约束分为两种情况，取决于归纳类型是否被指定落在<code>Prop</code>（即<code>Sort 0</code>）。</p>
+<p>我们首先考虑归纳类型<em>不</em>指定落在<code>Prop</code>的情况。那么宇宙等级<code>u'</code>被限制为满足以下条件：</p>
+<blockquote>
+<p>对于上面的每个构造子<code>c</code>，以及序列<code>β[a]</code>中的每个<code>βk[a]</code>，如果<code>βk[a] : Sort v</code>，我们有<code>u</code>≥<code>v</code>。</p>
+</blockquote>
+<p>换句话说，宇宙等级<code>u</code>被要求至少与代表构造子参数的每个类型的宇宙等级一样大。</p>
+<p>当归纳类型被指定落在<code>Prop</code>中时，对构造子参数的宇宙等级没有任何限制。但是这些宇宙等级对消去规则有影响。一般来说，对于<code>Prop</code>中的归纳类型，消去规则的motive被要求在<code>Prop</code>中。</p>
+<p>这最后一条规则有一个例外：当只有一个构造子，并且每个构造子参数都在<code>Prop</code>中或者是一个索引时，我们可以从一个归纳定义的<code>Prop</code>中消除到一个任意的<code>Sort</code>。直观的说，在这种情况下，消除并不利用任何信息，而这些信息并不是由参数类型被栖息这一简单的事实所提供的。这种特殊情况被称为<em>单子消除</em>（singleton elimination）。</p>
+<p>我们已经在<code>Eq.rec</code>的应用中看到了单子消除的作用，这是归纳定义的相等类型的消去子。我们可以使用一个元素<code>h : Eq a b</code>来将一个元素<code>t' : p a</code>转换为<code>p b</code>，即使<code>p a</code>和<code>p b</code>是任意类型，因为转换并不产生新的数据；它只是重新解释了我们已经有的数据。单子消除法也用于异质等价和良基的递归，这将在<a href="./induction_and_recursion.html">归纳和递归</a>一章中讨论。</p>
+<h2 id="相互和嵌套的归纳类型"><a class="header" href="#相互和嵌套的归纳类型">相互和嵌套的归纳类型</a></h2>
+<p>我们现在考虑两个经常有用的归纳类型的推广，Lean通过“编译”它们来支持上述更原始的归纳类型种类。换句话说，Lean解析了更一般的定义，在此基础上定义了辅助的归纳类型，然后使用辅助类型来定义我们真正想要的类型。下一章将介绍Lean的方程编译器，它需要有效地利用这些类型。尽管如此，在这里描述这些声明还是有意义的，因为它们是普通归纳定义的直接变形。</p>
+<p>首先，Lean支持<em>相互定义</em>的归纳类型。这个想法是，我们可以同时定义两个（或更多）归纳类型，其中每个类型都指代其他类型。</p>
+<pre><code class="language-lean">mutual
+  inductive Even : Nat → Prop where
+    | even_zero : Even 0
+    | even_succ : (n : Nat) → Odd n → Even (n + 1)
+
+  inductive Odd : Nat → Prop where
+    | odd_succ : (n : Nat) → Even n → Odd (n + 1)
+end
+</code></pre>
+<p>在这个例子中，同时定义了两种类型：一个自然数<code>n</code>如果是<code>0</code>或比<code>Even</code>多一个，就是<code>Odd</code>；如果是比<code>Odd</code>多一个，就是<code>Even</code>。在下面的练习中，要求你写出细节。</p>
+<p>相互的归纳定义也可以用来定义有限树的符号，节点由<code>α</code>的元素标记：</p>
+<pre><code class="language-lean">mutual
+    inductive Tree (α : Type u) where
+      | node : α → TreeList α → Tree α
+
+    inductive TreeList (α : Type u) where
+      | nil  : TreeList α
+      | cons : Tree α → TreeList α → TreeList α
+end
+</code></pre>
+<p>有了这个定义，我们可以通过给出一个<code>α</code>的元素和一个子树列表（可能是空的）来构造<code>Tree α</code>的元素。子树列表由<code>TreeList α</code>类型表示，它被定义为空列表<code>nil</code>，或者是一棵树的<code>cons</code>和<code>TreeList α</code>的一个元素。</p>
+<p>然而，这个定义在工作中是不方便的。如果子树的列表是由<code>List (Tree α)</code>类型给出的，那就更好了，尤其是Lean的库中包含了一些处理列表的函数和定理。我们可以证明<code>TreeList α</code>类型与<code>List (Tree α)</code>是<em>同构</em>的，但是沿着这个同构关系来回翻译结果是很乏味的。</p>
+<p>事实上，Lean允许我们定义我们真正想要的归纳类型：</p>
+<pre><code class="language-lean">inductive Tree (α : Type u) where
+  | mk : α → List (Tree α) → Tree α
+</code></pre>
+<p>这就是所谓的<em>嵌套</em>归纳类型。它不属于上一节给出的归纳类型的严格规范，因为<code>Tree</code>不是严格意义上出现在<code>mk</code>的参数中，而是嵌套在<code>List</code>类型构造子中。然后Lean在其内核中自动建立了<code>TreeList α</code>和<code>List (Tree α)</code>之间的同构关系，并根据同构关系定义了<code>Tree</code>的构造子。</p>
+<h2 id="练习"><a class="header" href="#练习">练习</a></h2>
+<ol>
+<li>尝试定义自然数的其他运算，如乘法、前继函数（定义<code>pred 0 = 0</code>）、截断减法（当<code>m</code>大于或等于<code>n</code>时，<code>n - m = 0</code>）和乘方。然后在我们已经证明的定理的基础上，尝试证明它们的一些基本属性。</li>
+</ol>
+<p>由于其中许多已经在Lean的核心库中定义，你应该在一个名为<code>Hidden</code>或类似的命名空间中工作，以避免名称冲突。</p>
+<ol start="2">
+<li>定义一些对列表的操作，如<code>length</code>函数或<code>reverse</code>函数。证明一些属性，比如下面这些。</li>
+</ol>
+<p>a. <code>length (s ++ t) = length s + length t</code></p>
+<p>b. <code>length (reverse t) = length t</code></p>
+<p>c. <code>reverse (reverse t) = t</code></p>
+<ol start="3">
+<li>定义一个归纳数据类型，由以下构造子建立的项组成。</li>
+</ol>
+<ul>
+<li><code>const n</code>，一个表示自然数<code>n</code>的常数</li>
+<li><code>var n</code>，一个变量，编号为<code>n</code></li>
+<li><code>plus s t</code>，表示<code>s</code>和<code>t</code>的总和</li>
+<li><code>times s t</code>，表示<code>s</code>和<code>t</code>的乘积</li>
+</ul>
+<p>递归地定义一个函数，根据变量的赋值来计算任何这样的项。</p>
+<ol start="4">
+<li>同样，定义命题公式的类型，以及关于这类公式类型的函数：求值函数、衡量公式复杂性的函数，以及用另一个公式替代给定变量的函数。</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="interacting_with_lean.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="induction_and_recursion.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="interacting_with_lean.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="induction_and_recursion.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

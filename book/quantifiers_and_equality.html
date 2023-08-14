@@ -1,0 +1,680 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>量词与等价 - Lean中文教程</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title_page.html">Lean 4定理证明</a></li><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> 介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li></ol></li><li class="chapter-item expanded "><a href="dependent_type_theory.html"><strong aria-hidden="true">2.</strong> 依赖类型论</a></li><li class="chapter-item expanded "><a href="propositions_and_proofs.html"><strong aria-hidden="true">3.</strong> 命题和证明</a></li><li class="chapter-item expanded "><a href="quantifiers_and_equality.html" class="active"><strong aria-hidden="true">4.</strong> 量词与等价</a></li><li class="chapter-item expanded "><a href="tactics.html"><strong aria-hidden="true">5.</strong> 证明策略</a></li><li class="chapter-item expanded "><a href="interacting_with_lean.html"><strong aria-hidden="true">6.</strong> 使用Lean进行工作</a></li><li class="chapter-item expanded "><a href="inductive_types.html"><strong aria-hidden="true">7.</strong> 归纳类型</a></li><li class="chapter-item expanded "><a href="induction_and_recursion.html"><strong aria-hidden="true">8.</strong> Induction and Recursion</a></li><li class="chapter-item expanded "><a href="structures_and_records.html"><strong aria-hidden="true">9.</strong> 结构体和记录</a></li><li class="chapter-item expanded "><a href="type_classes.html"><strong aria-hidden="true">10.</strong> Type Classes</a></li><li class="chapter-item expanded "><a href="conv.html"><strong aria-hidden="true">11.</strong> 转换策略模式</a></li><li class="chapter-item expanded "><a href="axioms_and_computation.html"><strong aria-hidden="true">12.</strong> Axioms and Computation</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Lean中文教程</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/subfish-zhou/theorem_proving_in_lean4_zh_CN" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="量词与等价"><a class="header" href="#量词与等价">量词与等价</a></h1>
+<p>上一章介绍了构造包含命题连接词的证明方法。在本章中，我们扩展逻辑结构，包括全称量词和存在量词，以及等价关系。</p>
+<h2 id="全称量词"><a class="header" href="#全称量词">全称量词</a></h2>
+<p>如果<code>α</code>是任何类型，我们可以将<code>α</code>上的一元谓词<code>p</code>作为<code>α → Prop</code>类型的对象。在这种情况下，给定<code>x : α</code>， <code>p x</code>表示断言<code>p</code>在<code>x</code>上成立。类似地，一个对象<code>r : α → α → Prop</code>表示<code>α</code>上的二元关系：给定<code>x y : α</code>，<code>r x y</code>表示断言<code>x</code>与<code>y</code>相关。</p>
+<p>全称量词<code>∀ x : α, p x</code>表示，对于每一个<code>x : α</code>，<code>p x</code>成立。与命题连接词一样，在自然演绎系统中，“forall”有引入和消去规则。非正式地，引入规则是：</p>
+<blockquote>
+<p>给定<code>p x</code>的证明，在<code>x : α</code>是任意的情况下，我们得到<code>∀ x : α, p x</code>的证明。</p>
+</blockquote>
+<p>消去规则是：</p>
+<blockquote>
+<p>给定<code>∀ x : α, p x</code>的证明和任何项<code>t : α</code>，我们得到<code>p t</code>的证明。</p>
+</blockquote>
+<p>与蕴含的情况一样，命题即类型。回想依值箭头类型的引入规则:</p>
+<blockquote>
+<p>给定类型为<code>β x</code>的项<code>t</code>，在<code>x : α</code>是任意的情况下，我们有<code>(fun x : α =&gt; t) : (x : α) → β x</code>。</p>
+</blockquote>
+<p>消去规则：</p>
+<blockquote>
+<p>给定项<code>s : (x : α) → β x</code>和任何项<code>t : α</code>，我们有<code>s t : β t</code>。</p>
+</blockquote>
+<p>在<code>p x</code>具有<code>Prop</code>类型的情况下，如果我们用<code>∀ x : α, p x</code>替换<code>(x : α) → β x</code>，就得到构建涉及全称量词的证明的规则。</p>
+<p>因此，构造演算用全称表达式来识别依值箭头类型。如果<code>p</code>是任何表达式，<code>∀ x : α, p</code>不过是<code>(x : α) → p</code>的替代符号，在<code>p</code>是命题的情况下，前者比后者更自然。通常，表达式<code>p</code>取决于<code>x : α</code>。回想一下，在普通函数空间中，我们可以将<code>α → β</code>解释为<code>(x : α) → β</code>的特殊情况，其中<code>β</code>不依赖于<code>x</code>。类似地，我们可以把命题之间的蕴涵<code>p → q</code>看作是<code>∀ x : p, q</code>的特殊情况，其中<code>q</code>不依赖于<code>x</code>。</p>
+<p>下面是一个例子，说明了如何运用命题即类型对应规则。<code>∀</code>可以用<code>\forall</code>输入，也可以用前两个字母简写<code>\fo</code>。</p>
+<pre><code class="language-lean">example (α : Type) (p q : α → Prop) : (∀ x : α, p x ∧ q x) → ∀ y : α, p y  :=
+  fun h : ∀ x : α, p x ∧ q x =&gt;
+  fun y : α =&gt;
+  show p y from (h y).left
+</code></pre>
+<p>作为一种符号约定，我们给予全称量词尽可能最宽的优先级范围，因此上面例子中的假设中，需要用括号将<code>x</code>上的量词限制起来。证明<code>∀ y : α, p y</code>的标准方法是取任意的<code>y</code>，然后证明<code>p y</code>。这是引入规则。现在，给定<code>h</code>有类型<code>∀ x : α, p x ∧ q x</code>，表达式<code>h y</code>有类型<code>p y ∧ q y</code>。这是消去规则。取合取的左侧得到想要的结论<code>p y</code>。</p>
+<p>只有约束变量名称不同的表达式被认为是等价的。因此，例如，我们可以在假设和结论中使用相同的变量<code>x</code>，并在证明中用不同的变量<code>z</code>实例化它:</p>
+<pre><code class="language-lean">example (α : Type) (p q : α → Prop) : (∀ x : α, p x ∧ q x) → ∀ x : α, p x  :=
+  fun h : ∀ x : α, p x ∧ q x =&gt;
+  fun z : α =&gt;
+  show p z from And.left (h z)
+</code></pre>
+<p>再举一个例子，下面是关系<code>r</code>的传递性：</p>
+<pre><code class="language-lean">variable (α : Type) (r : α → α → Prop)
+variable (trans_r : ∀ x y z, r x y → r y z → r x z)
+
+variable (a b c : α)
+variable (hab : r a b) (hbc : r b c)
+
+#check trans_r    -- ∀ (x y z : α), r x y → r y z → r x z
+#check trans_r a b c
+#check trans_r a b c hab
+#check trans_r a b c hab hbc
+</code></pre>
+<p>当我们在值<code>a b c</code>上实例化<code>trans_r</code>时，我们最终得到<code>r a b → r b c → r a c</code>的证明。将此应用于“假设”<code>hab : r a b</code>，我们得到了<code>r b c → r a c</code>的一个证明。最后将它应用到假设<code>hbc</code>中，得到结论<code>r a c</code>的证明。</p>
+<pre><code class="language-lean">variable (α : Type) (r : α → α → Prop)
+variable (trans_r : ∀ {x y z}, r x y → r y z → r x z)
+
+variable (a b c : α)
+variable (hab : r a b) (hbc : r b c)
+
+#check trans_r
+#check trans_r hab
+#check trans_r hab hbc
+</code></pre>
+<p>优点是我们可以简单地写<code>trans_r hab hbc</code>作为<code>r a c</code>的证明。一个缺点是Lean没有足够的信息来推断表达式<code>trans_r</code>和<code>trans_r hab</code>中的参数类型。第一个<code>#check</code>命令的输出是<code>r ?m.1 ?m.2 → r ?m.2 ?m.3 → r ?m.1 ?m.3</code>，表示在本例中隐式参数未指定。</p>
+<p>下面是一个用等价关系进行基本推理的例子:</p>
+<pre><code class="language-lean">variable (α : Type) (r : α → α → Prop)
+
+variable (refl_r : ∀ x, r x x)
+variable (symm_r : ∀ {x y}, r x y → r y x)
+variable (trans_r : ∀ {x y z}, r x y → r y z → r x z)
+
+example (a b c d : α) (hab : r a b) (hcb : r c b) (hcd : r c d) : r a d :=
+  trans_r (trans_r hab (symm_r hcb)) hcd
+</code></pre>
+<p>为了习惯使用全称量词，你应该尝试本节末尾的一些练习。</p>
+<p>依值箭头类型的类型规则，特别是全称量词，体现了<code>Prop</code>命题类型与其他对象的类型的不同。假设我们有<code>α : Sort i</code>和<code>β : Sort j</code>，其中表达式<code>β</code>可能依赖于变量<code>x : α</code>。那么<code>(x : α) → β</code>是<code>Sort (imax i j)</code>的一个元素，其中<code>imax i j</code>是<code>i</code>和<code>j</code>在<code>j</code>不为0时的最大值，否则为0。</p>
+<p>其想法如下。如果<code>j</code>不是<code>0</code>，然后<code>(x : α) → β</code>是<code>Sort (max i j)</code>类型的一个元素。换句话说，从<code>α</code>到<code>β</code>的一类依值函数存在于指数为<code>i</code>和<code>j</code>最大值的宇宙中。然而，假设<code>β</code>属于<code>Sort 0</code>，即<code>Prop</code>的一个元素。在这种情况下，<code>(x : α) → β</code>也是<code>Sort 0</code>的一个元素，无论<code>α</code>生活在哪种类型的宇宙中。换句话说，如果<code>β</code>是一个依赖于<code>α</code>的命题，那么<code>∀ x : α, β</code>又是一个命题。这反映出<code>Prop</code>作为一种命题类型而不是数据类型，这也使得<code>Prop</code>具有“非直谓性”（impredicative）。</p>
+<p>“直谓性”一词起源于20世纪初的数学基础发展，当时逻辑学家如庞加莱和罗素将集合论的悖论归咎于“恶性循环”：当我们通过量化一个集合来定义一个属性时，这个集合包含了被定义的属性。注意，如果<code>α</code>是任何类型，我们可以在<code>α</code>上形成所有谓词的类型<code>α → Prop</code>(<code>α</code>的“幂”类型)。Prop的非直谓性意味着我们可以通过<code>α → Prop</code>形成量化命题。特别是，我们可以通过量化所有关于<code>α</code>的谓词来定义<code>α</code>上的谓词，这正是曾经被认为有问题的循环类型。</p>
+<h2 id="等价"><a class="header" href="#等价">等价</a></h2>
+<p>现在让我们来看看在Lean库中定义的最基本的关系之一，即等价关系。在<a href="inductive_types.html">归纳类型</a>一章中，我们将解释如何从Lean的逻辑框架中定义等价。在这里我们解释如何使用它。</p>
+<p>等价关系的基本性质：反身性、对称性、传递性。</p>
+<pre><code class="language-lean">#check Eq.refl    -- ∀ (a : ?m.1), a = a
+#check Eq.symm    -- ?m.2 = ?m.3 → ?m.3 = ?m.2
+#check Eq.trans   -- ?m.2 = ?m.3 → ?m.3 = ?m.4 → ?m.2 = ?m.4
+</code></pre>
+<p>通过告诉Lean不要插入隐参数(在这里显示为元变量)可以使输出更容易阅读。</p>
+<pre><code class="language-lean">universe u
+
+#check @Eq.refl.{u}   -- ∀ {α : Sort u} (a : α), a = a
+#check @Eq.symm.{u}   -- ∀ {α : Sort u} {a b : α}, a = b → b = a
+#check @Eq.trans.{u}  -- ∀ {α : Sort u} {a b c : α}, a = b → b = c → a = c
+</code></pre>
+<p><code>.{u}</code>告诉Lean实例化宇宙<code>u</code>上的常量。</p>
+<p>因此，我们可以将上一节中的示例具体化为等价关系:</p>
+<pre><code class="language-lean">variable (α : Type) (a b c d : α)
+variable (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd
+</code></pre>
+<p>我们也可以使用简写：</p>
+<pre><code class="language-lean">example : a = d := (hab.trans hcb.symm).trans hcd
+</code></pre>
+<p>反身性比它看上去更强大。回想一下，在构造演算中，项有一个计算解释，可化简为相同形式的项会被逻辑框架视为相同的。因此，一些非平凡的恒等式可以通过自反性来证明：</p>
+<pre><code class="language-lean">variable (α β : Type)
+
+example (f : α → β) (a : α) : (fun x =&gt; f x) a = f a := Eq.refl _
+example (a : α) (b : α) : (a, b).1 = a := Eq.refl _
+example : 2 + 3 = 5 := Eq.refl _
+</code></pre>
+<p>框架的这个特性非常重要，以至于库中为<code>Eq.refl _</code>专门定义了一个符号<code>rfl</code>：</p>
+<pre><code class="language-lean">variable (α β : Type)
+example (f : α → β) (a : α) : (fun x =&gt; f x) a = f a := rfl
+example (a : α) (b : α) : (a, b).1 = a := rfl
+example : 2 + 3 = 5 := rfl
+</code></pre>
+<p>然而，等价不仅仅是一种关系。它有一个重要的性质，即每个断言都遵从等价性，即我们可以在不改变真值的情况下对表达式做等价代换。也就是说，给定<code>h1 : a = b</code>和<code>h2 : p a</code>，我们可以构造一个证明<code>p b</code>，只需要使用代换<code>Eq.subst h1 h2</code>。</p>
+<pre><code class="language-lean">example (α : Type) (a b : α) (p : α → Prop)
+        (h1 : a = b) (h2 : p a) : p b :=
+  Eq.subst h1 h2
+
+example (α : Type) (a b : α) (p : α → Prop)
+    (h1 : a = b) (h2 : p a) : p b :=
+  h1 ▸ h2
+</code></pre>
+<p>第二个例子中的三角形是建立在<code>Eq.subst</code>和<code>Eq.symm</code>之上的宏，它可以通过<code>\t</code>来输入。</p>
+<p>规则<code>Eq.subst</code>定义了一些辅助规则，用来执行更显式的替换。它们是为处理应用型项，即形式为<code>s t</code>的项而设计的。这些辅助规则是，使用<code>congrArg</code>来替换参数，使用<code>congrFun</code>来替换正在应用的项，并且可以同时使用<code>congr</code>来替换两者。</p>
+<pre><code class="language-lean">variable (α : Type)
+variable (a b : α)
+variable (f g : α → Nat)
+variable (h₁ : a = b)
+variable (h₂ : f = g)
+
+example : f a = f b := congrArg f h₁
+example : f a = g a := congrFun h₂ a
+example : f a = g b := congr h₂ h₁
+</code></pre>
+<p>Lean的库包含大量通用的等式，例如：</p>
+<pre><code class="language-lean">variable (a b c d : Nat)
+
+example : a + 0 = a := Nat.add_zero a
+example : 0 + a = a := Nat.zero_add a
+example : a * 1 = a := Nat.mul_one a
+example : 1 * a = a := Nat.one_mul a
+example : a + b = b + a := Nat.add_comm a b
+example : a + b + c = a + (b + c) := Nat.add_assoc a b c
+example : a * b = b * a := Nat.mul_comm a b
+example : a * b * c = a * (b * c) := Nat.mul_assoc a b c
+example : a * (b + c) = a * b + a * c := Nat.mul_add a b c
+example : a * (b + c) = a * b + a * c := Nat.left_distrib a b c
+example : (a + b) * c = a * c + b * c := Nat.add_mul a b c
+example : (a + b) * c = a * c + b * c := Nat.right_distrib a b c
+</code></pre>
+<p><code>Nat.mul_add</code>和<code>Nat.add_mul</code>是<code>Nat.left_distrib</code>和<code>Nat.right_distrib</code>的代称。上面的属性是为自然数类型<code>Nat</code>声明的。</p>
+<p>这是一个使用代换以及结合律、交换律和分配律的自然数计算的例子。</p>
+<pre><code class="language-lean">example (x y z : Nat) : x * (y + z) = x * y + x * z := Nat.mul_add x y z
+example (x y z : Nat) : (x + y) * z = x * z + y * z := Nat.add_mul x y z
+example (x y z : Nat) : x + y + z = x + (y + z) := Nat.add_assoc x y z
+
+example (x y : Nat) : (x + y) * (x + y) = x * x + y * x + x * y + y * y :=
+  have h1 : (x + y) * (x + y) = (x + y) * x + (x + y) * y :=
+    Nat.mul_add (x + y) x y
+  have h2 : (x + y) * (x + y) = x * x + y * x + (x * y + y * y) :=
+    (Nat.add_mul x y x) ▸ (Nat.add_mul x y y) ▸ h1
+  h2.trans (Nat.add_assoc (x * x + y * x) (x * y) (y * y)).symm
+</code></pre>
+<p>注意，<code>Eq.subst</code>的第二个隐式参数提供了将要发生代换的表达式上下文，其类型为<code>α → Prop</code>。因此，推断这个谓词需要一个<em>高阶合一</em>（higher-order unification）的实例。一般来说，确定高阶合一器是否存在的问题是无法确定的，而Lean充其量只能提供不完美的和近似的解决方案。因此，<code>Eq.subst</code>并不总是做你想要它做的事。宏<code>h ▸ e</code>使用了更有效的启发式方法来计算这个隐参数，并且在不能应用<code>Eq.subst</code>的情况下通常会成功。</p>
+<p>因为等式推理是如此普遍和重要，Lean提供了许多机制来更有效地执行它。下一节将提供允许你以更自然和清晰的方式编写计算式证明的语法。但更重要的是，等式推理是由项重写器、简化器和其他种类的自动化方法支持的。术语重写器和简化器将在下一节中简要描述，然后在下一章中更详细地描述。</p>
+<h2 id="计算式证明"><a class="header" href="#计算式证明">计算式证明</a></h2>
+<p>一个计算式证明是指一串使用诸如等式的传递性等基本规则得到的中间结果。在Lean中，计算式证明从关键字<code>calc</code>开始，语法如下：</p>
+<pre><code>calc
+  &lt;expr&gt;_0  'op_1'  &lt;expr&gt;_1  ':='  &lt;proof&gt;_1
+    '_'     'op_2'  &lt;expr&gt;_2  ':='  &lt;proof&gt;_2
+     ...
+    '_'     'op_n'  &lt;expr&gt;_n  ':='  &lt;proof&gt;_n
+
+</code></pre>
+<p>每个<code>&lt;proof&gt;_i</code>是<code>&lt;expr&gt;_{i-1} op_i &lt;expr&gt;_i</code>的证明。</p>
+<p>例子：</p>
+<pre><code class="language-lean">variable (a b c d e : Nat)
+variable (h1 : a = b)
+variable (h2 : b = c + 1)
+variable (h3 : c = d)
+variable (h4 : e = 1 + d)
+
+theorem T : a = e :=
+  calc
+    a = b      := h1
+    _ = c + 1  := h2
+    _ = d + 1  := congrArg Nat.succ h3
+    _ = 1 + d  := Nat.add_comm d 1
+    _ = e      := Eq.symm h4
+</code></pre>
+<p>这种写证明的风格在与<code>simp</code>和<code>rewrite</code>策略（tactic）结合使用时最为有效，这些策略将在下一章详细讨论。例如，用缩写`rw'表示重写，上面的证明可以写成如下。</p>
+<pre><code class="language-lean">theorem T : a = e :=
+  calc
+    a = b      := by rw [h1]
+    _ = c + 1  := by rw [h2]
+    _ = d + 1  := by rw [h3]
+    _ = 1 + d  := by rw [Nat.add_comm]
+    _ =  e     := by rw [h4]
+</code></pre>
+<p>本质上，<code>rw</code>策略使用一个给定的等式(它可以是一个假设、一个定理名称或一个复杂的项)来“重写”目标。如果这样做将目标简化为一种等式<code>t = t</code>，那么该策略将使用反身性来证明这一点。</p>
+<p>重写可以一次应用一系列，因此上面的证明可以缩写为：</p>
+<pre><code class="language-lean">theorem T : a = e :=
+  calc
+    a = d + 1  := by rw [h1, h2, h3]
+    _ = 1 + d  := by rw [Nat.add_comm]
+    _ =  e     := by rw [h4]
+</code></pre>
+<p>甚至这样：</p>
+<pre><code class="language-lean">theorem T : a = e :=
+  by rw [h1, h2, h3, Nat.add_comm, h4]
+</code></pre>
+<p>相反，<code>simp</code>策略通过在项中以任意顺序在任何适用的地方重复应用给定的等式来重写目标。它还使用了之前声明给系统的其他规则，并明智地应用交换性以避免循环。因此，我们也可以如下证明定理:</p>
+<pre><code class="language-lean">theorem T : a = e :=
+  by simp [h1, h2, h3, Nat.add_comm, h4]
+</code></pre>
+<p>我们将在下一章讨论<code>rw</code>和<code>simp</code>的变体。
+We will discuss variations of <code>rw</code> and <code>simp</code> in the next chapter.</p>
+<p><code>calc</code>命令可以配置为任何支持某种形式的传递性的关系。它甚至可以结合不同的关系。</p>
+<pre><code class="language-lean">example (a b c d : Nat) (h1 : a = b) (h2 : b ≤ c) (h3 : c + 1 &lt; d) : a &lt; d :=
+  calc
+    a = b     := h1
+    _ &lt; b + 1 := Nat.lt_succ_self b
+    _ ≤ c + 1 := Nat.succ_le_succ h2
+    _ &lt; d     := h3
+</code></pre>
+<p>使用<code>calc</code>，我们可以以一种更自然、更清晰的方式写出上一节的证明。</p>
+<pre><code class="language-lean">example (x y : Nat) : (x + y) * (x + y) = x * x + y * x + x * y + y * y :=
+  calc
+    (x + y) * (x + y) = (x + y) * x + (x + y) * y  := by rw [Nat.mul_add]
+        _ = x * x + y * x + (x + y) * y            := by rw [Nat.add_mul]
+        _ = x * x + y * x + (x * y + y * y)        := by rw [Nat.add_mul]
+        _ = x * x + y * x + x * y + y * y          := by rw [←Nat.add_assoc]
+</code></pre>
+<p><code>Nat.add_assoc</code>之前的左箭头指挥重写以相反的方向使用等式。(你可以输入<code>\l</code>或ascii码<code>&lt;-</code>。)如果追求简洁，<code>rw</code>和<code>simp</code>可以一次性完成这项工作:</p>
+<pre><code class="language-lean">example (x y : Nat) : (x + y) * (x + y) = x * x + y * x + x * y + y * y :=
+  by rw [Nat.mul_add, Nat.add_mul, Nat.add_mul, ←Nat.add_assoc]
+
+example (x y : Nat) : (x + y) * (x + y) = x * x + y * x + x * y + y * y :=
+  by simp [Nat.mul_add, Nat.add_mul, Nat.add_assoc, Nat.add_left_comm]
+</code></pre>
+<h2 id="存在量词"><a class="header" href="#存在量词">存在量词</a></h2>
+<p>存在量词可以写成<code>exists x : α, p x</code>或<code>∃ x : α, p x</code>。这两个写法实际上在Lean的库中的定义为一个更冗长的表达式，<code>Exists (fun x : α =&gt; p x)</code>。</p>
+<p>存在量词也有一个引入规则和一个消去规则。引入规则很简单：要证明<code>∃ x : α, p x</code>，只需提供一个合适的项<code>t</code>和对<code>p t</code>的证明即可。<code>∃</code>用<code>\exists</code>或简写<code>\ex</code>输入，下面是一些例子:</p>
+<pre><code class="language-lean">example : ∃ x : Nat, x &gt; 0 :=
+  have h : 1 &gt; 0 := Nat.zero_lt_succ 0
+  Exists.intro 1 h
+
+example (x : Nat) (h : x &gt; 0) : ∃ y, y &lt; x :=
+  Exists.intro 0 h
+
+example (x y z : Nat) (hxy : x &lt; y) (hyz : y &lt; z) : ∃ w, x &lt; w ∧ w &lt; z :=
+  Exists.intro y (And.intro hxy hyz)
+
+#check @Exists.intro
+</code></pre>
+<p>当类型可从上下文中推断时，我们可以使用匿名构造子表示法<code>⟨t, h⟩</code>替换<code>Exists.intro t h</code>。</p>
+<pre><code class="language-lean">example : ∃ x : Nat, x &gt; 0 :=
+  have h : 1 &gt; 0 := Nat.zero_lt_succ 0
+  ⟨1, h⟩
+
+example (x : Nat) (h : x &gt; 0) : ∃ y, y &lt; x :=
+  ⟨0, h⟩
+
+example (x y z : Nat) (hxy : x &lt; y) (hyz : y &lt; z) : ∃ w, x &lt; w ∧ w &lt; z :=
+  ⟨y, hxy, hyz⟩
+</code></pre>
+<p>注意<code>Exists.intro</code>有隐参数：Lean必须在结论<code>∃ x, p x</code>中推断谓词<code>p : α → Prop</code>。这不是一件小事。例如，如果我们有<code>hg : g 0 0 = 0</code>和<code>Exists.intro 0 hg</code>，有许多可能的值的谓词<code>p</code>，对应定理<code>∃ x, g x x = x</code>，<code>∃ x, g x x = 0</code>，<code>∃ x, g x 0 = x</code>，等等。Lean使用上下文来推断哪个是合适的。下面的例子说明了这一点，在这个例子中，我们设置了选项<code>pp.explicit</code>为true，要求Lean打印隐参数。</p>
+<pre><code class="language-lean">variable (g : Nat → Nat → Nat)
+variable (hg : g 0 0 = 0)
+
+theorem gex1 : ∃ x, g x x = x := ⟨0, hg⟩
+theorem gex2 : ∃ x, g x 0 = x := ⟨0, hg⟩
+theorem gex3 : ∃ x, g 0 0 = x := ⟨0, hg⟩
+theorem gex4 : ∃ x, g x x = 0 := ⟨0, hg⟩
+
+set_option pp.explicit true  -- 打印隐参数
+#print gex1
+#print gex2
+#print gex3
+#print gex4
+</code></pre>
+<p>我们可以将<code>Exists.intro</code>视为信息隐藏操作，因为它将断言的具体实例隐藏起来变成了存在量词。存在消去规则<code>Exists.elim</code>执行相反的操作。它允许我们从<code>∃ x : α, p x</code>证明一个命题<code>q</code>，通过证明对于任意值<code>w</code>时<code>p w</code>都能推出<code>q</code>。粗略地说，既然我们知道有一个<code>x</code>满足<code>p x</code>，我们可以给它起个名字，比如<code>w</code>。如果<code>q</code>没有提到<code>w</code>，那么表明<code>p w</code>能推出<code>q</code>就等同于表明<code>q</code>从任何这样的<code>x</code>的存在而推得。下面是一个例子:</p>
+<pre><code class="language-lean">variable (α : Type) (p q : α → Prop)
+
+example (h : ∃ x, p x ∧ q x) : ∃ x, q x ∧ p x :=
+  Exists.elim h
+    (fun w =&gt;
+     fun hw : p w ∧ q w =&gt;
+     show ∃ x, q x ∧ p x from ⟨w, hw.right, hw.left⟩)
+</code></pre>
+<p>把存在消去规则和析取消去规则作个比较可能会带来一些启发。命题<code>∃ x : α, p x</code>可以看成一个对所有<code>α</code>中的元素<code>a</code>所组成的命题<code>p a</code>的大型析取。注意到匿名构造子<code>⟨w, hw.right, hw.left⟩</code>是嵌套的构造子<code>⟨w, ⟨hw.right, hw.left⟩⟩</code>的缩写。</p>
+<p>存在式命题类型很像依值类型一节所述的sigma类型。给定<code>a : α</code>和<code>h : p a</code>时，项<code>Exists.intro a h</code>具有类型<code>(∃ x : α, p x) : Prop</code>，而<code>Sigma.mk a h</code>具有类型<code>(Σ x : α, p x) : Type</code>。<code>∃</code>和<code>Σ</code>之间的相似性是Curry-Howard同构的另一例子。</p>
+<p>Lean提供一个更加方便的消去存在量词的途径，那就是通过<code>match</code>表达式。</p>
+<pre><code class="language-lean">variable (α : Type) (p q : α → Prop)
+
+example (h : ∃ x, p x ∧ q x) : ∃ x, q x ∧ p x :=
+  match h with
+  | ⟨w, hw⟩ =&gt; ⟨w, hw.right, hw.left⟩
+</code></pre>
+<p><code>match</code>表达式是Lean功能定义系统的一部分，它提供了复杂功能的方便且丰富的表达方式。再一次，正是Curry-Howard同构让我们能够采用这种机制来编写证明。<code>match</code>语句将存在断言“析构”到组件<code>w</code>和<code>hw</code>中，然后可以在语句体中使用它们来证明命题。我们可以对match中使用的类型进行注释，以提高清晰度：</p>
+<pre><code class="language-lean"># variable (α : Type) (p q : α → Prop)
+example (h : ∃ x, p x ∧ q x) : ∃ x, q x ∧ p x :=
+  match h with
+  | ⟨(w : α), (hw : p w ∧ q w)⟩ =&gt; ⟨w, hw.right, hw.left⟩
+</code></pre>
+<p>我们甚至可以同时使用match语句来分解合取：</p>
+<pre><code class="language-lean"># variable (α : Type) (p q : α → Prop)
+example (h : ∃ x, p x ∧ q x) : ∃ x, q x ∧ p x :=
+  match h with
+  | ⟨w, hpw, hqw⟩ =&gt; ⟨w, hqw, hpw⟩
+</code></pre>
+<p>Lean还提供了一个模式匹配的<code>let</code>表达式：</p>
+<pre><code class="language-lean"># variable (α : Type) (p q : α → Prop)
+example (h : ∃ x, p x ∧ q x) : ∃ x, q x ∧ p x :=
+  let ⟨w, hpw, hqw⟩ := h
+  ⟨w, hqw, hpw⟩
+</code></pre>
+<p>这实际上是上面的<code>match</code>结构的替代表示法。Lean甚至允许我们在<code>fun</code>表达式中使用隐含的<code>match</code>：</p>
+<pre><code class="language-lean"># variable (α : Type) (p q : α → Prop)
+example : (∃ x, p x ∧ q x) → ∃ x, q x ∧ p x :=
+  fun ⟨w, hpw, hqw⟩ =&gt; ⟨w, hqw, hpw⟩
+</code></pre>
+<p>我们将在<a href="./induction_and_recursion.html">归纳和递归</a>一章看到所有这些变体都是更一般的模式匹配构造的实例。</p>
+<p>在下面的例子中，我们将<code>even a</code>定义为<code>∃ b, a = 2*b</code>，然后我们证明两个偶数的和是偶数。</p>
+<pre><code class="language-lean">def is_even (a : Nat) := ∃ b, a = 2 * b
+
+theorem even_plus_even (h1 : is_even a) (h2 : is_even b) : is_even (a + b) :=
+  Exists.elim h1 (fun w1 (hw1 : a = 2 * w1) =&gt;
+  Exists.elim h2 (fun w2 (hw2 : b = 2 * w2) =&gt;
+    Exists.intro (w1 + w2)
+      (calc
+        a + b = 2 * w1 + 2 * w2  := by rw [hw1, hw2]
+          _   = 2*(w1 + w2)      := by rw [Nat.mul_add])))
+</code></pre>
+<p>使用本章描述的各种小工具——<code>match</code>语句、匿名构造子和<code>rewrite</code>策略，我们可以简洁地写出如下证明：</p>
+<pre><code class="language-lean">def is_even (a : Nat) := ∃ b, a = 2 * b
+theorem even_plus_even (h1 : is_even a) (h2 : is_even b) : is_even (a + b) :=
+  match h1, h2 with
+  | ⟨w1, hw1⟩, ⟨w2, hw2⟩ =&gt; ⟨w1 + w2, by rw [hw1, hw2, Nat.mul_add]⟩
+</code></pre>
+<p>就像构造主义的“或”比古典的“或”强，同样，构造的“存在”也比古典的“存在”强。例如，下面的推论需要经典推理，因为从构造的角度来看，知道并不是每一个<code>x</code>都满足<code>¬ p</code>，并不等于有一个特定的<code>x</code>满足<code>p</code>。</p>
+<pre><code class="language-lean">open Classical
+variable (p : α → Prop)
+
+example (h : ¬ ∀ x, ¬ p x) : ∃ x, p x :=
+  byContradiction
+    (fun h1 : ¬ ∃ x, p x =&gt;
+      have h2 : ∀ x, ¬ p x :=
+        fun x =&gt;
+        fun h3 : p x =&gt;
+        have h4 : ∃ x, p x :=  ⟨x, h3⟩
+        show False from h1 h4
+      show False from h h2)
+</code></pre>
+<p>下面是一些涉及存在量词的常见等式。在下面的练习中，我们鼓励你尽可能多写出证明。你需要判断哪些是非构造主义的，因此需要一些经典推理。</p>
+<pre><code class="language-lean">open Classical
+
+variable (α : Type) (p q : α → Prop)
+variable (r : Prop)
+
+example : (∃ x : α, r) → r := sorry
+example (a : α) : r → (∃ x : α, r) := sorry
+example : (∃ x, p x ∧ r) ↔ (∃ x, p x) ∧ r := sorry
+example : (∃ x, p x ∨ q x) ↔ (∃ x, p x) ∨ (∃ x, q x) := sorry
+
+example : (∀ x, p x) ↔ ¬ (∃ x, ¬ p x) := sorry
+example : (∃ x, p x) ↔ ¬ (∀ x, ¬ p x) := sorry
+example : (¬ ∃ x, p x) ↔ (∀ x, ¬ p x) := sorry
+example : (¬ ∀ x, p x) ↔ (∃ x, ¬ p x) := sorry
+
+example : (∀ x, p x → r) ↔ (∃ x, p x) → r := sorry
+example (a : α) : (∃ x, p x → r) ↔ (∀ x, p x) → r := sorry
+example (a : α) : (∃ x, r → p x) ↔ (r → ∃ x, p x) := sorry
+</code></pre>
+<p>注意，第二个例子和最后两个例子要求假设至少有一个类型为<code>α</code>的元素<code>a</code>。</p>
+<p>以下是两个比较困难的问题的解：</p>
+<pre><code class="language-lean">open Classical
+
+variable (α : Type) (p q : α → Prop)
+variable (a : α)
+variable (r : Prop)
+
+example : (∃ x, p x ∨ q x) ↔ (∃ x, p x) ∨ (∃ x, q x) :=
+  Iff.intro
+    (fun ⟨a, (h1 : p a ∨ q a)⟩ =&gt;
+      Or.elim h1
+        (fun hpa : p a =&gt; Or.inl ⟨a, hpa⟩)
+        (fun hqa : q a =&gt; Or.inr ⟨a, hqa⟩))
+    (fun h : (∃ x, p x) ∨ (∃ x, q x) =&gt;
+      Or.elim h
+        (fun ⟨a, hpa⟩ =&gt; ⟨a, (Or.inl hpa)⟩)
+        (fun ⟨a, hqa⟩ =&gt; ⟨a, (Or.inr hqa)⟩))
+
+example : (∃ x, p x → r) ↔ (∀ x, p x) → r :=
+  Iff.intro
+    (fun ⟨b, (hb : p b → r)⟩ =&gt;
+     fun h2 : ∀ x, p x =&gt;
+     show r from  hb (h2 b))
+    (fun h1 : (∀ x, p x) → r =&gt;
+     show ∃ x, p x → r from
+       byCases
+         (fun hap : ∀ x, p x =&gt; ⟨a, λ h' =&gt; h1 hap⟩)
+         (fun hnap : ¬ ∀ x, p x =&gt;
+          byContradiction
+            (fun hnex : ¬ ∃ x, p x → r =&gt;
+              have hap : ∀ x, p x :=
+                fun x =&gt;
+                byContradiction
+                  (fun hnp : ¬ p x =&gt;
+                    have hex : ∃ x, p x → r := ⟨x, (fun hp =&gt; absurd hp hnp)⟩
+                    show False from hnex hex)
+              show False from hnap hap)))
+</code></pre>
+<h2 id="更多证明语言"><a class="header" href="#更多证明语言">更多证明语言</a></h2>
+<p>我们已经看到像<code>fun</code>、<code>have</code>和<code>show</code>这样的关键字使得写出反映非正式数学证明结构的正式证明项成为可能。在本节中，我们将讨论证明语言的一些通常很方便的附加特性。</p>
+<p>首先，我们可以使用匿名的<code>have</code>表达式来引入一个辅助目标，而不需要标注它。我们可以使用关键字<code>this</code>'来引用最后一个以这种方式引入的表达式:</p>
+<pre><code class="language-lean">variable (f : Nat → Nat)
+variable (h : ∀ x : Nat, f x ≤ f (x + 1))
+
+example : f 0 ≤ f 3 :=
+  have : f 0 ≤ f 1 := h 0
+  have : f 0 ≤ f 2 := Nat.le_trans this (h 1)
+  show f 0 ≤ f 3 from Nat.le_trans this (h 2)
+</code></pre>
+<p>通常证明从一个事实转移到另一个事实，所以这可以有效地消除杂乱的大量标签。</p>
+<p>当目标可以推断出来时，我们也可以让Lean写<code>by assumption</code>来填写证明：</p>
+<pre><code class="language-lean"># variable (f : Nat → Nat)
+# variable (h : ∀ x : Nat, f x ≤ f (x + 1))
+example : f 0 ≤ f 3 :=
+  have : f 0 ≤ f 1 := h 0
+  have : f 0 ≤ f 2 := Nat.le_trans (by assumption) (h 1)
+  show f 0 ≤ f 3 from Nat.le_trans (by assumption) (h 2)
+</code></pre>
+<p>这告诉Lean使用<code>assumption</code>策略，反过来，通过在局部上下文中找到合适的假设来证明目标。我们将在下一章学习更多关于<code>assumption</code>策略的内容。</p>
+<p>我们也可以通过写<code>‹p›</code>的形式要求Lean填写证明，其中<code>p</code>是我们希望Lean在上下文中找到的证明命题。你可以分别使用<code>\f&lt;</code>和<code>\f&gt;</code>输入这些角引号。字母“f”表示“French”，因为unicode符号也可以用作法语引号。事实上，这个符号在Lean中定义如下:</p>
+<pre><code class="language-lean">notation &quot;‹&quot; p &quot;›&quot; =&gt; show p by assumption
+</code></pre>
+<p>这种方法比使用<code>by assumption</code>更稳健，因为需要推断的假设类型是显式给出的。它还使证明更具可读性。这里有一个更详细的例子:</p>
+<pre><code class="language-lean">variable (f : Nat → Nat)
+variable (h : ∀ x : Nat, f x ≤ f (x + 1))
+
+example : f 0 ≥ f 1 → f 1 ≥ f 2 → f 0 = f 2 :=
+  fun _ : f 0 ≥ f 1 =&gt;
+  fun _ : f 1 ≥ f 2 =&gt;
+  have : f 0 ≥ f 2 := Nat.le_trans ‹f 1 ≥ f 2› ‹f 0 ≥ f 1›
+  have : f 0 ≤ f 2 := Nat.le_trans (h 0) (h 1)
+  show f 0 = f 2 from Nat.le_antisymm this ‹f 0 ≥ f 2›
+</code></pre>
+<p>你可以这样使用法语引号来指代上下文中的“任何东西”，而不仅仅是匿名引入的东西。它的使用也不局限于命题，尽管将它用于数据有点奇怪：</p>
+<pre><code class="language-lean">example (n : Nat) : Nat := ‹Nat›
+</code></pre>
+<p>稍后，我们将展示如何使用Lean中的宏系统扩展证明语言。</p>
+<h2 id="练习"><a class="header" href="#练习">练习</a></h2>
+<ol>
+<li>证明以下等式：</li>
+</ol>
+<pre><code class="language-lean">variable (α : Type) (p q : α → Prop)
+
+example : (∀ x, p x ∧ q x) ↔ (∀ x, p x) ∧ (∀ x, q x) := sorry
+example : (∀ x, p x → q x) → (∀ x, p x) → (∀ x, q x) := sorry
+example : (∀ x, p x) ∨ (∀ x, q x) → ∀ x, p x ∨ q x := sorry
+</code></pre>
+<p>你还应该想想为什么在最后一个例子中反过来是不能证明的。</p>
+<ol start="2">
+<li>当一个公式的组成部分不依赖于被全称的变量时，通常可以把它提取出一个全称量词的范围。尝试证明这些(第二个命题中的一个方向需要经典逻辑)：</li>
+</ol>
+<pre><code class="language-lean">variable (α : Type) (p q : α → Prop)
+variable (r : Prop)
+
+example : α → ((∀ x : α, r) ↔ r) := sorry
+example : (∀ x, p x ∨ r) ↔ (∀ x, p x) ∨ r := sorry
+example : (∀ x, r → p x) ↔ (r → ∀ x, p x) := sorry
+</code></pre>
+<ol start="3">
+<li>考虑“理发师悖论”：在一个小镇里，这里有一个（男性）理发师给所有不为自己刮胡子的人刮胡子。证明这里存在矛盾：</li>
+</ol>
+<pre><code class="language-lean">variable (men : Type) (barber : men)
+variable  (shaves : men → men → Prop)
+
+example (h : ∀ x : men, shaves barber x ↔ ¬ shaves x x) : false := sorry
+</code></pre>
+<ol start="4">
+<li>如果没有任何参数，类型<code>Prop</code>的表达式只是一个断言。填入下面<code>prime</code>和<code>Fermat_prime</code>的定义，并构造每个给定的断言。例如，通过断言每个自然数<code>n</code>都有一个大于<code>n</code>的质数，你可以说有无限多个质数。哥德巴赫弱猜想指出，每一个大于5的奇数都是三个素数的和。如果有必要，请查阅费马素数的定义或其他任何资料。</li>
+</ol>
+<pre><code class="language-lean">def even (n : Nat) : Prop := sorry
+
+def prime (n : Nat) : Prop := sorry
+
+def infinitely_many_primes : Prop := sorry
+
+def Fermat_prime (n : Nat) : Prop := sorry
+
+def infinitely_many_Fermat_primes : Prop := sorry
+
+def goldbach_conjecture : Prop := sorry
+
+def Goldbach's_weak_conjecture : Prop := sorry
+
+def Fermat's_last_theorem : Prop := sorry
+</code></pre>
+<ol start="5">
+<li>尽可能多地证明存在量词一节列出的等式。</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="propositions_and_proofs.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="tactics.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="propositions_and_proofs.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="tactics.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
