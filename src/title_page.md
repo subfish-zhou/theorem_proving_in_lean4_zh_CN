@@ -3,6 +3,8 @@
 *作者：Jeremy Avigad, Leonardo de Moura, Soonho Kong and Sebastian Ullrich, 以及Lean社区*
 *译者 [subfish_zhou](https://github.com/subfish-zhou)*
 
+原文地址[Theorem Proving in Lean 4](https://leanprover.github.io/theorem_proving_in_lean4/)
+
 本中文教程旨在教你使用Lean 4。 参考[Lean 4 Manual](https://leanprover.github.io/lean4/doc/)中的[Setting Up Lean section](https://leanprover.github.io/lean4/doc/setup.html)一节来安装Lean。本项目也包括一个快速安装教程。
 本书的Lean 2 和Lean 3 版本见[这里](https://leanprover.github.io/theorem_proving_in_lean/)。
 

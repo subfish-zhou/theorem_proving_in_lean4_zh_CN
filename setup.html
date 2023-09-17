@@ -4,8 +4,10 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>安装 - Lean中文教程</title>
+
+
         <!-- Custom HTML head -->
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -16,25 +18,29 @@
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
         <link rel="stylesheet" href="css/print.css" media="print">
+
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
         <link rel="stylesheet" href="fonts/fonts.css">
+
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
         <link rel="stylesheet" href="tomorrow-night.css">
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -50,7 +56,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -62,12 +68,14 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -80,11 +88,33 @@
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
@@ -93,7 +123,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -113,6 +143,7 @@
                         <a href="https://github.com/subfish-zhou/theorem_proving_in_lean4_zh_CN" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
+
                     </div>
                 </div>
 
@@ -126,8 +157,9 @@
                         </ul>
                     </div>
                 </div>
+
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -138,43 +170,14 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="安装lean"><a class="header" href="#安装lean">安装Lean</a></h2>
-<p><em>（本节译自Lean Manual的Setup一节，并记录了译者个人遇到的报错以及解决方案）</em></p>
-<p><em>（update：请使用linux系统来配置Lean4，Windows不再被支持）</em></p>
-<p>目前有两种方法来建立Lean 4 开发环境：</p>
-<ul>
-<li><a href="./setup.html#%E5%9F%BA%E6%9C%AC%E5%AE%89%E8%A3%85">基本安装</a> (Linux/macOS/Windows): 用 <a href="https://github.com/leanprover/elan"><code>elan</code></a> + 预装代码编辑器</li>
-<li><a href="./setup.html#Nix%E5%AE%89%E8%A3%85">Nix安装</a> (Linux/macOS/WSL): 用 <a href="https://nixos.org/nix/">Nix</a>，这是个用于安装项目所有本地依赖的包管理器</li>
-</ul>
-<p><a href="./setup.html#%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B">快速开始</a>一节介绍使用VS Code使用Lean的方法。</p>
+<p>本教程演示在Windows系统下如何安装Lean 4正式版。Linux和MacOS版本请参考Lean Manual。</p>
 <h2 id="基本安装"><a class="header" href="#基本安装">基本安装</a></h2>
-<p>所有受支持平台的发布版本都可以在<a href="https://github.com/leanprover/lean4/releases">https://github.com/leanprover/lean4/releases</a>中找到。
-推荐使用精益版本管理器<a href="https://github.com/leanprover/elan"><code>elan</code></a>代替下载文件和手动设置路径。</p>
-<pre><code class="language-sh">$ elan self update  # 以防你很久没升级+elan
-# 下载及应用最新的Lean4版本 (https://github.com/leanprover/lean4/releases)
-$ elan default leanprover/lean4:stable
-# 也可选择，用最新的nightly构建 (https://github.com/leanprover/lean4-nightly/releases)
-$ elan default leanprover/lean4:nightly
-# 也可选择，只在当前目录下使用Lean4
-$ elan override set leanprover/lean4:stable
-</code></pre>
-<h2 id="快速开始"><a class="header" href="#快速开始">快速开始</a></h2>
-<p>这些指令将引导你使用“基本”设置和VS Code作为编辑器来设置Lean。</p>
+<p>所有受支持平台的发布版本都可以在<a href="https://github.com/leanprover/lean4/releases">https://github.com/leanprover/lean4/releases</a>中找到。</p>
 <ol>
-<li>
-<p>用<a href="https://github.com/leanprover/elan"><code>elan</code></a>安装最新版Lean 4 nightly：在任何支持bash的shell中运行：</p>
-<pre><code class="language-sh">curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- --default-toolchain leanprover/lean4:nightly
-</code></pre>
+<li>使用Lean版本管理器<a href="https://github.com/leanprover/elan">elan</a>代替下载文件和手动设置路径。在elan的<a href="https://github.com/leanprover/elan">Github仓库</a>中下载最新release，解压运行elan-init.exe，按照指示安装。默认安装位置是用户文件目录下的<code>.elan</code>文件夹，添加环境变量<code>你的用户文件目录\.elan\bin</code>。</li>
+</ol>
 <blockquote>
-<p>如果下载不成功，可以到本项目的git仓库的resources文件夹中获取elan-init.sh文件。
-(不推荐)如果后面的步骤执行也不成功，可以直接下载.elan压缩文件，解压到用户文件目录下(例如C:\Users\xxx目录)，然后手动配置环境变量(C:\Users\xxx\.elan\bin)</p>
-</blockquote>
-<p>或者在Windows系统中, 在<code>cmd</code>中运行</p>
-<pre><code class="language-sh">curl -O --location https://raw.githubusercontent.com/leanprover/elan/master/elan-init.ps1
-powershell -f elan-init.ps1 --default-toolchain leanprover/lean4:nightly
-del elan-init.ps1
-</code></pre>
-<blockquote>
-<p>译者注：需要科学上网。我在运行第二句话时发生了“<em>无法加载文件……因为在此系统上禁止运行此脚本</em>”报错。解决方案是
+<p>可能出现以下报错<em>无法加载文件……因为在此系统上禁止运行此脚本</em>”。解决方案是
 1.用管理员身份运行Powershell；
 2.输入命令<code>set-Executionpolicy Remotesigned</code>，选择<code>Y</code>；
 然后就可以正常使用了。考虑到系统安全性，建议安装完成后将该选项改回默认值<code>N</code>。
@@ -182,14 +185,22 @@ del elan-init.ps1
 <img src="images/setuplean.png" alt="setuplean" />
 由于本网站无法提供讨论区，欢迎向译者提供新的报错和解决方案，以丰富本页面。可邮件至<a href="mailto:subfishzhou@gmail.com">subfishzhou@gmail.com</a></p>
 </blockquote>
-</li>
+<ol start="2">
 <li>
-<p>安装 <a href="https://code.visualstudio.com/">VS Code</a>。</p>
-</li>
-<li>
-<p>打开VS Code 安装<code>lean4</code>扩展。</p>
+<p>安装<a href="https://gitforwindows.org/">git</a>。安装 <a href="https://code.visualstudio.com/">VS Code</a>，并安装<code>lean4</code>扩展。</p>
 <p><img src="images/code-ext.png" alt="installing the vscode-lean4 extension" /></p>
 </li>
+<li>
+<p>在终端中运行</p>
+</li>
+</ol>
+<pre><code class="language-sh">$ elan self update  # 以防你下载的不是最新版elan
+# 下载及应用最新的Lean4版本 (https://github.com/leanprover/lean4/releases)
+$ elan default leanprover/lean4:stable
+# 也可选择，只在当前目录下使用Lean4
+$ elan override set leanprover/lean4:stable
+</code></pre>
+<ol start="4">
 <li>
 <p>创建一个以 <code>.lean</code> 为扩展名的新文件，并写入以下代码：</p>
 <pre><code class="language-lean">#eval Lean.versionString
@@ -197,10 +208,21 @@ del elan-init.ps1
 <p>你会看到语法高亮。当你把光标放在最后一行时，在右边有一个“Lean信息视图”，显示已经安装的Lean版本。</p>
 <p><img src="images/code-success.png" alt="successful setup" /></p>
 </li>
-<li>
-<p>你成功了！尝试打开一个包含包文件<code>leanpkg.toml</code>的Lean文件夹。您可以在命令行上使用<code>leanpkg init</code>创建自己的包。软件包<strong>必须</strong>使用“文件&gt;打开文件夹…”来打开导入。在运行“Lean 4: Refresh File Dependencies”(<code>Ctrl+Shift+X</code>)后，保存的更改可以在其他文件中看到。</p>
-</li>
 </ol>
+<h2 id="创建新lean项目"><a class="header" href="#创建新lean项目">创建新Lean项目</a></h2>
+<p>用VS code打开一个新文件夹，你可以用两种方式创建新工程。</p>
+<ol>
+<li>在终端中运行</li>
+</ol>
+<pre><code>lake init &lt;your_project_name&gt;
+</code></pre>
+<p>以创建一个名为your_project_name的空白新工程。如果你想把你的Lean程序编译成可执行文件，在终端中运行<code>lake build</code>命令。</p>
+<ol start="2">
+<li>如果你想在你的新工程中引用Mathlib4，在终端中运行</li>
+</ol>
+<pre><code>lake +leanprover-community/mathlib4:lean-toolchain new &lt;your_project_name&gt; math
+</code></pre>
+<p>（这个命令暂时无法让中国用户使用，等我找一个别的办法）</p>
 
                     </main>
 
@@ -209,9 +231,11 @@ del elan-init.ps1
                             <a rel="prev" href="introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
+
                             <a rel="next" href="dependent_type_theory.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
+
                         <div style="clear: both"></div>
                     </nav>
                 </div>
@@ -221,6 +245,7 @@ del elan-init.ps1
                     <a rel="prev" href="introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
+
                     <a rel="next" href="dependent_type_theory.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
@@ -228,16 +253,25 @@ del elan-init.ps1
 
         </div>
 
-        <script type="text/javascript">
+
+
+
+        <script>
             window.playground_copyable = true;
         </script>
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
+
+
+    </div>
     </body>
 </html>
