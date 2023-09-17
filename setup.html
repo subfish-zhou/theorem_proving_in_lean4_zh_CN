@@ -177,8 +177,9 @@
 <p>在系统目录C:\Windows\System32\drivers\etc文件夹下找到hosts文件。对于其它系统用户也都是找到各自系统的hosts文件。</p>
 <p>这个文件需要管理员权限来修改，有一个简便方法是，把它复制到别的地方修改，然后再粘贴回去，并选择使用管理员身份继续。</p>
 <p>用记事本打开这个文件，在最后一行写入<code>185.199.108.133 raw.githubusercontent.com</code></p>
-<p>重启电脑，然后开启科学上网。</p>
+<p>重启电脑，然后开启科学上网。（注意，你需要让终端也处在梯子的作用域中，例如你使用clash类梯子需要打开<strong>全局</strong>模式。）</p>
 <p>（经过这个步骤之后你也可以使用官网提供的方法来安装了。）</p>
+<p>如果你遇到&quot;SSL connection error&quot;, &quot;Timeout was reached&quot;,&quot;Failed to connect to github.com port 443&quot;...等错误，就是说明你的网络环境有问题。重启电脑或者检查你的梯子。</p>
 </blockquote>
 <h2 id="基本安装"><a class="header" href="#基本安装">基本安装</a></h2>
 <p>所有受支持平台的发布版本都可以在<a href="https://github.com/leanprover/lean4/releases">https://github.com/leanprover/lean4/releases</a>中找到。</p>
