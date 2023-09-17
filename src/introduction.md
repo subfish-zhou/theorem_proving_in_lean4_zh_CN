@@ -59,4 +59,4 @@ Anthony Hart, Simon Hudon, Sean Leather, Assia Mahboubi, Gihan Marasingha, Patri
 Sebastian Ullrich, Floris van Doorn, Daniel Velleman, Théo Zimmerman, Paul Chisholm, and Chris Lovett for their contributions.  Please see [lean prover](https://github.com/leanprover/) and [lean community](https://github.com/leanprover-community/) for an up to date list
 of our amazing contributors.
 
-rujia liu审校了译本，toaster对改进译本提出了诸多宝贵建议，译者在此表示感谢。
+kokic、Faputa修改了n处typo，rujia liu审校了译本，toaster对改进译本提出了诸多宝贵建议，译者在此表示感谢。

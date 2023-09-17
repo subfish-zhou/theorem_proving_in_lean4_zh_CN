@@ -210,14 +210,22 @@ Carter, Eduardo Cavazos, Amine Chaieb, Joe Corneli, William DeMeo, Marcus Klaas 
 Anthony Hart, Simon Hudon, Sean Leather, Assia Mahboubi, Gihan Marasingha, Patrick Massot, Christopher John Mazey,
 Sebastian Ullrich, Floris van Doorn, Daniel Velleman, Théo Zimmerman, Paul Chisholm, and Chris Lovett for their contributions.  Please see <a href="https://github.com/leanprover/">lean prover</a> and <a href="https://github.com/leanprover-community/">lean community</a> for an up to date list
 of our amazing contributors.</p>
-<p>rujia liu审校了译本，toaster对改进译本提出了诸多宝贵建议，译者在此表示感谢。</p>
+<p>kokic、Faputa修改了n处typo，rujia liu审校了译本，toaster对改进译本提出了诸多宝贵建议，译者在此表示感谢。</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="安装lean"><a class="header" href="#安装lean">安装Lean</a></h2>
 <p>本教程演示在Windows系统下如何安装Lean 4正式版。Linux和MacOS版本请参考Lean Manual。</p>
+<blockquote>
+<p>如果你身在中国，在运行安装程序前需要做如下准备：
+在系统目录C:\Windows\System32\drivers\etc文件夹下找到hosts文件。对于其它系统用户也都是找到各自系统的hosts文件。
+这个文件需要管理员权限来修改，有一个简便方法是，把它复制到别的地方修改，然后再粘贴回去，并选择使用管理员身份继续。
+用记事本打开这个文件，在最后一行写入<code>185.199.108.133 raw.githubusercontent.com</code>
+重启电脑，然后开启科学上网。
+（经过这个步骤之后你也可以使用官网提供的方法来安装了。）</p>
+</blockquote>
 <h2 id="基本安装"><a class="header" href="#基本安装">基本安装</a></h2>
 <p>所有受支持平台的发布版本都可以在<a href="https://github.com/leanprover/lean4/releases">https://github.com/leanprover/lean4/releases</a>中找到。</p>
 <ol>
-<li>使用Lean版本管理器<a href="https://github.com/leanprover/elan">elan</a>代替下载文件和手动设置路径。在elan的<a href="https://github.com/leanprover/elan">Github仓库</a>中下载最新release，解压运行elan-init.exe，按照指示安装。默认安装位置是用户文件目录下的<code>.elan</code>文件夹，添加环境变量<code>你的用户文件目录\.elan\bin</code>。</li>
-</ol>
+<li>
+<p>使用Lean版本管理器<a href="https://github.com/leanprover/elan">elan</a>代替下载文件和手动设置路径。在elan的<a href="https://github.com/leanprover/elan">Github仓库</a>中下载最新release，解压运行elan-init.exe，按照指示安装。默认安装位置是用户文件目录下的<code>.elan</code>文件夹，添加环境变量<code>你的用户文件目录\.elan\bin</code>。</p>
 <blockquote>
 <p>可能出现以下报错<em>无法加载文件……因为在此系统上禁止运行此脚本</em>”。解决方案是
 1.用管理员身份运行Powershell；
@@ -227,22 +235,20 @@ of our amazing contributors.</p>
 <img src="images/setuplean.png" alt="setuplean" />
 由于本网站无法提供讨论区，欢迎向译者提供新的报错和解决方案，以丰富本页面。可邮件至<a href="mailto:subfishzhou@gmail.com">subfishzhou@gmail.com</a></p>
 </blockquote>
-<ol start="2">
+</li>
 <li>
 <p>安装<a href="https://gitforwindows.org/">git</a>。安装 <a href="https://code.visualstudio.com/">VS Code</a>，并安装<code>lean4</code>扩展。</p>
 <p><img src="images/code-ext.png" alt="installing the vscode-lean4 extension" /></p>
 </li>
 <li>
 <p>在终端中运行</p>
-</li>
-</ol>
 <pre><code class="language-sh">$ elan self update  # 以防你下载的不是最新版elan
 # 下载及应用最新的Lean4版本 (https://github.com/leanprover/lean4/releases)
 $ elan default leanprover/lean4:stable
 # 也可选择，只在当前目录下使用Lean4
 $ elan override set leanprover/lean4:stable
 </code></pre>
-<ol start="4">
+</li>
 <li>
 <p>创建一个以 <code>.lean</code> 为扩展名的新文件，并写入以下代码：</p>
 <pre><code class="language-lean">#eval Lean.versionString
@@ -254,17 +260,42 @@ $ elan override set leanprover/lean4:stable
 <h2 id="创建新lean项目"><a class="header" href="#创建新lean项目">创建新Lean项目</a></h2>
 <p>用VS code打开一个新文件夹，你可以用两种方式创建新工程。</p>
 <ol>
-<li>在终端中运行</li>
-</ol>
+<li>
+<p>在终端中运行（<code>&lt;your_project_name&gt;</code>替换为你自己起的名字）</p>
 <pre><code>lake init &lt;your_project_name&gt;
 </code></pre>
-<p>以创建一个名为your_project_name的空白新工程。如果你想把你的Lean程序编译成可执行文件，在终端中运行<code>lake build</code>命令。</p>
-<ol start="2">
-<li>如果你想在你的新工程中引用Mathlib4，在终端中运行</li>
-</ol>
+<p>以创建一个名为your_project_name的空白新工程。如果你想把你的Lean程序编译成可执行文件，在终端中运行<code>lake build</code>命令。
+如果你想在这个现有的工程中引用Mathlib4，你需要在<code>lakefile.lean</code>文件中加入</p>
+<pre><code>require mathlib from git
+    &quot;https://github.com/leanprover-community/mathlib4&quot;
+</code></pre>
+<p>然后在终端中运行</p>
+<pre><code>curl -L https://raw.githubusercontent.com/leanprover-community/mathlib4/master/lean-toolchain -o lean-toolchain
+</code></pre>
+</li>
+<li>
+<p>如果你想直接创建一个引用Mathlib4的新工程，在终端中运行</p>
 <pre><code>lake +leanprover-community/mathlib4:lean-toolchain new &lt;your_project_name&gt; math
 </code></pre>
-<p>（这个命令暂时无法让中国用户使用，等我找一个别的办法）</p>
+<p>以创建一个名为your_project_name的新工程。</p>
+</li>
+</ol>
+<h3 id="使用mathlib"><a class="header" href="#使用mathlib">使用Mathlib</a></h3>
+<p><em>更多内容请参考<a href="https://github.com/leanprover-community/mathlib4/wiki/Using-mathlib4-as-a-dependency">Mathlib Wiki</a></em></p>
+<p>在你的项目文件夹下，使用终端运行</p>
+<pre><code>lake update
+lake exe cache get
+</code></pre>
+<p>如果你看到终端中显示了类似如下的提示：</p>
+<pre><code>Decompressing 1234 file(s)
+unpacked in 12345 ms
+</code></pre>
+<p>同时你的项目文件夹中出现了lake-packages文件夹，那么证明你安装Mathlib成功了。</p>
+<p>如果你想更新Mathlib，在终端中运行</p>
+<pre><code>curl -L https://raw.githubusercontent.com/leanprover-community/mathlib4/master/lean-toolchain -o lean-toolchain
+lake update
+lake exe cache get
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="依值类型论"><a class="header" href="#依值类型论">依值类型论</a></h1>
 <p>依值类型论（Dependent type theory）是一种强大而富有表达力的语言，允许你表达复杂的数学断言，编写复杂的硬件和软件规范，并以自然和统一的方式对这两者进行推理。Lean是基于一个被称为<em>构造演算</em>（Calculus of Constructions）的依值类型论的版本，它拥有一个可数的非累积性宇宙（non-cumulative universe）的层次结构以及归纳类型（inductive type）。在本章结束时，你将学会一大部分。</p>
 <h2 id="普通类型论"><a class="header" href="#普通类型论">普通类型论</a></h2>
@@ -394,7 +425,7 @@ def β : Type := Bool
 <p>这里<code>u_1</code>是一个覆盖类型级别的变量。<code>#check</code>命令的输出意味着当<code>α</code>有类型<code>Type n</code>时，<code>List α</code>也有类型<code>Type n</code>。函数<code>Prod</code>具有类似的多态性：</p>
 <pre><code class="language-lean">#check Prod    -- Type u_1 → Type u_2 → Type (max u_1 u_2)
 </code></pre>
-<p>你可以使用 <code>universe</code> 命令来声明宇宙变量，这样就可以定义定义多态常量：</p>
+<p>你可以使用 <code>universe</code> 命令来声明宇宙变量，这样就可以定义多态常量：</p>
 <pre><code class="language-lean">universe u
 
 def F (α : Type u) : Type u := Prod α α

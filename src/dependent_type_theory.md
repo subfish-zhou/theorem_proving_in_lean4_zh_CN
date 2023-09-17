@@ -172,7 +172,7 @@ def α : Type := Nat
 #check Prod    -- Type u_1 → Type u_2 → Type (max u_1 u_2)
 ```
 
-你可以使用 `universe` 命令来声明宇宙变量，这样就可以定义定义多态常量：
+你可以使用 `universe` 命令来声明宇宙变量，这样就可以定义多态常量：
 
 ```lean
 universe u

@@ -298,7 +298,7 @@ def β : Type := Bool
 <p>这里<code>u_1</code>是一个覆盖类型级别的变量。<code>#check</code>命令的输出意味着当<code>α</code>有类型<code>Type n</code>时，<code>List α</code>也有类型<code>Type n</code>。函数<code>Prod</code>具有类似的多态性：</p>
 <pre><code class="language-lean">#check Prod    -- Type u_1 → Type u_2 → Type (max u_1 u_2)
 </code></pre>
-<p>你可以使用 <code>universe</code> 命令来声明宇宙变量，这样就可以定义定义多态常量：</p>
+<p>你可以使用 <code>universe</code> 命令来声明宇宙变量，这样就可以定义多态常量：</p>
 <pre><code class="language-lean">universe u
 
 def F (α : Type u) : Type u := Prod α α
