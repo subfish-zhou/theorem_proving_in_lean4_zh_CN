@@ -1,6 +1,7 @@
 安装Lean
 ---------------
 
+（updates in 2023.09.17）
 本教程演示在Windows系统下如何安装Lean 4正式版。Linux和MacOS版本请参考Lean Manual。
 
 > 如果你身在中国，在运行安装程序前需要做如下准备：
@@ -14,7 +15,7 @@
 
 所有受支持平台的发布版本都可以在<https://github.com/leanprover/lean4/releases>中找到。
 
-1. 使用Lean版本管理器[elan](https://github.com/leanprover/elan)代替下载文件和手动设置路径。在elan的[Github仓库](https://github.com/leanprover/elan)中下载最新release，解压运行elan-init.exe，按照指示安装。默认安装位置是用户文件目录下的`.elan`文件夹，添加环境变量`你的用户文件目录\.elan\bin`。
+1. 使用Lean版本管理器[elan](https://github.com/leanprover/elan)代替下载文件和手动设置路径。在elan的[Github仓库](https://github.com/leanprover/elan)中下载最新release（对于windows，请下载elan-x86_64-pc-windows-msvc.zip），解压运行elan-init.exe，按照指示安装。默认安装位置是用户文件目录下的`.elan`文件夹，添加环境变量`你的用户文件目录\.elan\bin`。
 
     > 可能出现以下报错*无法加载文件……因为在此系统上禁止运行此脚本*”。解决方案是
     > 1.用管理员身份运行Powershell；
@@ -90,7 +91,15 @@ lake exe cache get
 Decompressing 1234 file(s)
 unpacked in 12345 ms
 ```
-同时你的项目文件夹中出现了lake-packages文件夹，那么证明你安装Mathlib成功了。
+同时你的项目文件夹中出现了lake-packages文件夹，那么证明你安装Mathlib成功了，重启系统即可使用。
+
+这里提供一个实例来测试你的安装：
+```
+import Mathlib.Data.Real.Basic
+example (a b : ℝ) : a * b = b * a := by
+  rw [mul_comm a b]
+```
+如果你的Lean infoview没有任何报错，并且光标放在文件最后一行时会提示“No goals”，证明你的Mathlib已经正确安装了。
 
 如果你想更新Mathlib，在终端中运行
 

@@ -170,7 +170,8 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="安装lean"><a class="header" href="#安装lean">安装Lean</a></h2>
-<p>本教程演示在Windows系统下如何安装Lean 4正式版。Linux和MacOS版本请参考Lean Manual。</p>
+<p>（updates in 2023.09.17）
+本教程演示在Windows系统下如何安装Lean 4正式版。Linux和MacOS版本请参考Lean Manual。</p>
 <blockquote>
 <p>如果你身在中国，在运行安装程序前需要做如下准备：
 在系统目录C:\Windows\System32\drivers\etc文件夹下找到hosts文件。对于其它系统用户也都是找到各自系统的hosts文件。
@@ -183,7 +184,7 @@
 <p>所有受支持平台的发布版本都可以在<a href="https://github.com/leanprover/lean4/releases">https://github.com/leanprover/lean4/releases</a>中找到。</p>
 <ol>
 <li>
-<p>使用Lean版本管理器<a href="https://github.com/leanprover/elan">elan</a>代替下载文件和手动设置路径。在elan的<a href="https://github.com/leanprover/elan">Github仓库</a>中下载最新release，解压运行elan-init.exe，按照指示安装。默认安装位置是用户文件目录下的<code>.elan</code>文件夹，添加环境变量<code>你的用户文件目录\.elan\bin</code>。</p>
+<p>使用Lean版本管理器<a href="https://github.com/leanprover/elan">elan</a>代替下载文件和手动设置路径。在elan的<a href="https://github.com/leanprover/elan">Github仓库</a>中下载最新release（对于windows，请下载elan-x86_64-pc-windows-msvc.zip），解压运行elan-init.exe，按照指示安装。默认安装位置是用户文件目录下的<code>.elan</code>文件夹，添加环境变量<code>你的用户文件目录\.elan\bin</code>。</p>
 <blockquote>
 <p>可能出现以下报错<em>无法加载文件……因为在此系统上禁止运行此脚本</em>”。解决方案是
 1.用管理员身份运行Powershell；
@@ -248,7 +249,13 @@ lake exe cache get
 <pre><code>Decompressing 1234 file(s)
 unpacked in 12345 ms
 </code></pre>
-<p>同时你的项目文件夹中出现了lake-packages文件夹，那么证明你安装Mathlib成功了。</p>
+<p>同时你的项目文件夹中出现了lake-packages文件夹，那么证明你安装Mathlib成功了，重启系统即可使用。</p>
+<p>这里提供一个实例来测试你的安装：</p>
+<pre><code>import Mathlib.Data.Real.Basic
+example (a b : ℝ) : a * b = b * a := by
+  rw [mul_comm a b]
+</code></pre>
+<p>如果你的Lean infoview没有任何报错，并且光标放在文件最后一行时会提示“No goals”，证明你的Mathlib已经正确安装了。</p>
 <p>如果你想更新Mathlib，在终端中运行</p>
 <pre><code>curl -L https://raw.githubusercontent.com/leanprover-community/mathlib4/master/lean-toolchain -o lean-toolchain
 lake update
