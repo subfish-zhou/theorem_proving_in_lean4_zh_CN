@@ -182,7 +182,7 @@ def F (α : Type u) : Type u := Prod α α
 #check F    -- Type u → Type u
 ```
 
-可以通过在定义F时提供universe参数来避免使用universe命令：
+可以通过在定义F时提供universe参数来避免使用`universe`命令：
 
 ```lean
 def F.{u} (α : Type u) : Type u := Prod α α

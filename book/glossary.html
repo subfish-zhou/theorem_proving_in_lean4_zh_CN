@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Lean 4定理证明 - Lean中文教程</title>
+        <title>术语表 - Lean中文教程</title>
 
 
         <!-- Custom HTML head -->
@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title_page.html" class="active">Lean 4定理证明</a></li><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> 介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li></ol></li><li class="chapter-item expanded "><a href="dependent_type_theory.html"><strong aria-hidden="true">2.</strong> 依值类型论</a></li><li class="chapter-item expanded "><a href="propositions_and_proofs.html"><strong aria-hidden="true">3.</strong> 命题和证明</a></li><li class="chapter-item expanded "><a href="quantifiers_and_equality.html"><strong aria-hidden="true">4.</strong> 量词与等价</a></li><li class="chapter-item expanded "><a href="tactics.html"><strong aria-hidden="true">5.</strong> 证明策略</a></li><li class="chapter-item expanded "><a href="interacting_with_lean.html"><strong aria-hidden="true">6.</strong> 使用Lean进行工作</a></li><li class="chapter-item expanded "><a href="inductive_types.html"><strong aria-hidden="true">7.</strong> 归纳类型</a></li><li class="chapter-item expanded "><a href="induction_and_recursion.html"><strong aria-hidden="true">8.</strong> Induction and Recursion</a></li><li class="chapter-item expanded "><a href="structures_and_records.html"><strong aria-hidden="true">9.</strong> 结构体和记录</a></li><li class="chapter-item expanded "><a href="type_classes.html"><strong aria-hidden="true">10.</strong> Type Classes</a></li><li class="chapter-item expanded "><a href="conv.html"><strong aria-hidden="true">11.</strong> 转换策略模式</a></li><li class="chapter-item expanded "><a href="axioms_and_computation.html"><strong aria-hidden="true">12.</strong> Axioms and Computation</a></li><li class="chapter-item expanded "><a href="glossary.html"><strong aria-hidden="true">13.</strong> 术语表</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title_page.html">Lean 4定理证明</a></li><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> 介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li></ol></li><li class="chapter-item expanded "><a href="dependent_type_theory.html"><strong aria-hidden="true">2.</strong> 依值类型论</a></li><li class="chapter-item expanded "><a href="propositions_and_proofs.html"><strong aria-hidden="true">3.</strong> 命题和证明</a></li><li class="chapter-item expanded "><a href="quantifiers_and_equality.html"><strong aria-hidden="true">4.</strong> 量词与等价</a></li><li class="chapter-item expanded "><a href="tactics.html"><strong aria-hidden="true">5.</strong> 证明策略</a></li><li class="chapter-item expanded "><a href="interacting_with_lean.html"><strong aria-hidden="true">6.</strong> 使用Lean进行工作</a></li><li class="chapter-item expanded "><a href="inductive_types.html"><strong aria-hidden="true">7.</strong> 归纳类型</a></li><li class="chapter-item expanded "><a href="induction_and_recursion.html"><strong aria-hidden="true">8.</strong> Induction and Recursion</a></li><li class="chapter-item expanded "><a href="structures_and_records.html"><strong aria-hidden="true">9.</strong> 结构体和记录</a></li><li class="chapter-item expanded "><a href="type_classes.html"><strong aria-hidden="true">10.</strong> Type Classes</a></li><li class="chapter-item expanded "><a href="conv.html"><strong aria-hidden="true">11.</strong> 转换策略模式</a></li><li class="chapter-item expanded "><a href="axioms_and_computation.html"><strong aria-hidden="true">12.</strong> Axioms and Computation</a></li><li class="chapter-item expanded "><a href="glossary.html" class="active"><strong aria-hidden="true">13.</strong> 术语表</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -169,23 +169,29 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="lean-4-定理证明"><a class="header" href="#lean-4-定理证明">Lean 4 定理证明</a></h1>
-<p><em>作者：Jeremy Avigad, Leonardo de Moura, Soonho Kong and Sebastian Ullrich, 以及Lean社区</em>
-<em>译者 <a href="https://github.com/subfish-zhou">subfish_zhou</a></em></p>
-<p>原文地址<a href="https://leanprover.github.io/theorem_proving_in_lean4/">Theorem Proving in Lean 4</a></p>
-<p>本中文教程旨在教你使用Lean 4。 参考<a href="https://leanprover.github.io/lean4/doc/">Lean 4 Manual</a>中的<a href="https://leanprover.github.io/lean4/doc/setup.html">Setting Up Lean section</a>一节来安装Lean。本项目也包括一个快速安装教程。
-本书的Lean 2 和Lean 3 版本见<a href="https://leanprover.github.io/theorem_proving_in_lean/">这里</a>。</p>
-<p>本项目的翻译量较大，因此大多采用机翻，仅供习惯中文的读者作为参考，译者推荐有能力的读者阅读原文。欢迎对本译文提出宝贵意见，可邮件至<a href="mailto:subfishzhou@gmail.com">subfishzhou@gmail.com</a>
-译者自制的习题参考答案在本项目Github仓库的Exercise文件夹中。本项目尚未完工。</p>
+                        <h2 id="术语表完善中"><a class="header" href="#术语表完善中">术语表（完善中）</a></h2>
+<p>繁饰        elaboration
+抽象        abstraction
+应用        application
+合一        unification
+规约        Reduction
+策略        tactic
+组合子      combinator
+构造子      constructor
+消去子      eliminator
+递归子      recursor
+构造演算    Calculus of Constructions
+归纳类型    inductive type
+依值类型论  dependent type theory</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-
-                            <a rel="next" href="introduction.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
+                            <a rel="prev" href="axioms_and_computation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
                             </a>
+
 
                         <div style="clear: both"></div>
                     </nav>
@@ -193,10 +199,10 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-
-                    <a rel="next" href="introduction.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
+                    <a rel="prev" href="axioms_and_computation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
                     </a>
+
             </nav>
 
         </div>

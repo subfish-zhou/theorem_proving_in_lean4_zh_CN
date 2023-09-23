@@ -84,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title_page.html">Lean 4定理证明</a></li><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> 介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li></ol></li><li class="chapter-item expanded "><a href="dependent_type_theory.html"><strong aria-hidden="true">2.</strong> 依赖类型论</a></li><li class="chapter-item expanded "><a href="propositions_and_proofs.html"><strong aria-hidden="true">3.</strong> 命题和证明</a></li><li class="chapter-item expanded "><a href="quantifiers_and_equality.html"><strong aria-hidden="true">4.</strong> 量词与等价</a></li><li class="chapter-item expanded "><a href="tactics.html"><strong aria-hidden="true">5.</strong> 证明策略</a></li><li class="chapter-item expanded "><a href="interacting_with_lean.html"><strong aria-hidden="true">6.</strong> 使用Lean进行工作</a></li><li class="chapter-item expanded "><a href="inductive_types.html"><strong aria-hidden="true">7.</strong> 归纳类型</a></li><li class="chapter-item expanded "><a href="induction_and_recursion.html"><strong aria-hidden="true">8.</strong> Induction and Recursion</a></li><li class="chapter-item expanded "><a href="structures_and_records.html"><strong aria-hidden="true">9.</strong> 结构体和记录</a></li><li class="chapter-item expanded "><a href="type_classes.html"><strong aria-hidden="true">10.</strong> Type Classes</a></li><li class="chapter-item expanded "><a href="conv.html"><strong aria-hidden="true">11.</strong> 转换策略模式</a></li><li class="chapter-item expanded "><a href="axioms_and_computation.html"><strong aria-hidden="true">12.</strong> Axioms and Computation</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title_page.html">Lean 4定理证明</a></li><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> 介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li></ol></li><li class="chapter-item expanded "><a href="dependent_type_theory.html"><strong aria-hidden="true">2.</strong> 依值类型论</a></li><li class="chapter-item expanded "><a href="propositions_and_proofs.html"><strong aria-hidden="true">3.</strong> 命题和证明</a></li><li class="chapter-item expanded "><a href="quantifiers_and_equality.html"><strong aria-hidden="true">4.</strong> 量词与等价</a></li><li class="chapter-item expanded "><a href="tactics.html"><strong aria-hidden="true">5.</strong> 证明策略</a></li><li class="chapter-item expanded "><a href="interacting_with_lean.html"><strong aria-hidden="true">6.</strong> 使用Lean进行工作</a></li><li class="chapter-item expanded "><a href="inductive_types.html"><strong aria-hidden="true">7.</strong> 归纳类型</a></li><li class="chapter-item expanded "><a href="induction_and_recursion.html"><strong aria-hidden="true">8.</strong> Induction and Recursion</a></li><li class="chapter-item expanded "><a href="structures_and_records.html"><strong aria-hidden="true">9.</strong> 结构体和记录</a></li><li class="chapter-item expanded "><a href="type_classes.html"><strong aria-hidden="true">10.</strong> Type Classes</a></li><li class="chapter-item expanded "><a href="conv.html"><strong aria-hidden="true">11.</strong> 转换策略模式</a></li><li class="chapter-item expanded "><a href="axioms_and_computation.html"><strong aria-hidden="true">12.</strong> Axioms and Computation</a></li><li class="chapter-item expanded "><a href="glossary.html"><strong aria-hidden="true">13.</strong> 术语表</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -221,7 +221,7 @@ of our amazing contributors.</p>
 <p>用记事本打开这个文件，在最后一行写入<code>185.199.108.133 raw.githubusercontent.com</code></p>
 <p>重启电脑，然后开启科学上网。（注意，你需要让终端也处在梯子的作用域中，例如你使用clash类梯子需要打开<strong>全局</strong>模式。）</p>
 <p>（经过这个步骤之后你也可以使用官网提供的方法来安装了。）</p>
-<p>如果你遇到&quot;SSL connection error&quot;, &quot;Timeout was reached&quot;,&quot;Failed to connect to github.com port 443&quot;...等错误，就是说明你的网络环境有问题。重启电脑或者检查你的梯子。</p>
+<p>如果你遇到&quot;SSL connect error&quot;, &quot;Timeout was reached&quot;,&quot;Failed to connect to github.com port 443&quot;...等错误，就是说明你的网络环境有问题。重启电脑或者检查你的梯子。</p>
 </blockquote>
 <h2 id="基本安装"><a class="header" href="#基本安装">基本安装</a></h2>
 <p>所有受支持平台的发布版本都可以在<a href="https://github.com/leanprover/lean4/releases">https://github.com/leanprover/lean4/releases</a>中找到。</p>
@@ -442,7 +442,7 @@ def F (α : Type u) : Type u := Prod α α
 
 #check F    -- Type u → Type u
 </code></pre>
-<p>可以通过在定义F时提供universe参数来避免使用universe命令：</p>
+<p>可以通过在定义F时提供universe参数来避免使用<code>universe</code>命令：</p>
 <pre><code class="language-lean">def F.{u} (α : Type u) : Type u := Prod α α
 
 #check F    -- Type u → Type u
@@ -1554,8 +1554,7 @@ theorem T : a = e :=
 <pre><code class="language-lean">theorem T : a = e :=
   by simp [h1, h2, h3, Nat.add_comm, h4]
 </code></pre>
-<p>我们将在下一章讨论<code>rw</code>和<code>simp</code>的变体。
-We will discuss variations of <code>rw</code> and <code>simp</code> in the next chapter.</p>
+<p>我们将在下一章讨论<code>rw</code>和<code>simp</code>的变体。</p>
 <p><code>calc</code>命令可以配置为任何支持某种形式的传递性的关系。它甚至可以结合不同的关系。</p>
 <pre><code class="language-lean">example (a b c d : Nat) (h1 : a = b) (h2 : b ≤ c) (h3 : c + 1 &lt; d) : a &lt; d :=
   calc
@@ -2678,7 +2677,7 @@ example (xs ys : List Nat) (p : List Nat → Prop)
   simp at h; assumption
 end
 </code></pre>
-<p>在该部分之外，简化器将不再默认使用``reverse_mk_symm`。</p>
+<p>在该部分之外，简化器将不再默认使用<code>reverse_mk_symm</code>。</p>
 <p>请注意，我们讨论过的各种<code>simp</code>选项----给出一个明确的规则列表，并使用<code>at</code>指定位置----可以合并，但它们的排列顺序是严格的。你可以在编辑器中看到正确的顺序，把光标放在<code>simp</code>标识符上，查看与之相关的文档。</p>
 <p>有两个额外的修饰符是有用的。默认情况下，<code>simp</code>包括所有被标记为<code>[simp]</code>属性的定理。写<code>simp only</code>排除了这些默认值，允许你使用一个更明确的规则列表。在下面的例子中，减号和<code>only</code>被用来阻止<code>reverse_mk_symm</code>的应用：</p>
 <pre><code class="language-lean">def mk_symm (xs : List α) :=
@@ -3610,7 +3609,7 @@ inductive Or (a b : Prop) : Prop where
   | inr : b → Or a b
 end Hidden
 </code></pre>
-<p>你应该想一想这些是如何产生你已经看到的引入和消去规则的。有一些规则规定了归纳类型的消去子可以去消去什么，或者说，哪些类型可以成为递归子的目标。粗略地说，<code>Prop</code>中的归纳类型的特点是，只能消去成<code>Prop</code>中的其他类型。这与以下理解是一致的：如果<code>p : Prop</code>，一个元素<code>hp : p</code>不携带任何数据。然而，这个规则有一个小的例外，我们将在<a href="inductive_types.html#%E5%BD%92%E7%BA%B3%E6%97%8F">归纳族</a>y一节中讨论。</p>
+<p>你应该想一想这些是如何产生你已经看到的引入和消去规则的。有一些规则规定了归纳类型的消去子可以去消去什么，或者说，哪些类型可以成为递归子的目标。粗略地说，<code>Prop</code>中的归纳类型的特点是，只能消去成<code>Prop</code>中的其他类型。这与以下理解是一致的：如果<code>p : Prop</code>，一个元素<code>hp : p</code>不携带任何数据。然而，这个规则有一个小的例外，我们将在<a href="inductive_types.html#%E5%BD%92%E7%BA%B3%E6%97%8F">归纳族</a>一节中讨论。</p>
 <p>甚至存在量词也是归纳式定义的：</p>
 <pre><code class="language-lean">namespace Hidden
 inductive Exists {α : Type u} (q : α → Prop) : Prop where
@@ -7502,6 +7501,20 @@ theorem linv_comp_self {f : α → β} [Inhabited α]
 constructive point of view, it is unacceptable; because there is no
 way to implement such a function in general, the construction is not
 informative.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="术语表完善中"><a class="header" href="#术语表完善中">术语表（完善中）</a></h2>
+<p>繁饰        elaboration
+抽象        abstraction
+应用        application
+合一        unification
+规约        Reduction
+策略        tactic
+组合子      combinator
+构造子      constructor
+消去子      eliminator
+递归子      recursor
+构造演算    Calculus of Constructions
+归纳类型    inductive type
+依值类型论  dependent type theory</p>
 
                     </main>
 

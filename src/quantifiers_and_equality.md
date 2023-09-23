@@ -301,7 +301,6 @@ theorem T : a = e :=
 ```
 
 我们将在下一章讨论``rw``和``simp``的变体。
-We will discuss variations of ``rw`` and ``simp`` in the next chapter.
 
 ``calc``命令可以配置为任何支持某种形式的传递性的关系。它甚至可以结合不同的关系。
 

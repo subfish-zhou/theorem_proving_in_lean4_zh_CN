@@ -17,7 +17,7 @@
 > 
 > （经过这个步骤之后你也可以使用官网提供的方法来安装了。）
 >
-> 如果你遇到"SSL connection error", "Timeout was reached","Failed to connect to github.com port 443"...等错误，就是说明你的网络环境有问题。重启电脑或者检查你的梯子。
+> 如果你遇到"SSL connect error", "Timeout was reached","Failed to connect to github.com port 443"...等错误，就是说明你的网络环境有问题。重启电脑或者检查你的梯子。
 
 ## 基本安装
 
