@@ -1,7 +1,7 @@
 安装Lean
 ---------------
 
-（updates in 2023.09.17）
+（updates in 2023.09.25）
 
 本教程演示在Windows系统下如何安装Lean 4正式版。Linux和MacOS版本请参考Lean Manual。
 
@@ -97,7 +97,7 @@
 
 *更多内容请参考[Mathlib Wiki](https://github.com/leanprover-community/mathlib4/wiki/Using-mathlib4-as-a-dependency)*
 
-在你的项目文件夹下，使用终端运行
+在你的项目文件夹下打开VS code，使用终端运行
 
 ```
 lake update
@@ -110,7 +110,7 @@ lake exe cache get
 Decompressing 1234 file(s)
 unpacked in 12345 ms
 ```
-同时你的项目文件夹中出现了lake-packages文件夹，那么证明你安装Mathlib成功了，重启系统即可使用。
+同时你的项目文件夹中出现了lake-packages文件夹，那么证明你安装Mathlib成功了，重启系统即可使用。**注意：你要在lake-packages所在的目录中运行VScode，才能让Lean使用Mathlib。**
 
 这里提供一个实例来测试你的安装：
 ```

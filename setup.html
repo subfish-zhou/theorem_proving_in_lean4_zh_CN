@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>安装 - Lean中文教程</title>
+        <title>安装 - Lean定理证明</title>
 
 
         <!-- Custom HTML head -->
@@ -134,7 +134,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">Lean中文教程</h1>
+                    <h1 class="menu-title">Lean定理证明</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -244,7 +244,7 @@ $ elan override set leanprover/lean4:stable
 </ol>
 <h3 id="使用mathlib"><a class="header" href="#使用mathlib">使用Mathlib</a></h3>
 <p><em>更多内容请参考<a href="https://github.com/leanprover-community/mathlib4/wiki/Using-mathlib4-as-a-dependency">Mathlib Wiki</a></em></p>
-<p>在你的项目文件夹下，使用终端运行</p>
+<p>在你的项目文件夹下打开VS code，使用终端运行</p>
 <pre><code>lake update
 lake exe cache get
 </code></pre>
@@ -252,7 +252,7 @@ lake exe cache get
 <pre><code>Decompressing 1234 file(s)
 unpacked in 12345 ms
 </code></pre>
-<p>同时你的项目文件夹中出现了lake-packages文件夹，那么证明你安装Mathlib成功了，重启系统即可使用。</p>
+<p>同时你的项目文件夹中出现了lake-packages文件夹，那么证明你安装Mathlib成功了，重启系统即可使用。<strong>注意：你要在lake-packages所在的目录中运行VScode，才能让Lean使用Mathlib。</strong></p>
 <p>这里提供一个实例来测试你的安装：</p>
 <pre><code>import Mathlib.Data.Real.Basic
 example (a b : ℝ) : a * b = b * a := by

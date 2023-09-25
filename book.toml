@@ -3,7 +3,7 @@ authors = ["subfish-zhou"]
 language = "zh"
 multilingual = false
 src = "src"
-title = "Lean中文教程"
+title = "Lean定理证明"
 
 [output.html]
 git-repository-url = "https://github.com/subfish-zhou/theorem_proving_in_lean4_zh_CN"
